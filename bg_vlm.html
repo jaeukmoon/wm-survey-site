@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">VLM 구조 — 비전 인코더를 LLM에 어떻게 붙이나</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# VLM 구조 — 비전 인코더를 LLM에 어떻게 붙이나\n\n**큰 그림**: VLM(Vision-Language Model)은 거의 다 \"**이미 똑똑한 비전 인코더(ViT)**\"와 \"**이미 똑똑한 LLM**\"을 가져다, 둘 사이에 **커넥터(connector)**를 끼워 붙인 것이다. 핵심 설계 선택은 단 하나 — **\"이미지에서 나온 시각 토큰을 LLM에 어떻게 먹이느냐\"**. 여기서 4가지 계열이 갈린다.\n\n| 계열 | 커넥터 메커니즘 | 시각 토큰 수 | 비전/LLM 동결? | 대표 |\n|---|---|---|---|---|\n| **Cross-attention 주입** | Perceiver Resampler + gated cross-attn 층을 **LLM 내부에 삽입** | 고정(예: 64) | 둘 다 frozen | Flamingo |\n| **Linear/MLP projection (앞에 붙이기)** | ViT 특징을 LLM 임베딩 공간으로 사영 → 텍스트 토큰과 **concat** | 가변(=ViT 패치 수) | 비전 frozen, LLM tune | LLaVA |\n| **Query 기반 커넥터** | Q-Former: 학습되는 query가 cross-attn으로 시각 토큰 추출 | 고정(예: 32) | 둘 다 frozen | BLIP-2 |\n| **Native dynamic resolution** | 원해상도 ViT + 2×2 patch-merge, M-RoPE로 위치 인코딩 | 가변(해상도 비례) | 함께 학습 | Qwen2-VL |\n\n> **한 줄 직관**: \"시각 토큰을 **LLM 옆구리(cross-attention)에 주입**하느냐(Flamingo), **프롬프트 맨 앞에 그냥 끼워넣느냐**(LLaVA/BLIP-2), 토큰 수를 **고정**하느냐 **가변**으로 두느냐\"의 조합.\n\n### 1) Cross-attention 주입 — Flamingo\n- **원리**: frozen 비전 인코더 특징을 **Perceiver Resampler**가 고정 개수 토큰으로 압축 → frozen LLM 사이사이에 새로 끼운 **gated cross-attention** 층의 key/value로 주입. 텍스트는 LLM의 self-attention 경로에 그대로 있고, 시각 정보는 cross-attention으로만 들어온다. tanh 게이트(초기값 0)로 학습 시작 시점엔 원래 LLM을 그대로 보존.\n- **흐름**: `이미지/비디오 → frozen ViT → 가변 특징 격자 → Perceiver Resampler(학습 latent query) → 고정 N개 시각 토큰 → gated cross-attn의 K/V로 LLM에 주입 → 텍스트 출력`\n- **장단점**: 비전·LLM 둘 다 얼려서 resampler+gated층만 학습 → 파라미터 효율·안정적, 이미지-텍스트 interleave/다중이미지/비디오 자연 지원. 단 LLM 내부를 수술해야 함(drop-in 아님), 층마다 cross-attn 연산 추가.\n\n원본 그림 (architecture overview):\n![Flamingo architecture](https://ar5iv.labs.arxiv.org/html/2204.14198/assets/x38.png)\n> Figure 3 (Flamingo, arXiv 2204.14198): 시각 데이터+텍스트를 interleave로 받아 자유 형식 텍스트를 출력.\n\ngated xattn-dense 층:\n![Flamingo gated xattn-dense](https://ar5iv.labs.arxiv.org/html/2204.14198/assets/x39.png)\n> Figure 4: frozen LLM 층 사이에 cross-attention 층을 삽입. query=언어, key/value=시각 특징. tanh 게이트로 초기엔 LLM 보존.\n\nPerceiver Resampler:\n![Flamingo Perceiver Resampler](https://ar5iv.labs.arxiv.org/html/2204.14198/assets/x42.png)\n> Figure 5: 가변 크기 시공간 시각 특징을 **고정 개수** 토큰으로 매핑. 학습된 latent를 query로, 시각 특징을 key/value로.\n\n### 2) Linear/MLP projection — LLaVA\n- **원리**: 가장 단순. frozen CLIP-ViT 특징을 **선형 사영(MLP)** 하나로 LLM 단어 임베딩 공간에 맞춰 → 그 시각 토큰을 텍스트 토큰 앞에 **그냥 이어붙여** 한 시퀀스로 LLM에 입력.\n- **흐름**: `이미지 → frozen CLIP ViT-L/14 → 시각 특징 Z_v → 사영행렬 W → 시각 토큰 H_v(LLM 임베딩 차원) → 텍스트 토큰 H_q와 concat → LLM(Vicuna) → 텍스트`. 시각 토큰 수 = ViT 패치 수(해상도 고정 시 고정, 예: 336px→256개).\n- **장단점**: 커넥터가 행렬 하나라 학습·재현이 매우 쌈, LLM 수술 불필요(시각 토큰이 그냥 프롬프트에 삶). 단 해상도 올리면 토큰 수 증가 → 시퀀스 길어지고 self-attention O(n²) 부담, 얇은 projector라 정렬이 약할 수 있음.\n\n원본 그림:\n![LLaVA architecture](https://arxiv.org/html/2304.08485v2/x1.png)\n> Figure 1 (LLaVA, arXiv 2304.08485): 비전 인코더 → projection W → 시각 토큰을 언어 토큰과 함께 LLM에.\n\n### 3) Query 기반 커넥터 — BLIP-2 (Q-Former)\n- **원리**: 경량 **Q-Former**가 소수의 **학습되는 query 임베딩**을 들고, frozen 이미지 인코더에서 cross-attention으로 **고정 개수**(예: 32) 시각 토큰만 뽑아냄 → 선형층으로 frozen LLM 입력 공간에 사영(soft prompt). 이미지 인코더·LLM 둘 다 frozen.\n- **흐름**: `이미지 → frozen 이미지 인코더 → 이미지 특징 → Q-Former(32개 query가 cross-attend) → 32개 query 출력 → 선형 사영 → 텍스트 토큰 앞 soft prompt → frozen LLM(OPT/FlanT5) → 텍스트`. Q-Former는 2단계로 사전학습(표현학습 → vision-to-language 생성학습).\n- **장단점**: 이미지 크기와 무관하게 토큰 수 작고 고정(정보 병목) → LLM 컨텍스트 쌈, 둘 다 frozen이라 파라미터 효율 최고. 단 2단계 사전학습이 복잡, 고정 병목이 세밀한 디테일(고해상 OCR 등)을 떨굴 수 있음.\n\n원본 그림 (framework / Q-Former):\n![BLIP-2 framework](https://arxiv.org/html/2301.12597v3/x1.png)\n> Figure 1 (BLIP-2, arXiv 2301.12597): Q-Former를 2단계로 사전학습해 frozen 이미지 인코더와 frozen LLM 사이 modality gap을 메움.\n\n![BLIP-2 Q-Former](https://arxiv.org/html/2301.12597v3/x2.png)\n> Figure 2: (좌) Q-Former 구조와 1단계 표현학습 목적함수 3종. (우) query-text 상호작용을 제어하는 self-attention 마스킹.\n\n### 4) Native dynamic resolution — Qwen2-VL\n- **원리**: ViT가 이미지를 **원해상도 그대로**(\"naive dynamic resolution\") 처리 → **가변** 패치 수 생성 → 인접 2×2 패치를 작은 MLP로 합쳐 시각 토큰으로 압축 → LLM 시퀀스에 삽입. 위치는 **M-RoPE**(rotary 위치 임베딩을 시간/높이/너비로 분해)로 인코딩해 텍스트·이미지·비디오 위치를 한 틀에서 모델링.\n- **흐름**: `원해상도 이미지 → ViT(가변 패치) → 2×2 patch-merge(MLP) → 가변 시각 토큰(<|vision_start|>..<|vision_end|>로 감쌈) → M-RoPE 위치와 함께 LLM 시퀀스에 삽입 → 텍스트`. 토큰 수는 이미지 크기에 비례(min/max_pixels로 조절).\n- **장단점**: 원해상도·종횡비 보존 → OCR·차트·다양한 크기에 강함, M-RoPE가 텍스트/이미지/비디오 위치를 통일하고 길이 외삽에 도움. 단 가변 토큰 수라 배칭/서빙·메모리 예측이 어렵고, 고해상이면 시퀀스 폭증(그래서 min/max_pixels 제어).\n\n> Qwen2-VL 논문 HTML엔 **전체 아키텍처 블록도 그림이 없다**(Flamingo Fig3/LLaVA Fig1/BLIP-2 Fig1 같은 게 없음). 메커니즘을 보여주는 대표 그림은 M-RoPE:\n\n![Qwen2-VL M-RoPE](https://arxiv.org/html/2409.12191v2/images/mrope.png)\n> Figure 3 (Qwen2-VL, arXiv 2409.12191): rotary 임베딩을 시간·높이·너비로 분해(M-RoPE)해 텍스트/이미지/비디오 위치를 LLM에서 명시적으로 모델링.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-15 07:06 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>

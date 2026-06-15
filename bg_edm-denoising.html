@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">EDM denoising</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# EDM denoising\n\n> 출처: [EDM] Karras, Aittala, Aila, Laine, \"Elucidating the Design Space of Diffusion-Based Generative Models\" (NeurIPS 2022, arXiv 2206.00364). 수식·하이퍼파라미터는 공식 구현 [NVlabs/edm](https://github.com/NVlabs/edm) (`training/loss.py`, `training/networks.py`)로 교차검증.\n\n**한 줄 정의**: diffusion 모델을 **노이즈 레벨 $\\sigma$로 직접 파라미터화**하고, 신경망의 입력·출력·노이즈·skip을 $\\sigma$에 따라 **재스케일(preconditioning)** 해서, 모든 $\\sigma$에서 \"노이즈 낀 신호 $\\to$ 깨끗한 신호\"를 맞히는 **denoiser** $D_\\theta(x;\\sigma)$를 학습하는 방식. EDM은 새 신경망 구조가 아니라, diffusion의 **학습/샘플링 design space를 분해·정리한 레시피**(노이즈 스케줄·preconditioning·loss 가중치·ODE 샘플러를 각각 독립적으로 고를 수 있게)다.\n\n> **30초 큰 그림 비유**: 라디오 잡음 제거기를 만든다고 하자. 잡음이 **속삭임 수준($\\sigma$ 작음)**일 때와 **폭풍 수준($\\sigma$ 큼)**일 때는 신호의 크기 자체가 천차만별이다. 같은 회로에 그냥 넣으면 한쪽에선 신호가 묻히고 한쪽에선 터진다. EDM의 핵심은 **잡음 크기에 맞춰 입력 볼륨을 자동 정규화하고(입력 게인 $c_{\\text{in}}$), 출력을 적절히 키우고(출력 게인 $c_{\\text{out}}$), 잡음이 약할 땐 \"거의 손대지 말고 원본을 그냥 통과\"시키는 지름길($c_{\\text{skip}}$)**을 신경망 바깥에 미리 달아두는 것. 신경망은 항상 \"크기가 잘 정규화된\" 문제만 풀면 되니 학습이 안정된다.\n\n### preconditioning — 핵심 아이디어\n$\\sigma$가 0.002에서 80까지 약 4만 배 움직이는 동안 노이즈 낀 입력 $x=y+n$의 크기도 그만큼 변한다. 신경망은 입력·타깃이 **비슷한 스케일**일 때 잘 학습된다. 그래서 EDM은 신경망 $F_\\theta$를 직접 denoiser로 쓰지 않고, $\\sigma$ 의존 계수들로 감싼다.\n\n```\n        σ (noise level)\n          │  4개 게인을 모두 결정\n          ▼\n   ┌──────────────────────────────────────────────────────────┐\n   │  c_in(σ)·x ──►  F_θ( · ; c_noise(σ) )  ──► ·c_out(σ) ─┐    │\n   │   (입력 정규화)      (raw network)        (출력 스케일)  │    │\n   │                                                       ▼    │\n   x ──────────────────────►  ·c_skip(σ)  ───────────────► + ──► D_θ(x;σ) ≈ y (clean)\n   │     (skip: σ 작으면 원본 거의 그대로 통과)                     │\n   └──────────────────────────────────────────────────────────┘\n       loss:  E[ λ(σ)·c_out(σ)²·‖F_θ(...) − target‖² ]  (= E[ weight·‖D_θ−y‖² ])\n              학습 σ ~ lognormal:  ln σ ~ N(P_mean, P_std²)\n```\n\n핵심: **신경망 $F_\\theta$는 절대 raw $x$를 보지 않는다.** 항상 $c_{\\text{in}}(\\sigma)$로 분산이 1에 맞춰진 입력만 보고, 출력도 $c_{\\text{out}}$로 적정 크기로 펴진 뒤에야 $c_{\\text{skip}}$ 지름길과 합쳐져 denoiser $D_\\theta$가 된다.\n\n### 수식 — preconditioning과 loss\n\n**(1) preconditioned denoiser** [EDM 식 (7)]:\n\n$$\nD_\\theta(x;\\sigma) = c_{\\text{skip}}(\\sigma)\\,x + c_{\\text{out}}(\\sigma)\\,F_\\theta\\big(c_{\\text{in}}(\\sigma)\\,x;\\ c_{\\text{noise}}(\\sigma)\\big)\n$$\n\n- **무슨 식?**: 최종 denoiser $D_\\theta$(노이즈 입력 $x$를 깨끗한 $y$로 보내는 함수)는 두 갈래의 합이다 — (i) **skip 지름길** $c_{\\text{skip}}\\,x$(입력을 거의 그대로), (ii) raw 신경망 $F_\\theta$ 출력을 $c_{\\text{out}}$로 스케일한 보정. $F_\\theta$에는 정규화된 입력 $c_{\\text{in}}x$와 변환된 노이즈 라벨 $c_{\\text{noise}}(\\sigma)$가 들어간다.\n- **왜?**: 신경망은 \"전부\"가 아니라 **skip이 못 맞춘 잔차(residual)** 만 맞히면 된다. $\\sigma$가 작으면 $c_{\\text{skip}}\\!\\approx\\!1$이라 입력을 거의 그대로 통과, $\\sigma$가 크면 $c_{\\text{skip}}\\!\\to\\!0$이라 신경망 예측이 지배.\n\n**(2) preconditioning 계수** [EDM Table 1, \"Ours (EDM)\" 열]:\n\n$$\nc_{\\text{skip}}(\\sigma)=\\frac{\\sigma_{\\text{data}}^2}{\\sigma^2+\\sigma_{\\text{data}}^2},\\quad\nc_{\\text{out}}(\\sigma)=\\frac{\\sigma\\cdot\\sigma_{\\text{data}}}{\\sqrt{\\sigma^2+\\sigma_{\\text{data}}^2}},\\quad\nc_{\\text{in}}(\\sigma)=\\frac{1}{\\sqrt{\\sigma^2+\\sigma_{\\text{data}}^2}},\\quad\nc_{\\text{noise}}(\\sigma)=\\tfrac{1}{4}\\ln\\sigma\n$$\n\n- **$c_{\\text{in}}$**: 입력 $x=y+n$의 분산을 1로 정규화($y$의 분산 $\\sigma_{\\text{data}}^2$ + 노이즈 분산 $\\sigma^2$의 합으로 나눔). 신경망이 항상 단위 분산 입력만 보게 함.\n- **$c_{\\text{out}}$**: 신경망이 맞혀야 할 **타깃(잔차)의 크기를 1**로 맞추는 출력 게인. $\\sigma\\!\\to\\!0$이면 0(맞힐 잔차가 작음), $\\sigma\\!\\to\\!\\infty$이면 $\\sigma_{\\text{data}}$로 포화.\n- **$c_{\\text{skip}}$**: 노이즈가 약할수록($\\sigma$ 작을수록) 1에 가까워져 입력을 그대로 통과시키는 지름길 비중. 노이즈가 셀수록 0으로.\n- **$c_{\\text{noise}}$**: $\\sigma$를 그대로 쓰면 범위가 너무 넓어, $\\frac14\\ln\\sigma$로 압축해 시간/노이즈 임베딩으로 신경망에 넣는다(timestep 조건). 단조 변환이라 정보 손실 없음.\n- **검증**: `training/networks.py`의 `EDMPrecond.forward`에 `c_skip = sigma_data**2/(sigma**2+sigma_data**2)`, `c_out = sigma*sigma_data/(sigma**2+sigma_data**2).sqrt()`, `c_in = 1/(sigma_data**2+sigma**2).sqrt()`, `c_noise = sigma.log()/4`로 그대로 구현.\n\n**(3) 학습 목적함수 (denoising loss)** [EDM 식 (8)]:\n\n$$\n\\mathbb{E}_{\\sigma\\sim p_{\\text{train}}}\\ \\mathbb{E}_{y\\sim p_{\\text{data}},\\ n\\sim\\mathcal{N}(0,\\sigma^2 I)}\\ \\Big[\\ \\lambda(\\sigma)\\,c_{\\text{out}}(\\sigma)^2\\ \\big\\lVert F_\\theta\\big(c_{\\text{in}}(\\sigma)(y+n);\\,c_{\\text{noise}}(\\sigma)\\big) - \\tfrac{1}{c_{\\text{out}}(\\sigma)}\\big(y - c_{\\text{skip}}(\\sigma)(y+n)\\big)\\big\\rVert_2^2\\ \\Big]\n$$\n\n- **무슨 식?**: 깨끗한 $y$에 노이즈 $n$을 더한 $x=y+n$을 신경망에 주고, **denoiser 출력이 원본 $y$가 되도록** 맞춘다. 우변 안쪽은 식 (1)을 풀어 쓴 것 — 신경망 $F_\\theta$가 직접 맞혀야 하는 (정규화된) 타깃은 $\\frac{1}{c_{\\text{out}}}(y-c_{\\text{skip}}x)$. 동등하게 코드에선 **`loss = weight * (D_yn - y)²`** 로, denoiser 출력 $D_\\theta(x;\\sigma)$와 clean $y$의 가중 MSE다.\n- **$\\lambda(\\sigma)c_{\\text{out}}(\\sigma)^2$의 의미**: EDM은 $\\lambda(\\sigma)=1/c_{\\text{out}}(\\sigma)^2$로 잡아 **두 항이 상쇄** → 모든 $\\sigma$에서 effective loss 가중치가 균일(uniform)해지도록 설계. 이게 식 (4)의 `weight`다.\n\n**(4) loss 가중치 $\\lambda(\\sigma)$** [EDM 식 본문, `loss.py`의 `weight`]:\n\n$$\n\\lambda(\\sigma)=\\frac{\\sigma^2+\\sigma_{\\text{data}}^2}{(\\sigma\\cdot\\sigma_{\\text{data}})^2}\n$$\n\n- **무슨 식?**: $\\lambda(\\sigma)=1/c_{\\text{out}}(\\sigma)^2$. 식 (3)에서 $c_{\\text{out}}^2$와 곱해지면 1이 되어, 어떤 노이즈 레벨이든 denoiser 차원의 MSE가 **동일한 비중**으로 학습된다(쉬운 $\\sigma$도 어려운 $\\sigma$도 균형).\n- **검증**: `loss.py`의 `weight = (sigma**2 + sigma_data**2) / (sigma*sigma_data)**2`.\n\n**(5) 학습 노이즈 분포 (Karras noise schedule, 학습용)** [EDM 식 본문, `loss.py`]:\n\n$$\n\\ln\\sigma\\sim\\mathcal{N}(P_{\\text{mean}},\\,P_{\\text{std}}^2),\\qquad P_{\\text{mean}}=-1.2,\\ \\ P_{\\text{std}}=1.2,\\ \\ \\sigma_{\\text{data}}=0.5\n$$\n\n- **무슨 식?**: 학습 때 각 샘플마다 $\\sigma$를 **로그정규분포**에서 뽑는다 — 표준정규 $\\varepsilon$을 뽑아 $\\sigma=\\exp(P_{\\text{std}}\\cdot\\varepsilon + P_{\\text{mean}})$. 중앙값 $\\approx e^{-1.2}\\!\\approx\\!0.30$ 근처에 집중하되 꼬리로 매우 작은/큰 $\\sigma$도 포함 → 중간 난이도 노이즈에 학습 자원을 더 쓰는 것.\n- **$\\sigma_{\\text{data}}=0.5$**: 데이터의 표준편차(이미지 픽셀을 $[-1,1]$로 정규화했을 때의 대략적 std)로, 모든 preconditioning 계수에 들어가는 상수.\n- **검증**: `loss.py` `EDMLoss(P_mean=-1.2, P_std=1.2, sigma_data=0.5)`, `sigma = (rnd_normal*P_std + P_mean).exp()`.\n\n> **샘플링 노이즈 스케줄은 학습과 다르다**(자주 헷갈림): **추론(샘플링)** 때는 위 로그정규가 아니라, $\\sigma_{\\max}$에서 $\\sigma_{\\min}$까지 가는 **결정적 $\\rho$-스케줄** $\\sigma_i=\\big(\\sigma_{\\max}^{1/\\rho}+\\tfrac{i}{N-1}(\\sigma_{\\min}^{1/\\rho}-\\sigma_{\\max}^{1/\\rho})\\big)^\\rho$ (기본값 $\\sigma_{\\min}=0.002,\\ \\sigma_{\\max}=80,\\ \\rho=7$)를 쓰고, 보통 **2차 Heun ODE 샘플러**로 적분한다. 학습 분포(어디서 배우나)와 샘플링 스케줄(어떻게 푸나)은 **별개의 design choice**다.\n\n### EDM vs Flow Matching (한 표로)\n| | EDM denoising | Flow Matching (앞 섹션) |\n|---|---|---|\n| 학습 타깃 | clean 신호 $y$ (denoiser $D_\\theta$) | 속도장 $v_t=x_1-x_0$ |\n| 파라미터 축 | 노이즈 레벨 $\\sigma$ (VE식) | 시간 $t\\in[0,1]$ |\n| 입출력 정규화 | **명시적 preconditioning**($c_{\\text{in}},c_{\\text{out}},c_{\\text{skip}}$) | 보통 없음(직선 경로가 스케일을 자연히 잡음) |\n| 추론 | $\\rho$-스케줄 + Heun ODE(보통 18~36 step) | OT 직선 + Euler(보통 ~10 step) |\n| 공통점 | 둘 다 ODE로 노이즈→데이터를 정제, score/velocity는 서로 변환 가능 | |\n\n### ⚠️ 흔한 오해 못박기 (gotchas)\n- **\"EDM은 새 신경망 구조다\" — 아니다.** EDM은 같은 UNet/DiT 백본을 두고 **학습/샘플링의 design space를 정리한 레시피**(preconditioning·noise schedule·loss weight·sampler)일 뿐. 백본은 그대로 쓴다.\n- **\"신경망 $F_\\theta$가 노이즈 $\\epsilon$를 예측한다\"가 일반 디폴트 — EDM은 다르다.** EDM의 학습 타깃은 ($\\epsilon$도 $v$도 아닌) **clean 신호 $y$를 복원하는 denoiser** $D_\\theta$다($x_0$-prediction 계열). preconditioning이 내부적으로 잔차 예측과 연결될 뿐, 바깥 인터페이스는 \"노이즈 제거\".\n- **$c_{\\text{noise}}=\\frac14\\ln\\sigma$는 \"노이즈를 0.25배 한다\"가 아니다.** $\\sigma$를 **신경망에 넣을 timestep/노이즈 임베딩으로 변환**하는 라벨 함수다. denoiser에 더해지는 노이즈 양과 무관.\n- **학습 $\\sigma$ 분포($\\ln\\sigma\\sim N(-1.2,1.2^2)$)와 샘플링 $\\rho$-스케줄을 혼동하지 말 것.** 위 인용 박스 참조 — 전자는 \"어떤 난이도로 배우나\", 후자는 \"추론 때 어떤 $\\sigma$들을 거쳐 푸나\".\n- **$\\lambda(\\sigma)$는 임의 가중치가 아니라 $1/c_{\\text{out}}^2$.** 식 (3)에서 $c_{\\text{out}}^2$를 정확히 상쇄해 **모든 노이즈 레벨의 effective loss를 균일화**하려는 의도적 설계.\n\n### 우리 계보에서의 쓰임 (used_by)\n- **Cosmos Policy** — 백본 **Cosmos-Predict2-2B-Video2World DiT**(latent video diffusion)가 **EDM denoising** 학습/샘플 공식을 사용. 하나의 DiT가 action·미래관측·value를 분리 모듈 없이 **같은 EDM denoise 과정**에서 함께 생성 (`world_model_lineage_easy.md` Cosmos Policy 카드, \"joint denoising ... EDM denoising(Karras식 diffusion 학습/샘플 공식)\").\n- **Cosmos 계열 전반**(NVIDIA Cosmos-Predict2 / Predict2.5) — latent video diffusion 백본이 Karras식 EDM preconditioning/noise schedule을 기반으로 함.\n\n### source_quotes (근거)\n- EDM 식 (7): `D_θ(x;σ) = c_skip(σ) x + c_out(σ) F_θ(c_in(σ) x; c_noise(σ))` — preconditioned denoiser.\n- NVlabs/edm `training/networks.py` (`EDMPrecond.forward`): `c_skip = sigma_data**2/(sigma**2+sigma_data**2)`, `c_out = sigma*sigma_data/(sigma**2+sigma_data**2).sqrt()`, `c_in = 1/(sigma_data**2+sigma**2).sqrt()`, `c_noise = sigma.log()/4`, `D_x = c_skip*x + c_out*F_x`.\n- NVlabs/edm `training/loss.py` (`EDMLoss`): `def __init__(self, P_mean=-1.2, P_std=1.2, sigma_data=0.5)`; `sigma = (rnd_normal*self.P_std + self.P_mean).exp()`; `weight = (sigma**2 + self.sigma_data**2)/(sigma*self.sigma_data)**2`; `loss = weight*((D_yn - y)**2)`.\n- 샘플링 기본값(NVIDIA-grounded): `sigma_min=0.002, sigma_max=80.0, sigma_data=0.5, rho=7`, 2차 Heun 샘플러.\n- 계보 근거: `world_model_lineage_easy.md` — \"Cosmos-Predict2-2B-Video2World DiT (latent video diffusion, EDM denoising)\", \"EDM denoising = Cosmos-Predict2가 쓰는 diffusion 학습/샘플링 공식(Karras et al.)\".\n\n> **figure**: EDM 원논문(arXiv 2206.00364)은 2022년 논문이라 arXiv HTML/ar5iv 렌더가 실패(Fatal conversion error)해 **figure src URL을 fetch로 확정할 수 없었다.** 공식 repo의 teaser 이미지(`docs/teaser-1920x640.jpg`)는 생성 샘플 montage일 뿐 preconditioning/denoising **메커니즘 다이어그램이 아니므로** 본 섹션 메커니즘 figure로는 부적합 → 임베드 생략(위 ASCII 다이어그램으로 대체). 지어내지 않음.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-15 07:06 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>

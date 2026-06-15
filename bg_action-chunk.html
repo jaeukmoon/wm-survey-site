@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Action chunk (행동 청크)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Action chunk (행동 청크)\n\n> 출처: [ACT] \"Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware\" (Zhao et al., arXiv 2304.13705, RSS 2023) — **action chunking 원조**. 후속 적용: π0 (2410.24164) 등. ※ ACT 그림은 ar5iv 호스트 원본.\n\n**한 줄 정의**: 정책이 매 스텝 행동 하나씩($a_t$) 내는 대신, **앞으로 $k$ 스텝의 행동 시퀀스 $a_{t:t+k}$를 한 번에** 예측하고 그 묶음(=청크)을 실행하는 방식. ACT 원논문 표현 그대로: \"the policy predicts the target joint positions for the next $k$ timesteps, rather than just one step at a time\" — 즉 $\\pi_\\theta(a_t\\mid s_t)$가 아니라 $\\pi_\\theta(a_{t:t+k}\\mid s_t)$를 모델링한다.\n\n**왜 묶나 — 두 가지 문제를 동시에 친다**:\n1. **Compounding error(오차 누적)**: 한 스텝씩 내면 매 스텝 관측에 의존 → 작은 오차가 다음 관측을 오염시키며 눈덩이처럼 커진다. $k$ 스텝을 한 번에 내면 정책을 호출하는 빈도(=관측에 의존하는 횟수)가 $1/k$로 줄어 **effective horizon이 짧아진다**.\n2. **Non-Markovian / 시연자 멈칫거림(pauses)**: 사람 시연 데이터엔 잠깐 멈추는 구간이 많아, 단일 스텝 정책은 \"지금 멈출까 갈까\"를 현재 관측만으로 못 정해 진동/멈춤에 빠진다. 청크로 묶으면 그런 시간적 상관 행동을 통째로 흉내 내 매끄럽다.\n\n**비유**: 받아쓰기를 **한 글자씩** 따라 쓰면(=single-step) 한 번 삐끗할 때마다 다음 글자 위치가 어긋나 점점 무너진다. 대신 **한 단어(또는 한 문장)를 통째로 외워 한 호흡에 쓰면**(=chunk) 중간 흔들림이 줄고 글씨도 매끄럽다. 단, 문장을 너무 길게 외우면 중간에 상황이 바뀌어도 못 멈추는 게 단점 — 그래서 아래 **temporal ensemble**로 보정한다.\n\n### Temporal ensemble (시간적 앙상블)\n청크를 그냥 $k$ 스텝마다 새로 뽑아 실행하면, 청크 경계에서 **행동이 뚝 끊겨 튀는(jerky)** 문제가 생긴다. 해결책: **매 스텝마다 정책을 새로 호출**하되, 한 시점 $t$에 대해 **여러 과거 청크가 내놓은 겹치는 예측들을 가중평균**한다. ACT 원문: \"we query the policy more frequently and average across the overlapping action chunks.\" 가중치는 지수 가중:\n\n$$\nw_i = \\exp(-m\\cdot i),\\qquad i=0,1,2,\\dots\n$$\n\n- **무슨 식?**: 한 실행 시점에 겹치는 여러 예측 중 $i$번째에 줄 가중치. $w_0$가 **가장 오래된** 청크의 행동에 주는 가중치($i$가 클수록 더 최근 청크). $m$은 **새 관측을 얼마나 빨리 반영하느냐**를 조절 — 원문: \"a smaller $m$ means faster incorporation.\" 즉 $m$이 작으면 최신 예측 비중↑(빠른 반응), 크면 과거까지 고루 섞음(더 매끄럽지만 둔함).\n- **효과**: 청크 경계의 불연속을 없애고, 동시에 여러 예측을 평균해 노이즈를 줄인다. **추가 학습 비용 0** — 추론 때 호출 빈도만 늘리면 된다.\n\n### ASCII — 청크 예측 + temporal ensemble\n```\nsingle-step 정책:           action chunking:\n s_t → π → a_t (1개)         s_t → π → [a_t, a_{t+1}, ..., a_{t+k-1}]  (k개 한 번에)\n s_{t+1} → π → a_{t+1}                          └ 한 번 호출로 k스텝 분량\n\ntemporal ensemble (매 스텝 새로 호출, 겹치는 예측을 지수가중 평균):\n        예측한 시점\n            │   실행 시점 t에 대한 예측들 (서로 다른 청크에서 나옴)\n  t-2 청크: │   a_t^{(t-2)} ─┐\n  t-1 청크: │   a_t^{(t-1)} ─┤  weighted avg,  w_i = exp(-m·i)\n   t  청크: │   a_t^{(t)}   ─┘  (w_0=가장 오래된 것, m↓ = 최신 반영 빠름)\n            │        │\n            ▼        ▼\n                 â_t = Σ_i w_i · a_t^{(i)} / Σ_i w_i   ← 실제 로봇에 보내는 행동\n```\n\n원본 그림 (action chunking + temporal ensemble 메커니즘):\n![ACT action chunking & temporal ensembling](https://ar5iv.labs.arxiv.org/html/2304.13705/assets/x3.png)\n> Figure 3 (ACT, arXiv 2304.13705): \"We employ both Action Chunking and Temporal Ensembling when applying actions, instead of interleaving observing and executing.\" 관측-실행을 한 스텝씩 번갈아 하지 않고, 청크 단위 예측을 겹쳐 지수가중 평균해 적용.\n\nACT 정책 구조(참고, 청크를 내는 디코더):\n![ACT (CVAE) architecture](https://ar5iv.labs.arxiv.org/html/2304.13705/assets/x2.png)\n> Figure 2 (ACT): Conditional VAE로 학습. (우) 디코더=정책이 다시점 이미지·관절 위치·스타일변수 z를 transformer encoder로 받아 transformer **decoder가 행동 시퀀스를 한 번에 예측**. z는 테스트 시 prior 평균(0)으로 고정.\n\n### ⚠️ gotchas (못박기)\n- **\"청크 = 일정 시간마다 한 묶음 통째 실행\"이 아니다.** 그건 가장 단순한 open-loop 변형일 뿐. ACT의 기본은 **매 스텝 호출 + temporal ensemble**로 사실상 closed-loop에 가깝게 만든다. \"청크 = 무조건 open-loop\"라는 오해 금지.\n- **chunk size $k$는 클수록 좋은 게 아니다.** $k$를 키우면 compounding error는 줄지만, 그만큼 옛 관측에 오래 묶여 **반응성이 떨어지고** 환경 변화에 둔해진다 — 명백한 trade-off. ACT는 $k=100$을 썼다(논문 세팅).\n- **temporal ensemble은 학습 기법이 아니라 추론(inference) 기법이다.** 가중치 $w_i$는 학습 파라미터가 아니라 추론 시 평균 가중치. 모델 재학습 없이 켜고 끌 수 있다.\n- **action chunk ≠ 생성 방식.** \"행동을 여러 개 묶어 예측\"하는 출력 *구조* 개념이고, 그 청크를 *어떻게* 만드는지(transformer 직접 회귀, diffusion, flow matching 등)는 별개. 예: ACT는 CVAE+transformer로, π0는 flow matching으로 같은 \"청크\"를 생성한다.\n- **$w_0$ = 가장 오래된 행동**이라는 인덱싱 방향을 헷갈리지 말 것(원문 그대로). $m$이 **작을수록** 최신 관측을 **빠르게** 반영한다(직관과 반대로 느껴질 수 있음).\n\n### 우리 계보에서의 쓰임 (used_by)\n- **π0 / π0.5**: VLM 백본 + flow-matching action expert가 **연속 행동 청크**를 한 번에 생성(고주파 제어). chunking을 flow matching 위에 얹은 대표 사례.\n- **ACoT-VLA**: chain-of-thought 추론 뒤 행동 청크를 예측.\n- **Cosmos Policy**: world-model 조건부로 행동 청크를 생성하는 정책.\n- **Fast-WAM**: video-DiT + action expert가 청크 단위 행동을 flow matching으로 생성(`FastWAM_deepdive.md` 참조).\n- **LingBot-VLA**, **InternVLA-A1**, **DreamDojo**: 모두 단일 스텝이 아닌 **청크 단위 행동 출력**을 기본 인터페이스로 사용.\n\n> ※ 위 used_by 모델들의 chunk size·ensemble 채택 여부 등 세부 수치는 각 모델 deep-dive 문서에서 확인할 것(여기선 \"청크 인터페이스를 쓴다\"는 공통점만).\n\n### source_quotes (근거)\n- ACT §IV-A: \"the policy predicts the target joint positions for the next $k$ timesteps, rather than just one step at a time\" — $\\pi_\\theta(a_{t:t+k}\\mid s_t)$.\n- ACT §IV-A (temporal ensemble): \"we query the policy more frequently and average across the overlapping action chunks ... an exponential weighting scheme $w_i=\\exp(-m*i)$, where $w_0$ is the weight for the oldest action ... a smaller $m$ means faster incorporation.\"\n- ACT Figure 3 caption: \"We employ both Action Chunking and Temporal Ensembling when applying actions, instead of interleaving observing and executing.\"\n- ACT Figure 2 caption: \"...the decoder or policy of ACT ... predicts a sequence of actions with a transformer decoder.\" (청크를 한 번에 출력하는 구조)\n- chunk size $k=100$: ACT 하이퍼파라미터(Table III) 및 ablation(Figure 6a).\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-15 07:06 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>

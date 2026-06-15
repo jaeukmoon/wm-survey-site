@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Flow Matching</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Flow Matching\n\n> 출처: [FM] \"Flow Matching for Generative Modeling\" (Lipman et al., arXiv 2210.02747), [RF] \"Flow Straight and Fast: Rectified Flow\" (Liu et al., arXiv 2209.03003). ※ 둘 다 arXiv HTML 404, 원본 그림은 ar5iv 호스트.\n\n**한 줄 정의**: 단순한 노이즈 분포(가우시안)를 데이터 분포로 **부드럽게 흘려보내는 속도장**(velocity field) $v_t(x)$ 를 배우는 생성법. 생성 = 노이즈에서 출발해 ODE $dx/dt=v_t(x)$를 몇 step 적분하면 데이터가 복원된다. diffusion과 친척이지만 **autoregressive 아님**(한꺼번에 정제), 보통 더 빠르고 안정적.\n\n> **30초 큰 그림 비유**: 데이터(정답)에 모래폭풍(노이즈)을 끼얹어 가는 **직선 길**을 그어 놓고, 그 길 위 아무 지점에서나 \"집(데이터)으로 가려면 어느 방향으로 얼마나 빨리?\"라는 **화살표(속도)**를 맞히도록 신경망을 훈련한다. 정답을 외우는 게 아니라 **되돌아오는 화살표**를 배우는 것. 추론 땐 노이즈에서 출발해 이 화살표 따라 몇 걸음 걸으면 끝.\n\n### 수식 — 왜 \"simulation-free\"가 가능한가\n\n**(1) 흐름(flow)과 ODE 정의**:\n\n$$\n\\frac{d}{dt}\\,\\phi_t(x) = v_t\\big(\\phi_t(x)\\big),\\qquad \\phi_0(x)=x\n$$\n\n- **무슨 식?**: $\\phi_t$는 시작점 $x$를 시간 $t$ 동안 속도장 $v_t$를 따라 이동시키는 **흐름 지도**. $\\phi_0$는 제자리. 이 흐름이 노이즈 분포 $p_0$를 시간에 따라 $p_t$로 밀어낸다.\n- **비유**: 강물의 유속장 $v_t$. 나뭇잎($x$)을 띄우면 물살 따라 흘러간다. $\\phi_t$ = \"$t$초 뒤 나뭇잎 위치\".\n\n**(2) Flow Matching 목적함수** [FM 식 5]:\n\n$$\n\\mathcal{L}_{\\mathrm{FM}}(\\theta) = \\mathbb{E}_{t,\\,p_t(x)}\\,\\big\\lVert v_t(x) - u_t(x)\\big\\rVert^2\n$$\n\n- **무슨 식?**: 학습 속도장 $v_t$(파라미터 $\\theta$)가 **진짜 목표 속도장** $u_t$ 와 같아지도록 제곱오차로 맞춘다.\n- **문제**: $u_t$도 $p_t$도 **닫힌 형태로 모름** → 이대로는 계산 불가. 그래서 (3)이 등장.\n\n**(3) Conditional Flow Matching (CFM)** [FM 식 9] — 핵심 트릭:\n\n$$\n\\mathcal{L}_{\\mathrm{CFM}}(\\theta) = \\mathbb{E}_{t,\\,q(x_1),\\,p_t(x\\mid x_1)}\\,\\big\\lVert v_t(x) - u_t(x\\mid x_1)\\big\\rVert^2\n$$\n\n- **무슨 식?**: 다루기 어려운 전체(marginal) 목표 대신, **데이터 샘플 $x_1$ 하나로 조건을 건** 경로의 목표 속도 $u_t(x\\mid x_1)$를 맞힌다. 이건 **닫힌 형태로 계산 가능** → 학습 때 ODE를 풀 필요가 없다(**simulation-free**).\n- **왜 이게 같은가** [FM 정리 2]: 두 목적함수의 **기울기가 같다**.\n\n$$\n\\nabla_\\theta\\,\\mathcal{L}_{\\mathrm{FM}}(\\theta) = \\nabla_\\theta\\,\\mathcal{L}_{\\mathrm{CFM}}(\\theta)\n$$\n\n  즉 계산 가능한 CFM을 최적화하면 원래 풀고 싶던 FM을 푸는 것과 **정확히 동일**. 이게 flow matching을 실용적으로 만든 결정적 한 줄.\n- **비유**: 반 전체 평균 성적($u_t$, 측정 불가)을 직접 맞히는 대신, **학생 한 명씩($x_1$) 점수를 맞히는 연습**을 무수히 반복한다. 개개인을 다 맞히면 평균도 자동으로 맞는다(기울기 동일).\n\n**(4) 조건부 경로 = 직선 보간 (OT path)** [FM 식 20–23, RF]:\n\n가장 흔한 선택은 노이즈 $x_0$와 데이터 $x_1$을 **직선으로** 잇는 것:\n\n$$\nx_t = (1-t)\\,x_0 + t\\,x_1,\\qquad x_0\\sim\\mathcal{N}(0,I),\\ \\ x_1\\sim q_{\\text{data}}\n$$\n\n이때 목표 속도(직선의 기울기)는 **위치와 무관하게 일정**:\n\n$$\nu_t = x_1 - x_0\n$$\n\n- **무슨 식?**: 노이즈→데이터를 직선으로 긋고, 그 직선을 따라가는 일정한 속도 $x_1-x_0$를 신경망이 맞히게 한다.\n- **왜 좋은가**: 속도가 시간에 따라 안 변해서(직선) **배우기 쉽고**, 적분도 몇 step이면 정확 → **빠른 추론**.\n- **비유**: (2)~(3)의 \"화살표 맞히기\"에서 길을 **직선**으로 택한 것. 직선이면 어느 지점에서나 화살표 방향이 똑같아 외우기 쉽다.\n\n### ⚠️ 부호·방향 컨벤션 (꼭 확인)\n**원논문 [FM]/[RF]는 둘 다 $t=0$이 노이즈, $t=1$이 데이터**, 목표 속도는 노이즈→데이터 방향 $x_1-x_0$.\n하지만 일부 코드베이스/논문(예: 일부 로봇 정책)은 이를 **뒤집어** $t=0$을 데이터, $t=1$을 노이즈로 두기도 한다 → 그러면 보간이 $x_t=(1-t)\\,x_{\\text{data}}+t\\,\\epsilon$이 되고 목표 속도 부호가 $\\epsilon - x_{\\text{data}}$로 바뀐다.\n- 예: **Fast-WAM**은 뒤집힌 컨벤션 — `식(5) y_t=(1-t)y+t·ε` (clean이 $t=0$), 목표 $\\epsilon - y$ (`FastWAM_deepdive.md` §3.3). **항상 코드의 보간 줄을 보고 부호를 확인할 것.**\n\n### 로봇 정책에서의 쓰임 (맥락)\n- action chunk 정책(예: π0 류)은 노이즈에서 시작해 $dx/dt=v_t(x)$를 **~10 Euler step** 적분해 행동 청크 전체를 한꺼번에 생성(non-autoregressive).\n- score-based diffusion 대비: 직선(OT) 경로는 속도 방향이 시간에 일정해 **few-step으로도 정확** → 실시간 제어에 유리.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-15 07:06 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>

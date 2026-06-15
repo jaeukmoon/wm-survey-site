@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Diffusion Transformer (DiT)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Diffusion Transformer (DiT)\n\n> 출처: [DiT] Peebles & Xie, \"Scalable Diffusion Models with Transformers\" (arXiv 2212.09748). ※ arXiv HTML 404 → 그림은 ar5iv 호스트.\n\n**한 줄 정의**: 확산모델 백본을 U-Net 대신 **Transformer**로 바꾼 것. 잠재 이미지를 패치로 쪼개 토큰 시퀀스로 만들고 ViT식 블록으로 노이즈를 예측한다. 핵심은 timestep $t$·조건 $c$(클래스 등)를 **adaptive LayerNorm-Zero(adaLN-Zero)**로 주입 — LayerNorm의 scale/shift/gate를 조건 임베딩에서 **회귀(regress)**한다.\n\n**직관**: \"확산은 U-Net이어야 한다\"는 통념을 깨고, 잠재 이미지를 **패치 토큰 시퀀스**로 보고 트랜스포머로 노이즈를 예측. ViT가 분류에서 한 일을 디노이저에서 한 셈 → **scale을 키울수록 품질이 매끄럽게 좋아진다**(논문 핵심).\n조건화(adaLN-Zero) 비유: 디노이저는 \"지금 몇 단계째($t$)·뭘 그릴지($c$)\"를 매 블록마다 알아야 한다. adaLN은 그 정보를 각 블록 LayerNorm의 **scale γ·shift β 손잡이**로 넣고, 거기에 **gate α**를 하나 더 달되 **학습 시작 시 α=0** → 블록이 \"아무것도 안 더하는 항등함수\"로 출발해 점진적으로 기여를 켠다(ResNet zero-init 잔차 트릭). 이 \"조용히 시작해 서서히 켜기\"가 깊은 DiT를 안정적으로 학습시켜 같은 FLOPs에서 FID를 크게 낮춘다.\n\nASCII:\n```\n   Latent z ─(patchify→토큰+pos)─►┌──────────────────┐\n                                  │   DiT block × N  │◄── cond = emb(t)+emb(c)\n   cond(t,c) ─► MLP ─►(γ,β,α)────►│   (adaLN-Zero)   │\n                                  └────────┬─────────┘\n                                           ▼\n                            LayerNorm → Linear&Reshape → ε_θ, Σ_θ (노이즈·공분산)\n\n   adaLN-Zero 블록 내부 (Self-Attn, FFN 각각 동일 패턴):\n     x ─► LN ─►(scale γ, shift β)─► [Attn 또는 FFN] ─►(× gate α)─►(+)─► x\n                                                         └ α=0 init → 처음엔 identity(잔차만 통과)\n```\n\n**수식**:\n\n$$\nq(x_t\\mid x_0)=\\mathcal N\\big(x_t;\\ \\sqrt{\\bar\\alpha_t}\\,x_0,\\ (1-\\bar\\alpha_t)I\\big)\n$$\n\n- 확산 전방과정(노이즈 점진 주입). $\\bar\\alpha_t=\\prod_{s\\le t}\\alpha_s$=누적 신호 보존비. 재매개변수화: $x_t=\\sqrt{\\bar\\alpha_t}x_0+\\sqrt{1-\\bar\\alpha_t}\\,\\epsilon_t$.\n\n$$\n\\mathcal L_{\\text{simple}}=\\big\\lVert\\epsilon_\\theta(x_t)-\\epsilon_t\\big\\rVert_2^2\n$$\n\n- DiT 주 학습목적(노이즈 예측 MSE). $\\Sigma_\\theta$(학습된 공분산)는 별도 full VLB로 학습(Nichol & Dhariwal 방식).\n\n$$\n\\text{adaLN-Zero: } x\\leftarrow x+\\alpha\\odot\\mathrm{Block}\\big(\\gamma\\odot\\mathrm{LN}(x)+\\beta\\big),\\quad (\\gamma,\\beta,\\alpha)=\\mathrm{MLP}\\big(\\mathrm{emb}(t)+\\mathrm{emb}(c)\\big),\\ \\ \\alpha\\big|_{\\text{init}}=\\mathbf 0\n$$\n\n- scale $\\gamma$·shift $\\beta$에 더해 **잔차 직전 gate $\\alpha$**를 회귀. MLP가 $\\alpha{=}0$을 출력하도록 초기화 → 학습 시작 시 블록 전체가 **항등함수**. 논문 인용: \"this initializes the full DiT block as the identity function.\" (self-attention·FFN 각각 별도 gate $\\alpha_1,\\alpha_2$.)\n\n원본 그림: [arXiv Figure 3 (DiT)](https://ar5iv.labs.arxiv.org/html/2212.09748/assets/x3.png)\n![](https://ar5iv.labs.arxiv.org/html/2212.09748/assets/x3.png)\n> Figure 3 (DiT, arXiv 2212.09748): (좌) 조건부 잠재 DiT — 잠재 패치 → N개 DiT 블록. (우) 조건화 변형 — adaLN-Zero(최고 성능)/cross-attention/in-context. \"Adaptive layer norm works best.\" (HTTP 200·image/png 검증; arxiv.org/html은 404라 ar5iv만 서빙.)\n\n### ⚠️ gotchas (못박기)\n- **\"DiT = 그냥 ViT\" 틀림.** 백본이 트랜스포머인 건 맞지만 핵심은 timestep·조건을 **adaLN-Zero**로 주입하는 조건화.\n- **adaLN vs adaLN-Zero**: 후자는 잔차 직전 **gate α 추가 + α=0 초기화**(블록을 항등함수로 출발). 논문에서 명확히 더 좋음(FID).\n- **DiT는 픽셀이 아니라 latent(LDM VAE 잠재)에서 동작.**\n- **DiT ≠ 특정 학습목적.** 원논문은 DDPM식 ε-예측 + 학습된 Σ. 최신 모델은 같은 DiT 백본에 **flow matching**을 얹기도 함(SD3·비디오 생성) → 백본(adaLN-Zero)과 목적함수(diffusion vs flow)는 **분리**해 이해. (Fast-WAM의 \"video-DiT\"가 그 예 — 백본은 DiT, 학습은 flow matching.)\n\n### 우리 계보에서의 쓰임 (used_by)\nCosmos Policy·DreamDojo·Cosmos-Transfer2.5(생성 백본)·Fast-WAM(Wan2.2 **video-DiT** + action expert, MoT)·BAGEL(이미지 생성). (`world_model_lineage_easy.md` 각 카드.)\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-15 07:06 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>

@@ -74,12 +74,18 @@ article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-a
 article.dd th{background:#f1f3f9}
 article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
 @media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
-</style></head>
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
 <body>
 <header><div class="wrap">
   <div>
-    <h1><a href="index.html">📚 Deep-dives</a></h1>
-    <p>논문 한 편을 끝까지 따라가는 스터디 노트 · /paper-deepdive 산출물</p>
+    <h1><a href="index.html">sim2real (simulation-to-reality)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
     <div id="upd-status"></div>
   </div>
   <div class="nav">
@@ -90,16 +96,41 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
-  <ul class="dd-list">
-    <li><a href="deepdive_BagelVLA.html">BagelVLA: Enhancing Long-Horizon Manipulation via Interleaved Vision-Language-Action Generation — Deep-Dive</a><div class="src">BagelVLA_deepdive.md</div></li>
-    <li><a href="deepdive_FastWAM.html">Fast-WAM: Do World Action Models Need Test-time Future Imagination? — Deep-Dive</a><div class="src">FastWAM_deepdive.md</div></li>
-    <li><a href="deepdive_LingBot-VLA.html">LingBot-VLA: A Pragmatic VLA Foundation Model — Deep-Dive</a><div class="src">LingBot-VLA_deepdive.md</div></li>
-    <li><a href="deepdive_pi0.7.html">π0.7: a Steerable Generalist Robotic Foundation Model with Emergent Capabilities — Deep-Dive</a><div class="src">π0.7_deepdive.md</div></li>
-  </ul>
-  <h2 class="date">📎 코드 매핑 (논문 ↔ 구현)</h2>
-  <ul class="dd-list">
-    <li><a href="codemap_FastWAM.html">📎 Fast-WAM — 논문 본문 ↔ 코드 매핑 (Code Map)</a><div class="src">FastWAM_code_map.md</div></li>
-  </ul>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# sim2real (simulation-to-reality)\n\n**한 줄 정의**: 시뮬레이터에서 학습/검증한 정책을 **실제 로봇·실세계로 옮기는 것**, 또는 그때 생기는 문제를 다루는 분야.\n\n### 왜 어려운가 — \"sim2real gap (reality gap)\"\n시뮬레이션과 현실은 절대 똑같지 않다. 이 차이 때문에 sim에서 잘 되던 정책이 실물에서 무너진다.\n\n- **물리**: 마찰·관성·접촉(contact)·말랑한 물체(deformable) 시뮬레이션이 부정확. 특히 천 조작(towel-folding) 같은 deformable 물체는 sim 물리가 현실과 크게 어긋남.\n- **센서/관측**: sim 렌더링 이미지 vs 실제 카메라(조명, 노이즈, 모션블러, 텍스처) 차이.\n- **액추에이터**: 명령한 토크/위치 ≠ 실제 모터 응답(지연, 백래시).\n\n### 줄이는 대표 기법\n| 기법 | 아이디어 |\n|---|---|\n| **Domain Randomization** | sim에서 조명·텍스처·마찰·질량을 무작위로 흔들어 학습 → 현실을 \"또 하나의 랜덤 변형\"으로 보게 만들어 robust |\n| **System Identification** | 실측 데이터로 sim 파라미터를 현실에 맞게 보정 |\n| **Domain Adaptation** | sim/real 표현을 정렬(이미지 변환, feature alignment) |\n| **Real-world fine-tuning** | sim에서 사전학습 → 소량 실데이터로 미세조정 |\n\n### 이 분야 문맥에서\n- 로봇 정책 연구는 보통 **시뮬레이션 벤치**(예: LIBERO, RoboTwin 2.0)와 **실세계 실험**(예: towel-folding)을 둘 다 평가한다 — \"sim 벤치에서만 좋은 게 아니라 실물에서도 되는가\"를 보는 것.\n- 예: Fast-WAM에서 실세계 towel-folding은 sim보다 훨씬 까다로운 long-horizon 조작이라, video co-training 제거 시 성공률이 10%로 폭락 → world-model식 학습이 sim2real robustness에 크게 기여하는 증거로 읽힌다.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
 </main>
 <footer>built 2026-06-15 07:06 · WM_surveybot</footer>
 <script>
