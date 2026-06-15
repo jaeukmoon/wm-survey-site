@@ -108,6 +108,16 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
       // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
       if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
     } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
     el.innerHTML = marked.parse(MD);
     // Fallback only if the extension failed to load (e.g. offline CDN)
     if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
@@ -121,7 +131,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   });
   </script>
 </main>
-<footer>built 2026-06-15 06:06 · WM_surveybot</footer>
+<footer>built 2026-06-15 06:27 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
