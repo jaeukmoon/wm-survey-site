@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">📊 데이터셋</a></h1>
+    <p>World Model · VLA 계보가 학습·평가에 쓰는 데이터셋 카탈로그</p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: DATASETS.md)</p></article>
+  <script>
+  const MD = "<div align=\"center\">\n\n# 🌍 World Model · VLA Datasets — Reference Catalog\n\n**우리 World Model / VLA 계보(14+ 모델)가 학습·평가에 쓰는 데이터셋을 한눈에.**\n\"이거 쓴다 = 아 그거\"가 바로 떠오르도록 — 카테고리 · 규모 · 라이선스 · 사용 모델 · 원문 링크.\n\n![datasets](https://img.shields.io/badge/datasets-23-2563eb)\n![categories](https://img.shields.io/badge/categories-6-0b366e)\n![models](https://img.shields.io/badge/WM%2FVLA_models-14%2B-16a34a)\n![fact-checked](https://img.shields.io/badge/fact--checked-web%20%2B%20adversarial-orange)\n![updated](https://img.shields.io/badge/updated-2026--06--16-informational)\n\n<\/div>\n\n> 📄 **상세 카드**(실제 타이핑 지시·장면 예시·검증 노트 포함)는 `datasets_reference.md` 참고.\n> 이 문서는 그 22+1개 카드를 스캔용으로 압축한 공개 카탈로그다.\n\n**Legend** — 공개: ✅ open · 🔶 partial | 모달리티: 🗣️ 언어지시 · 📷 RGB · 🦾 action · 🧊 depth/3D · 🎬 video\n\n---\n\n## 📚 Table of Contents\n\n- [At a Glance](#glance)\n- [🦾 Action 표현 치트시트](#action)\n- [🎮 1. 핵심 조작 벤치 (평가·학습)](#cat1)\n- [🤖 2. 대형 로봇 데이터 (cross-embodiment)](#cat2)\n- [🎥 3. Human Video (latent-action)](#cat3)\n- [🦿 4. 실로봇 플랫폼](#cat4)\n- [🖼️ 5. 멀티모달 (BAGEL 계열)](#cat5)\n- [🧩 6. Planning · Toy (WM 계열)](#cat6)\n- [Sources & Reliability](#sources)\n\n---\n\n<a id=\"glance\"><\/a>\n\n## At a Glance\n\n| # | 카테고리 | 데이터셋 | 한 줄 |\n|:-:|---|:-:|---|\n| 1 | 🎮 핵심 조작 벤치 | **7** | 언어조건 조작 시뮬 벤치 — 정책 성공률 평가 표준 |\n| 2 | 🤖 대형 로봇 데이터 | **6** | cross-embodiment 실로봇 사전학습 코퍼스 |\n| 3 | 🎥 Human Video | **3** | latent-action / 무라벨 사전학습용 사람 영상 |\n| 4 | 🦿 실로봇 플랫폼 | **1** | 양팔 teleop 리그 + 실세계 데모 |\n| 5 | 🖼️ 멀티모달 | **3** | 이미지·영상·멀티뷰 — BAGEL 통합 사전학습 |\n| 6 | 🧩 Planning · Toy | **3** | goal-conditioned / contact-rich WM 벤치 |\n\n---\n\n<a id=\"action\"><\/a>\n\n## 🦾 Action 표현 치트시트\n\n데이터셋마다 \"행동을 적는 언어\"가 다르다 — 모델을 섞어 학습할 때 이게 핵심이다.\n\n| 표현 | 뜻 | 대표 데이터 |\n|---|---|---|\n| **delta end-effector** | 손끝을 Cartesian으로 \"오른쪽 2cm\" 식 증분 명령 (6D pose + gripper) | BridgeData V2, LIBERO, RoboCasa, OXE |\n| **absolute joint** | 각 관절 각도를 직접 명령 | CALVIN(절대 tcp), ALOHA(14-DoF joint), MolmoAct2-Bimanual |\n| **discretized token** | 위 연속값을 차원당 256-bin으로 이산화 → 토큰 | OXE/RT-1, **MolmoAct(256-bin)** |\n| **goal observation** | 행동 라벨 없이 \"목표 이미지/상태\"로 task 지정 | OGBench, Push-T |\n\n> 💡 **MolmoAct2의 통합 트릭**: 각 action을 **고정 32차원으로 패딩**해 absolute-joint·delta-eef 데이터를 *한 토크나이저 입력공간*에 같이 담아 cross-embodiment 공동학습. → \"eef냐 joint냐\"를 고르지 않고 **둘 다** 학습.\n\n---\n\n<a id=\"cat1\"><\/a>\n\n## 🎮 1. 핵심 조작 벤치 (평가·학습)\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **LIBERO** 🗣️📷🦾 | 언어조건 조작 시뮬 벤치 (VLA 평가 표준) | 130 task · demo 50/task | ✅ MIT/CC BY | π0 · ACoT · VLA-JEPA · StarVLA · Cosmos-P · Fast-WAM · JEPA-WMs | [📄](https://arxiv.org/abs/2306.03310) · [🌐](https://libero-project.github.io) · [💻](https://github.com/Lifelong-Robot-Learning/LIBERO) |\n| **RoboTwin 2.0** 🗣️📷🦾 | 양팔 조작 시뮬 데이터생성기 + 벤치 | 50 task · 10만+ 궤적 · 5 embod | ✅ MIT | StarVLA · Fast-WAM · InternVLA-A1 | [📄](https://arxiv.org/abs/2506.18088) · [🌐](https://robotwin-platform.github.io/) · [💻](https://github.com/RoboTwin-Platform/RoboTwin) |\n| **RoboCasa** 🗣️📷🦾 | 주방 일상조작 대규모 시뮬 | 100 task · 100K+ traj · 120 씬 | ✅ MIT/CC BY | StarVLA · Cosmos-P · JEPA-WMs | [📄](https://arxiv.org/abs/2406.02523) · [🌐](https://robocasa.ai/) · [💻](https://github.com/robocasa/robocasa) |\n| **SimplerEnv** 🗣️📷🦾 | 실→sim 정책 평가 환경 (real-to-sim) | 2 robot · 8 task family | ✅ MIT | VLA-JEPA · StarVLA | [📄](https://arxiv.org/abs/2405.05941) · [🌐](https://simpler-env.github.io/) · [💻](https://github.com/simpler-env/SimplerEnv) |\n| **CALVIN** 🗣️📷🦾 | 장기 언어조건 조작 (play data) 시뮬 | ~24h play · 34 task · 389 문장 | ✅ MIT | SuSIE | [📄](https://arxiv.org/abs/2112.03227) · [🌐](http://calvin.cs.uni-freiburg.de) · [💻](https://github.com/mees/calvin) |\n| **BEHAVIOR-1K** 🗣️📷🧊🦾 | 1,000 가사활동 시뮬 벤치 (OmniGibson) | 1000 활동 · 데모 10K traj/1200h | ✅ MIT* | StarVLA | [📄](https://arxiv.org/abs/2403.09227) · [🌐](https://behavior.stanford.edu/) · [💻](https://github.com/StanfordVL/BEHAVIOR-1K) |\n| **VLABench** 🗣️📷🧊🦾 | 상식·추론 요구 장기 조작 벤치 | 100 task · 2,164 객체 | ✅ MIT | ACoT-VLA | [📄](https://arxiv.org/abs/2412.18194) · [🌐](https://vlabench.github.io/) · [💻](https://github.com/OpenMOSS/VLABench) |\n\n---\n\n<a id=\"cat2\"><\/a>\n\n## 🤖 2. 대형 로봇 데이터 (cross-embodiment)\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **Open X-Embodiment** 🗣️📷🦾 | 60+ 로봇데이터 RLDS 통합 (cross-embodiment 표준) | 22 embod · 100만+ traj · 527 skill | ✅ 혼합 | π0/π0.5 · StarVLA | [📄](https://arxiv.org/abs/2310.08864) · [🌐](https://robotics-transformer-x.github.io/) · [💻](https://github.com/google-deepmind/open_x_embodiment) |\n| **DROID** 🗣️📷🧊🦾 | in-the-wild Franka teleop (13기관) | 7.6만 demo · 350h · 564 씬 | ✅ CC BY | π0/π0.5 · JEPA-WMs | [📄](https://arxiv.org/abs/2403.12945) · [🌐](https://droid-dataset.github.io/) · [💻](https://github.com/droid-dataset/droid) |\n| **BridgeData V2** 🗣️📷🦾 | WidowX 저가팔 조작 (사실상 표준 입력원) | 6.0만 궤적 · 24 환경 · 13 skill | ✅ CC BY | SuSIE | [📄](https://arxiv.org/abs/2308.12952) · [🌐](https://rail-berkeley.github.io/bridgedata/) · [💻](https://github.com/rail-berkeley/bridge_data_v2) |\n| **Fractal / RT-1** 🗣️📷🦾 | Everyday Robots 데모 (OXE 핵심 구성요소) | 8.7만 traj · 700+ task · 13대 | ✅ CC BY | (π0 간접) | [📄](https://arxiv.org/abs/2212.06817) · [🌐](https://robotics-transformer1.github.io/) · [📦](https://www.tensorflow.org/datasets/catalog/fractal20220817_data) |\n| **AgiBot World** 🗣️📷🧊🦾 | 휴머노이드 양손조작 실데이터 + 합성 | 100만+ traj · 217 task (Alpha 100K) | ✅ CC BY-NC-SA | ACoT-VLA · InternVLA-A1 | [📄](https://arxiv.org/abs/2503.06669) · [🌐](https://opendrivelab.com/AgiBot-World/) · [📦](https://huggingface.co/datasets/agibot-world/AgiBotWorld-Alpha) |\n| **MolmoAct** 🆕 🗣️📷🧊🦾 | Ai2 ARM 학습데이터 — depth→trace→action chain-of-thought | Franka 1.07만 traj + bimanual 720h(v2) | ✅ Ai2 풀오픈 | *(참고)* MolmoAct/MolmoBot | [📄v1](https://arxiv.org/abs/2508.07917) · [📄v2](https://arxiv.org/abs/2605.02881) · [🌐](https://allenai.org/blog/molmoact) · [💻](https://github.com/allenai/molmoact) |\n\n---\n\n<a id=\"cat3\"><\/a>\n\n## 🎥 3. Human Video (latent-action / 사전학습)\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **Something-Something V2** 🎬 | 손동작 영상 174 클래스 (action recognition) | 22.1만 클립 · 174 class | 🔶 Qualcomm RUL | VLA-JEPA · SuSIE | [📄](https://arxiv.org/abs/1706.04261) · [🌐](https://www.qualcomm.com/developer/artificial-intelligence/datasets) |\n| **EgoDex** 🎬🧊 | Vision Pro 1인칭 손조작 + 3D 손포즈 | 829h · 90M frame · 338K demo · 194 task | 🔶 CC BY-NC-ND | DreamDojo | [📄](https://arxiv.org/abs/2505.11709) · [🌐](https://machinelearning.apple.com/research/egodex-learning-dexterous-manipulation) · [💻](https://github.com/apple/ml-egodex) |\n| **YT-Temporal-1B** 🎬 | 유튜브 2천만 영상 + ASR (행동 라벨 0) | 20M 영상 · ~1B frame | 🔶 접근제한 | JEPA-Wild | [📄](https://arxiv.org/abs/2201.02639) · [🌐](https://rowanzellers.com/merlotreserve/) · [💻](https://github.com/rowanz/merlot_reserve) |\n\n---\n\n<a id=\"cat4\"><\/a>\n\n## 🦿 4. 실로봇 플랫폼\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **ALOHA / ALOHA 2** 🗣️📷🦾 | 저가 양팔 teleop 리그 + ACT 정책 | 실물 6 task·50 demo + sim ~18 task | 🔶 MIT | Cosmos-Policy | [📄](https://arxiv.org/abs/2304.13705) · [🌐](https://tonyzhaozh.github.io/aloha/) · [💻](https://github.com/google-deepmind/aloha_sim) |\n\n---\n\n<a id=\"cat5\"><\/a>\n\n## 🖼️ 5. 멀티모달 (BAGEL 계열)\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **OmniCorpus** 📷 | 웹 image-text interleaved 100억장 코퍼스 | 8.6B img · 2.2B doc | ✅ CC BY* | BAGEL | [📄](https://arxiv.org/abs/2406.08418) · [💻](https://github.com/OpenGVLab/OmniCorpus) · [📦](https://huggingface.co/datasets/OpenGVLab/OmniCorpus-CC) |\n| **Koala-36M** 🎬 | 유튜브 영상 3,600만 + 장문 캡션(평균 202단어) | 36M 클립 · 172K h | ✅ 메타 공개* | BAGEL | [📄](https://arxiv.org/abs/2410.08260) · [🌐](https://koala36m.github.io/) · [📦](https://huggingface.co/datasets/Koala-36M/Koala-36M-v1) |\n| **MVImgNet2.0** 📷🧊 | 일상 물체 멀티뷰 이미지 + 3D 주석 | ~30만 물체 · 347 class · 9M frame | 🔶 비상업 | BAGEL | [📄](https://arxiv.org/abs/2412.01430) · [🌐](https://luyues.github.io/mvimgnet2/) · [💻](https://github.com/GAP-LAB-CUHK-SZ/MVImgNet2.0) |\n\n---\n\n<a id=\"cat6\"><\/a>\n\n## 🧩 6. Planning · Toy (WM 계열)\n\n| Dataset | 한 줄 | 규모 | 공개 | Used by | Links |\n|---|---|---|:-:|---|---|\n| **Push-T** 📷🦾 | 2D T블록 밀기 (contact-rich, 언어 없음) | ~206 ep · 25.6K frame | ✅ MIT | LeWM · JEPA-WMs(PLDM) | [📄](https://arxiv.org/abs/2303.04137) · [🌐](https://diffusion-policy.cs.columbia.edu/) · [💻](https://github.com/real-stanford/diffusion_policy) |\n| **OGBench** 📷🦾 | 오프라인 goal-conditioned RL 8환경 (goal로 task 지정) | 85 dataset · 410 task · ~1M tr/set | ✅ MIT | LeWM | [📄](https://arxiv.org/abs/2410.20092) · [🌐](https://seohong.me/projects/ogbench/) · [💻](https://github.com/seohongpark/ogbench) |\n| **Meta-World** 🦾 | Sawyer 50-task 멀티/메타 RL 벤치 | 50 task (MT10/50, ML10/45) | ✅ MIT | JEPA-WMs | [📄](https://arxiv.org/abs/1910.10897) · [🌐](https://meta-world.github.io/) · [💻](https://github.com/Farama-Foundation/Metaworld) |\n\n---\n\n<a id=\"sources\"><\/a>\n\n## Sources & Reliability\n\n- 22개 원본 카드는 **web 검색 + 적대적 사실검증 1패스**(2026-06)를 거침. **RoboCasa · OmniCorpus**는 최종 검증 패스 누락(1차 리서치본 — 검증 강도 한 단계 낮음).\n- **MolmoAct**(🆕 2026-06-16 추가)는 web 확인 기반이나 예시 지시는 **verbatim 미확정(대표 예시)**.\n- `*` 표시 라이선스: 코드/메타데이터는 공개이나 **원본 미디어 저작권은 출처 귀속**(OmniCorpus·Koala-36M) 또는 asset 라이선스 별도(BEHAVIOR-1K). 라이선스가 출처마다 다른 경우(LIBERO·DROID 등) 상세 카드에 둘 다 표기.\n- **Used by**는 내부 14모델 계보(+MolmoAct 참고) 기준 — 외부 web 검증 대상 아님.\n- 전체 상세(실제 지시문·장면·입출력·검증 노트): `datasets_reference.md` · 모델 계보: `world_model_lineage_easy.md`\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-16 04:37 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>
