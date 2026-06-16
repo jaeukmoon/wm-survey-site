@@ -201,6 +201,20 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
   <section>
+    <h2 class="date">2026-06-08 · 1편</h2>
+    <article class="card big">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.09828" target="_blank" rel="noopener">Mirage: Latent Spatial Memory for Video World Models</a></h3>
+        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.09828</span> · <a href="https://arxiv.org/abs/2606.09828" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/microsoft/LatentSpatialMemory" target="_blank" rel="noopener">code</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.09828v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">긴 카메라 이동에서 video world model이 공간을 잊는 drift를, 3D 장면을 diffusion latent 공간에 직접 캐싱(latent spatial memory)해 해결. RGB point-cloud 메모리의 render→re-encode 왕복을 제거해 생성 10.57× 빠르고 GPU 메모리 55×↓이면서 품질도 더 높음. Wan2.2-TI2V-5B를 프리즈하고 ControlNet side-branch + rank-64 LoRA만 학습. Microsoft Research + 浙大/Adelaide/Monash.</p><div class="f"><span class="lbl">기여</span><span>메모리를 RGB 점구름이 아니라 모델의 native latent 토큰(3D 위치+latent feature)으로 저장하고, 카메라 복귀 시 latent 해상도에서 단일 기하 투영(z-buffer warping)으로 조건을 꺼내 픽셀↔latent 왕복(double bottleneck)을 제거. 동적 객체/하늘을 SAM3/Qwen3-VL로 필터링해 정적 geometry만 영구 메모리에 남김.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>WorldScore 70.36 SOTA (Static 73.60·Dynamic 67.11·3D Const 92.21·Photo Const 93.95)</li><li>RGB point-cloud 캐시 대비 생성 10.57× 빠름 · GPU 메모리 55×↓</li><li>ablation: latent 캐시(70.36) &gt; RGB 점구름 캐시(67.71) — 속도뿐 아니라 품질도 우위(재인코딩 오차 제거)</li><li>RealEstate10K closed-loop(카메라 복귀) PSNR_C 20.05·SSIM_C 0.825로 복귀 일관성 1위, depth 선택에 robust</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>동적 객체는 메모리에서 일부러 제외 → chunk 간 이동 객체 상태 미유지, 움직임 지배 장면은 캐시 이득 적음(저자 명시)</li><li>동적 객체/하늘 필터(SAM3·Qwen3-VL)와 depth 추정(DepthAnything3)에 파이프라인 의존</li><li>메모리는 정적 geometry scaffold — 동적 콘텐츠는 매 chunk 재생성</li><li>RealEstate10K(실내) 중심 학습/평가 — outdoor·대규모 동적 씬 일반화 미검증</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 video world model (latent 3D 메모리)</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습/평가 RealEstate10K(실내 부동산 워크스루) · 벤치 WorldScore + RealEstate10K NVS/closed-loop</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Spatia</span><span class="cmp">Voyager</span><span class="cmp">WonderWorld</span><span class="cmp">ViewCrafter</span><span class="cmp">Explicit RGB Point Cloud (abl)</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>WorldScore (Avg)</td><td class="mt">score</td><td class="me">70.36</td><td>Spatia 69.73 · Voyager 66.08 · WonderWorld 61.79 <span class="note">Table 1 · 3D Const 92.21 / Photo Const 93.95</span></td></tr><tr><td>RealEstate10K closed-loop (복귀)</td><td class="mt">PSNR_C / SSIM_C</td><td class="me">20.05 / 0.825</td><td>Spatia 19.38 / 0.579 <span class="note">Table 2 · 복귀 일관성</span></td></tr><tr><td>효율 (vs RGB-cache)</td><td class="mt">speed / mem</td><td class="me">10.57× / 55×↓</td><td> <span class="note">Fig 5</span></td></tr><tr><td>ablation: latent vs RGB 캐시</td><td class="mt">WorldScore</td><td class="me">70.36</td><td>Explicit RGB Point Cloud 67.71 · No Dynamic Filter 61.20 <span class="note">Table 3</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-04 · 1편</h2>
     <article class="card">
       <div class="L">
@@ -404,7 +418,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
 </main>
-<footer>built 2026-06-16 11:20 · WM_surveybot</footer>
+<footer>built 2026-06-16 11:49 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
