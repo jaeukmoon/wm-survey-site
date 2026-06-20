@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">ViT (Vision Transformer) — 이미지를 16×16 패치 토큰으로</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# ViT (Vision Transformer) — 이미지를 16×16 패치 토큰으로\n\n> Dosovitskiy et al., *\"An Image is Worth 16×16 Words\"* (ICLR 2021, arXiv:2010.11929). 아래 'VLM 구조' 토픽이 전제로 삼는 **\"이미 똑똑한 비전 인코더(ViT)\"**가 내부에서 어떻게 도는지. 거의 모든 VLM(LLaVA·Qwen2-VL …)의 비전 인코더 표준.\n\n### 한 줄 요약\n\n```\n이미지를 16×16 패치 시퀀스로 잘라 \"단어 토큰\"처럼 다루고,\nCNN 없이 표준 Transformer Encoder 하나로 이미지 분류를 푼다.\n```\n\n핵심 주장: **충분히 큰 데이터(JFT-300M)로 사전학습하면, CNN의 inductive bias(locality·translation equivariance) 없이도 순수 Transformer가 SOTA를 넘는다.**\n\n### 전체 아키텍처 한눈에 (ViT-Base/16)\n\n```\n[Input image  x ∈ R^(B×3×224×224)]\n        │  ① Patchify: 16×16 패치 분할     N = (224/16)² = 14² = 196\n        ▼\n[196개 패치, 각 16×16×3 = 768차원]\n        │  ② Linear Projection (Patch Embedding)  E ∈ R^(768×768)\n        ▼\n[패치 임베딩  z_patch ∈ R^(B×196×768)]\n        │  ③ [CLS] 토큰 prepend  +  ④ Position Embedding 더하기\n        ▼\n[토큰 시퀀스  z_0 ∈ R^(B×197×768)]        197 = 1(CLS) + 196(patch)\n        ▼\n┌────────────────────────────────────────┐\n│  Transformer Encoder × L=12             │   ViT-B: ~86M params\n│  ┌──────────────────────────────────┐  │   각 layer (pre-norm):\n│  │ LN → MHSA(12 heads) → +residual  │  │\n│  │ LN → MLP(768→3072→768) → +resid  │  │\n│  └──────────────────────────────────┘  │\n└────────────────────────────────────────┘\n        │  z_L ∈ R^(B×197×768)\n        │  ⑤ CLS 토큰(index 0)만 추출 → ⑥ LN → MLP Head\n        ▼\n[logits ∈ R^(B×1000)]   (ImageNet 1000 클래스)\n```\n\n크기 변형:\n\n```\n┌─────────┬────────┬──────┬───────┬───────┬────────┐\n│ Model   │ Layers │  D   │ heads │ MLP   │ params │\n├─────────┼────────┼──────┼───────┼───────┼────────┤\n│ ViT-Base│   12   │  768 │  12   │ 3072  │  86M   │\n│ ViT-Large   24   │ 1024 │  16   │ 4096  │ 307M   │\n│ ViT-Huge│   32   │ 1280 │  16   │ 5120  │ 632M   │\n└─────────┴────────┴──────┴───────┴───────┴────────┘\n\"ViT-B/16\" = Base, patch_size=16.  head_dim = D/heads (ViT-B: 768/12=64).  MLP hidden = 4×D.\n```\n\n### Patch Embedding = stride=16 Conv 한 번\n\n```\n패치 하나 p ∈ R^(16×16×3) → flatten R^768 → E·p (E:768×768) → e ∈ R^768\n196개 전부 같은 E 적용:\n[B×3×224×224] ──Conv2d(3→768, kernel=16, stride=16)──> [B×768×14×14] ─flatten─> [B×196×768]\n```\n> 💡 \"패치로 잘라 linear projection\"은 **kernel=stride=patch_size인 Conv2d 한 번**과 수학적으로 동일. 실제 코드는 `nn.Conv2d(3,768,16,stride=16)` 하나로 처리.\n\n### [CLS] 토큰 + Position Embedding\n\n```\n  ┌─────┬───────┬───────┬─────┬─────────┐\n  │ CLS │ patch1│ patch2│ ... │ patch196│   197개 토큰(각 768-d)\n  └─────┴───────┴───────┴─────┴─────────┘\n     +      +       +      +       +\n  ┌─────┬───────┬───────┬─────┬─────────┐\n  │pos_0│ pos_1 │ pos_2 │ ... │ pos_196 │   learnable 1D PosEmb (197×768)\n  └─────┴───────┴───────┴─────┴─────────┘\n```\n- **[CLS] 토큰**: BERT 차용. 학습 가능한 단일 벡터 1개. 모든 패치와 self-attention 하며 **전역 표현**을 모아 마지막에 이것만 분류에 씀.\n- **PosEmb**: 표준 **learnable 1D**(원조 Transformer의 고정 sinusoidal 아님). 2D-aware도 실험했으나 이득 적어 1D 채택.\n\n### Transformer Encoder Layer (Pre-LN)\n\n```\nz_{ℓ-1} ──────────────┐(residual)        수식(pre-norm):\n  LN                  │                   z'_ℓ = MHSA(LN(z_{ℓ-1})) + z_{ℓ-1}\n  MHSA                │                   z_ℓ  = MLP (LN(z'_ℓ))    + z'_ℓ\n  +←──────────────────┘\nz'_ℓ ─────────────────┐(residual)\n  LN                  │\n  MLP(Linear→GELU→Linear)\n  +←──────────────────┘\nz_ℓ\n```\n> ⚠️ ViT는 **Pre-LN**(LayerNorm을 sub-layer 앞). 원조 \"Attention is All You Need\"의 Post-LN과 다르며 깊은 Transformer 안정화용.\n\n### 핵심 연산: Multi-Head Self-Attention\n\n```\nX ∈ R^(N×D), N=197, D=768, heads=12, head_dim=64\n  X·W_Q, X·W_K, X·W_V  →  Q,K,V (각 197×768)  →  12 heads로 reshape(각 197×64)\n  head_i:  A_i = softmax(Q_i·K_iᵀ / √64) ∈ R^(197×197)   →   O_i = A_i·V_i (197×64)\n  concat(O_1..O_12) (197×768) · W_O  →  출력 (197×768)\n\nAttention(Q,K,V) = softmax(QKᵀ/√d_k)·V\n```\n> 🔑 **CNN과의 결정적 차이**: convolution은 국소(3×3) 이웃만 보다 깊어지며 receptive field가 커진다. self-attention은 **첫 layer부터 모든 패치 쌍**을 본다 → 전역 의존성 즉시 모델링하지만 locality라는 공짜 prior가 없어 **데이터를 많이 먹는다**. (MLP 블록: Linear(768→3072)→GELU→Linear(3072→768), 토큰별 독립.)\n\n### 학습 / 추론 흐름\n\n```\n[x:(B,3,224,224)] [y:(B,)]\n  Patchify→+CLS/+Pos→Encoder×12→CLS추출→LN→Head→logits(B,1000)\n        └────────────► Loss = CrossEntropy(logits, y) ──► Backprop: 전 파라미터 갱신(AdamW)\n```\n- **사전학습**: ImageNet-21k / JFT-300M에서 분류 손실. Head = hidden 1개짜리 MLP.\n- **파인튜닝**: Head를 **단일 Linear(D→K)** 로 교체, 보통 더 높은 해상도로. 해상도 바뀌면 패치 수 N이 변하므로 사전학습 PosEmb를 원래 2D 격자 기준 **2D interpolation**으로 길이 맞춤(ViT의 유일한 수작업 inductive bias 지점).\n- **추론**: 동일 forward, Dropout/augmentation 끔, softmax→argmax.\n\n### 비교: vs CNN · vs 원조 Transformer\n\n```\n┌───────────────────────┬──────────────────────────────┐   ┌────────────────────┬──────────────────┐\n│ ResNet (CNN)          │ ViT (Transformer)            │   │ Transformer(NLP)   │ ViT              │\n├───────────────────────┼──────────────────────────────┤   ├────────────────────┼──────────────────┤\n│ 3×3 conv 국소 연산    │ self-attention 전역 연산     │   │ Encoder+Decoder    │ Encoder만        │\n│ locality 내장         │ inductive bias 거의 없음     │   │ 토큰=단어          │ 토큰=16×16 패치  │\n│ receptive field 점증  │ layer1부터 전역              │   │ sinusoidal(고정)   │ learnable 1D     │\n│ 작은 데이터에 강함    │ 큰 데이터(JFT)에서 역전      │   │ Post-LN            │ Pre-LN           │\n└───────────────────────┴──────────────────────────────┘   │ seq2seq            │ [CLS]→분류(BERT) │\n                                                            └────────────────────┴──────────────────┘\n데이터 규모: ImageNet(작음)→CNN 우위, ImageNet-21k→비등, JFT-300M(큼)→ViT가 CNN 추월.\n결론: ViT는 inductive bias 부족을 \"데이터 규모\"로 메운다.\n```\n\n### 텐서 shape 요약 (ViT-B/16, 224²)\n\n| 위치 | Shape | 설명 |\n|------|-------|------|\n| Input | (B, 3, 224, 224) | 원본 이미지 |\n| After Patchify | (B, 196, 768) | 패치 × linear proj |\n| +[CLS]+PosEmb (z_0) | (B, 197, 768) | CLS prepend + 위치 합산 |\n| Q/K/V (per head) | (B, 12, 197, 64) | 12 heads × head_dim 64 |\n| Attention map | (B, 12, 197, 197) | 토큰 쌍 가중치 |\n| MLP hidden | (B, 197, 3072) | FFN 중간(4×D) |\n| Encoder out z_L | (B, 197, 768) | 12 layer 통과 |\n| CLS 추출 → logits | (B, 768) → (B, 1000) | 분류 출력 |\n\n### VLM으로의 연결고리\n\n```\nViT가 남긴 표준:\n  · \"이미지 = 패치 토큰 시퀀스\"   → 모든 VLM 비전 인코더의 입력 형식\n  · patch 토큰들(CLS 제외)         → VLM은 이 patch 토큰을 LLM에 흘려넣음 (아래 'VLM 구조' 토픽)\n  · learnable 1D PosEmb(해상도 고정) → [한계] Qwen2-VL이 2D-RoPE + Naive Dynamic Resolution으로 해소\n```\n→ 다음 토픽 **'VLM 구조'**에서 이 patch 토큰들을 LLM에 붙이는 4가지 커넥터(Flamingo·LLaVA·BLIP-2·Qwen2-VL)를 본다.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-06-20 11:45 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>
