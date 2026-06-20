@@ -215,6 +215,20 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
   <section>
+    <h2 class="date">2026-06 · 1편</h2>
+    <article class="card">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">τ0-WM (tau-zero) — A Unified Video-Action World Model for Robotic Manipulation</a></h3>
+        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.01027</span> · <a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">행동 생성 + 미래 video 예측 + action-conditioned 미래 평가를 한 틀에 통합한 5.5B video-action world model. Wan2.2-TI2V-5B(video DiT) + 0.5B action DiT, 양쪽 다 flow matching. 결합은 cross-attention(action 토큰이 horizon 시간의존성을 self-attn으로 먼저 모델링 후 intermediate video feature를 cross-attend) — FastWAM의 MoT(self-attn 공유)와 대비되는 핵심 차이. test-time에 &#x27;행동 제안→시뮬→평가→수정&#x27;을 학습된 WM으로 수행. AgiBot Finch.</p><div class="f"><span class="lbl">기여</span><span>행동 생성·미래 video 예측·action-conditioned 평가를 단일 video-action world model로 통합. action 토큰이 self-attn으로 horizon 내 시간 의존성을 먼저 잡은 뒤 intermediate video feature를 cross-attend하는 결합 구조(FastWAM의 MoT self-attention 공유와 대비). Wan2.2-TI2V-5B 사전학습 video 모델에서 init.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>video·action·평가를 한 모델로 통합 → test-time plan-evaluate(행동 제안→시뮬→평가→수정)를 학습된 WM으로 수행</li><li>cross-attention 결합으로 action 토큰이 미래 video feature를 직접 참조(MoT self-attn 공유와 다른 설계축)</li><li>Wan2.2-TI2V-5B 사전학습 video 모델에서 init → 강한 video prior</li><li>~27.3K시간 대규모 데이터(real-robot teleop + UMI-style + egocentric video)</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>5.5B 대형 + test-time 시뮬·평가 루프라 추론 비용·지연 우려</li><li>FastWAM과 백본(Wan2.2-5B) init은 호환되나 결합 구조가 달라 action expert 교환 불가</li><li>구조 요약 카드 기반 — 정량 벤치/ablation 수치는 풀 논문 대조 필요(딥다이브 미작성)</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM (video-action 통합)</span></div><div class="f"><span class="lbl">데이터셋</span><span>~27.3K시간 — real-robot teleop + UMI-style + egocentric video</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">FastWAM</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-04 · 1편</h2>
     <article class="card">
       <div class="L">
@@ -418,7 +432,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
 </main>
-<footer>built 2026-06-20 13:10 · WM_surveybot</footer>
+<footer>built 2026-06-20 13:17 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
