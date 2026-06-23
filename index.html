@@ -93,6 +93,20 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
 </div></header>
 <main>
   <section>
+    <h2 class="date">2026-06-17 · 1편</h2>
+    <article class="card">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.19531" target="_blank" rel="noopener">ImageWAM: Do World Action Models Really Need Video Generation, or Just Image Editing?</a></h3>
+        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.19531</span> · <a href="https://arxiv.org/abs/2606.19531" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/yuyangalin/ImageWAM" target="_blank" rel="noopener">code</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.19531v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">video 생성 기반 WAM이 미래 영상 전체를 합성하는 비용/오류를, pretrained image-editing 모델(OmniGen2 main, +FLUX.2/Ovis-U1)을 backbone으로 재활용해 대체. 추론 시 target frame을 픽셀로 디코딩하지 않고 image-editing denoising의 KV cache(edit-aware 중간표현)에 flow-matching Action Expert를 joint attention으로 conditioning → action chunk a_{t:t+H} 예측. video-WAM 대비 FLOPs ~1/6·latency ~1/4로 VLA baseline(π0/π0.5 등) 능가. manipulation을 &#x27;instruction-guided visual transformation&#x27;으로 보는 관점.</p><div class="f"><span class="lbl">기여</span><span>image-editing 모델을 instruction-conditioned visual backbone으로 repurpose하는 ImageWAM 프레임워크(video 생성 WAM의 대안) 제시; robot manipulation을 instruction-guided visual transformation으로 정식화하고 editing pretraining의 3속성(instruction-to-change alignment / easier·action-relevant proxy / compact inference) 식별; editing-aware representation이 standard visual·VLM backbone보다 action-relevant함을 비교로 실증.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>효율: dense future-video 디코딩 제거 → FLOPs ~1/6 · latency ~1/4 (실시간 control 적합)</li><li>image editing = video보다 action-relevant·easier proxy: 현재→target의 instruction-consistent 변화에만 집중, 무관 temporal/appearance detail에 capacity 안 씀</li><li>부정확 future-video가 action을 오도하는 문제 회피 (Fig 5: video baseline은 task-relevant 객체 주변을 distort → 실패)</li><li>여러 image-editing backbone에 일반화: OmniGen2(main)·FLUX.2·Ovis-U1 (appendix)</li><li>RoboTwin 2.0·LIBERO·LIBERO-Plus·real-world에서 VLA baseline 능가</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>pretrained image-editing 모델(OmniGen2 등) prior에 의존 — 그 품질·도메인이 성능을 좌우</li><li>미래를 &#x27;단일 image-edit(한 장)&#x27;으로 표현 → multi-step temporal dynamics를 명시적으로 모델링하진 않음 (WAM 미래표현 중 가장 압축적)</li><li>backbone별 변형(OmniGen2/FLUX.2/Ovis-U1) 간 trade-off·세부는 appendix 의존</li><li>일부 절대 success-rate 수치는 deepdive 검증에서 unconfirmed(원표 재확인 필요)</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">🖼️ WAM (image-editing backbone — video 생성 대체)</span></div><div class="f"><span class="lbl">데이터셋</span><span>평가: RoboTwin 2.0 · LIBERO · LIBERO-Plus · real-world robot tasks. backbone은 OmniGen2/FLUX.2/Ovis-U1의 image-editing 사전학습 prior 활용.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">FastWAM (video-WAM)</span><span class="cmp">standard visual / VLM backbone (ablation)</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-06-15 · 1편</h2>
     <article class="card">
       <div class="L">
@@ -432,7 +446,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
 </main>
-<footer>built 2026-06-22 06:36 · WM_surveybot</footer>
+<footer>built 2026-06-23 16:02 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
