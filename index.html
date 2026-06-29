@@ -97,7 +97,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">28</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">8</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">10</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">6</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">4</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">39</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">8</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">12</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">13</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">6</span></button></div>
   <section>
     <h2 class="date">2026-06-17 · 1편</h2>
     <article class="card" data-group="WAM">
@@ -235,7 +235,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
   <section>
-    <h2 class="date">2026-06 · 1편</h2>
+    <h2 class="date">2026-06 · 12편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">τ0-WM (tau-zero) — A Unified Video-Action World Model for Robotic Manipulation</a></h3>
@@ -245,6 +245,127 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
       </div>
       <div class="R">
         <p class="sum">행동 생성 + 미래 video 예측 + action-conditioned 미래 평가를 한 틀에 통합한 5.5B video-action world model. Wan2.2-TI2V-5B(video DiT) + 0.5B action DiT, 양쪽 다 flow matching. 결합은 cross-attention(action 토큰이 horizon 시간의존성을 self-attn으로 먼저 모델링 후 intermediate video feature를 cross-attend) — FastWAM의 MoT(self-attn 공유)와 대비되는 핵심 차이. test-time에 &#x27;행동 제안→시뮬→평가→수정&#x27;을 학습된 WM으로 수행. AgiBot Finch.</p><div class="f"><span class="lbl">기여</span><span>행동 생성·미래 video 예측·action-conditioned 평가를 단일 video-action world model로 통합. action 토큰이 self-attn으로 horizon 내 시간 의존성을 먼저 잡은 뒤 intermediate video feature를 cross-attend하는 결합 구조(FastWAM의 MoT self-attention 공유와 대비). Wan2.2-TI2V-5B 사전학습 video 모델에서 init.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>video·action·평가를 한 모델로 통합 → test-time plan-evaluate(행동 제안→시뮬→평가→수정)를 학습된 WM으로 수행</li><li>cross-attention 결합으로 action 토큰이 미래 video feature를 직접 참조(MoT self-attn 공유와 다른 설계축)</li><li>Wan2.2-TI2V-5B 사전학습 video 모델에서 init → 강한 video prior</li><li>~27.3K시간 대규모 데이터(real-robot teleop + UMI-style + egocentric video)</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>5.5B 대형 + test-time 시뮬·평가 루프라 추론 비용·지연 우려</li><li>FastWAM과 백본(Wan2.2-5B) init은 호환되나 결합 구조가 달라 action expert 교환 불가</li><li>구조 요약 카드 기반 — 정량 벤치/ablation 수치는 풀 논문 대조 필요(딥다이브 미작성)</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM (video-action 통합)</span></div><div class="f"><span class="lbl">데이터셋</span><span>~27.3K시간 — real-robot teleop + UMI-style + egocentric video</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">FastWAM</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.24597" target="_blank" rel="noopener">Qwen-AgentWorld: Language World Models for General Agents</a></h3>
+        <div class="badges"><span class="badge org">🔴 Alibaba/Qwen</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 139</span></div>
+        <div class="meta"><span class="id">2606.24597</span> · <a href="https://arxiv.org/abs/2606.24597" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/QwenLM/Qwen-AgentWorld" target="_blank" rel="noopener">code</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">언어 모델 기반 에이전트 환경 시뮬레이터(언어 world model). 웹·코딩·OS 등 7개 도메인의 환경 state transition을 long chain-of-thought로 예측하는 Qwen-AgentWorld-35B-A3B/397B-A17B 두 모델을 개발하고, 5개 frontier 모델 × 9개 벤치마크 실제 상호작용으로 구성된 AgentWorldBench로 평가한다. 환경 시뮬레이터로서 agentic RL 지원 및 foundation model 사전학습으로 downstream 7개 벤치마크 성능 향상이라는 두 가지 활용을 검증한다.</p><div class="f"><span class="lbl">기여</span><span>로보틱스 대신 웹·OS·코드 등 소프트웨어 에이전트 도메인을 위한 첫 언어 world model(Qwen-AgentWorld). 10M+ 실환경 trajectory + CPT→SFT→RL 3단계 파이프라인으로 시뮬레이션 충실도를 높이고, AgentWorldBench를 새로 공개해 언어 WM 평가 체계를 제시한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>10M+ 실환경 interaction trajectory(7 도메인)로 학습 — 대규모 현실 데이터 기반</li><li>CPT→SFT→RL 3단계: CPT(state transition 일반 주입)→SFT(next-state 추론 활성화)→RL(rubric+rule 보상 충실도 강화)</li><li>환경 시뮬레이터로 agentic RL 지원(수천 환경 시뮬레이션) — real-environment training만보다 우수한 downstream 성능</li><li>frontier 5개 모델 × 9개 벤치마크 AgentWorldBench로 객관적 언어 WM 평가 기반 마련</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>소프트웨어/웹 에이전트 특화 — 물리 로보틱스(연속 제어) WM과 직접 비교 어려움</li><li>397B 파라미터 모델은 추론 비용 매우 높음</li><li>chain-of-thought 기반 시뮬레이션은 속도·토큰 비용 과중</li><li>closed-loop 시뮬레이션 품질이 실환경 gap을 완전히 메우지 못할 가능성</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 agentic WM (소프트웨어/웹 환경 시뮬레이터)</span></div><div class="f"><span class="lbl">데이터셋</span><span>10M+ 환경 상호작용 trajectory (7 domains: web/code/OS 등), AgentWorldBench (5 frontier models × 9 benchmarks)</span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.28128" target="_blank" rel="noopener">PhysisForcing: Physics Reinforced World Simulator for Robotic Manipulation</a></h3>
+        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 30</span></div>
+        <div class="meta"><span class="id">2606.28128</span> · <a href="https://arxiv.org/abs/2606.28128" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/DAGroup-PKU/PhysisForcing" target="_blank" rel="noopener">code</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">물리적으로 일관된 로봇 조작 영상을 생성하는 video WM 학습 프레임워크. pixel-level trajectory alignment loss(reference point trajectory로 DiT feature 지도)와 semantic-level relational alignment loss(frozen video encoder의 inter-region relation으로 DiT 정렬) 두 가지 손실로 움직이는 객체 변형·접촉 시 비현실적 spatio-temporal 상관관계를 억제한다. WorldArena action-planner 프로토콜에서 world model로 사용해 closed-loop 성공률 16%→24% 향상을 달성한다.</p><div class="f"><span class="lbl">기여</span><span>물리 불일치(객체 변형·접촉 부자연스러움)의 원인을 두 가지로 진단하고, physics-informative 영역에 집중하는 pixel+semantic 이중 정렬 손실을 제안한다. Wan2.2-I2V-A14B와 Cosmos3-Nano 기반 모델에 plug-in 형태로 적용해 R-Bench에서 +22.3%/+9.2% 향상을 달성한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>R-Bench에서 Wan2.2-I2V-A14B +22.3%, Cosmos3-Nano +9.2% (vanilla finetuning 대비 +7.1%/+3.7%)</li><li>WorldArena closed-loop 성공률 16%→24% (+50% 상대 향상), downstream policy 성능도 개선</li><li>plug-in 프레임워크 — 다양한 DiT 기반 video 모델에 적용 가능</li><li>frozen video encoder로 semantic-level 정렬 — 추가 annotation 없이 relational 감독 신호 획득</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>reference point trajectory 필요 — 추가 tracking 비용 발생</li><li>PAI-Bench·EZS-Bench 결과 상세 수치 abstract에 미공개</li><li>물리 일관성이 manipulation policy로 downstream transfer되는 경로가 WorldArena 프로토콜 종속</li><li>Cosmos3-Nano 전체 최고 달성이지만 절대 성능 수치 제한적 공개</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM (물리 일관성 강화 video WM)</span></div><div class="f"><span class="lbl">데이터셋</span><span>R-Bench, PAI-Bench, EZS-Bench (물리 일관성 평가 벤치마크)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Wan2.2-I2V-A14B</span><span class="cmp">Cosmos3-Nano</span><span class="cmp">vanilla finetuning</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>R-Bench (Wan2.2-I2V-A14B 기준)</td><td class="mt">개선율</td><td class="me">+22.3%</td><td>vanilla finetuning +7.1% <span class="note">abstract 수치</span></td></tr><tr><td>R-Bench (Cosmos3-Nano 기준)</td><td class="mt">개선율</td><td class="me">+9.2%</td><td>vanilla finetuning +3.7% <span class="note">abstract 수치</span></td></tr><tr><td>WorldArena closed-loop</td><td class="mt">Success Rate</td><td class="me">24.0%</td><td>base 16.0% <span class="note">abstract 수치</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card big" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.28133" target="_blank" rel="noopener">Translation as a Bridging Action: Transferring Manipulation Skills from Humans to Robots</a></h3>
+        <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 27</span></div>
+        <div class="meta"><span class="id">2606.28133</span> · <a href="https://arxiv.org/abs/2606.28133" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">인간 손목의 상대 translation(6DoF 중 rotation 제외)을 bridging action representation으로 사용해 인간 demonstration을 bi-manual 로봇으로 직접 전이한다. π0-like VLA에 interleaved action token + attention masking을 도입해 embodiment별 부재 action component를 처리하고, 동일 head-camera frame 기준 상대 손목 translation이라는 인간-로봇 공유 action space를 통해 sim-to-real gap 없이 학습한다. 인간 데이터 규모에 따라 성능이 향상됨을 실험으로 검증한다.</p><div class="f"><span class="lbl">기여</span><span>6DoF 전체 pose 대신 상대 손목 translation만 사용하는 bridging action을 제안, rotation 추정 노이즈와 gripper-vs-finger contact pattern 불일치를 동시에 해소한다. interleaved action token + attention masking으로 cross-embodiment 일반화를 달성하는 π0-like 아키텍처를 제시한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>rotation 추정 노이즈 원천 제거 — compact observation으로 sim-to-real 품질 향상</li><li>인간 데이터 스케일에 따른 성능 향상 확인 — 저비용 대규모 데이터 활용 가능성</li><li>attention masking으로 absence action component 처리 — 다양한 embodiment 호환</li><li>ByteDance Seed + HKU 협업 — 산업 규모 인프라 연결 가능성</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>translation-only action space는 rotation이 중요한 정밀 조작(나사 조이기 등)에 한계</li><li>bi-manual parallel gripper 특화 — 다관절 손·단일 팔에 직접 적용 어려움</li><li>abstract에 정량 수치 미공개 — 실제 성능 개선 폭 불명확</li><li>head-camera frame 기준 translation — 카메라 외부 파라미터 캘리브레이션 필요</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (인간→로봇 cross-embodiment 전이)</span></div><div class="f"><span class="lbl">데이터셋</span><span>novel bi-manual manipulation tasks (human demonstration data)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">6DoF human actions baseline</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.25473" target="_blank" rel="noopener">Causal-rCM: A Unified Teacher-Forcing and Self-Forcing Open Recipe for Autoregressive Diffusion Distillation in Streaming Video Generation and Interactive World Models</a></h3>
+        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 23</span></div>
+        <div class="meta"><span class="id">2606.25473</span> · <a href="https://arxiv.org/abs/2606.25473" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">autoregressive video diffusion을 위한 통합 diffusion distillation 레시피 Causal-rCM을 제안한다. teacher-forcing Consistency Model과 self-forcing Distribution Matching Distillation을 결합해 forward/reverse divergence의 상보성을 활용하며, sCM/MeanFlow 기반 연속시간 CM 최초 구현(custom-mask FlashAttention-2 JVP kernel — discrete-time CM 대비 10× 수렴 가속)을 포함한다. Wan2.1-1.3B 2-step 모델로 VBench-T2V 84.63 달성, Cosmos 3에 적용해 action-conditioned interactive WM을 구현한다.</p><div class="f"><span class="lbl">기여</span><span>teacher-forcing CM이 self-forcing DMD의 최적 초기화 보완재임을 실험으로 입증하고, autoregressive video diffusion에서 최초의 teacher-forcing 기반 연속시간 CM을 구현(FlashAttention-2 JVP kernel). Causal-rCM을 Cosmos 3에 적용해 physical AI용 interactive WM을 가속한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>discrete-time CM 대비 10× 빠른 수렴(JVP kernel 기반 연속시간 CM)</li><li>합성 데이터만으로 VBench-T2V SOTA(frame-wise·chunk-wise 모두)</li><li>Wan2.1-1.3B 2-step으로 84.63 — 극소 파라미터·스텝 대비 높은 품질</li><li>Cosmos 3 physical AI WM에 적용 → action-conditioned 생성 가속 실증</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>합성 데이터만 학습 — real distribution shift 잠재적 한계</li><li>JVP kernel 구현 복잡도 — 재현성 불확실</li><li>Cosmos 3 integration 결과 정량치 미공개</li><li>Wan2.1-1.3B 외 다른 규모별 VBench 수치 abstract에 미공개</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM (autoregressive video diffusion distillation 레시피)</span></div><div class="f"><span class="lbl">데이터셋</span><span>합성 데이터 (VBench-T2V 평가)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Wan2.1-1.3B (base)</span><span class="cmp">discrete-time CMs (dCMs)</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>VBench-T2V</td><td class="mt">Score</td><td class="me">84.63</td><td> <span class="note">Wan2.1-1.3B 2-step, 합성 데이터만 사용</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card big" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.18953" target="_blank" rel="noopener">Object-Centric Residual RL for Zero-Shot Sim-to-Real VLA Enhancement</a></h3>
+        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 3</span></div>
+        <div class="meta"><span class="id">2606.18953</span> · <a href="https://arxiv.org/abs/2606.18953" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">frozen VLA 위에 object pose 기반 residual RL policy를 sim에서만 학습해 real robot에 zero-shot 적용한다. Microsoft Research + KAIST 공동 연구로, Franka FR3 5개 조작 태스크에서 성공률 42%→76%로 향상시킨다. 개선된 rollout을 VLA 재학습에 재활용해 추가 원격조작 없이 self-improvement도 가능하다.</p><div class="f"><span class="lbl">기여</span><span>object pose라는 compact observation space를 통해 sim-to-real visual domain gap을 우회하는 object-centric residual RL을 제안한다. 실환경과 동일한 teleoperation demonstration을 시뮬에 재생해 sim 대응 VLA를 학습하고, pose noise injection + dropout으로 domain randomization해 zero-shot 전이를 달성한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>추가 real-world RL 없이 sim-only 학습 → 비용·안전 문제 회피</li><li>5개 태스크 Franka FR3에서 성공률 42%→76% (zero-shot sim-to-real)</li><li>개선 rollout 재활용으로 self-improvement 루프 구성 가능 — 추가 teleoperation 불필요</li><li>object pose space가 작아 빠른 sim 수렴</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>object pose estimation 필요 — 인식 정확도에 성능 종속</li><li>5개 태스크 Franka FR3만 평가 — 일반화 범위 제한적</li><li>sim-to-real gap이 pose noise 완화만으로 완전히 해소되지 않을 수 있음</li><li>frozen VLA 가정 — VLA 자체 재학습 없이는 기반 정책 품질에 한계</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (residual RL sim-to-real 강화)</span></div><div class="f"><span class="lbl">데이터셋</span><span>Franka Research 3 (FR3) 5개 manipulation tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">frozen VLA baseline</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>Franka FR3 manipulation (5 tasks)</td><td class="mt">Success Rate</td><td class="me">76%</td><td>frozen VLA baseline 42% <span class="note">zero-shot sim-to-real, abstract 수치</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card big" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.26694" target="_blank" rel="noopener">PhysEditWorld: A Large-Scale Dataset Toward Physics-Editable World Models</a></h3>
+        <div class="badges"><span class="badge org">🔴 Tencent</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.26694</span> · <a href="https://arxiv.org/abs/2606.26694" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">물리 파라미터(중력 등)를 명시적으로 편집할 수 있는 world model 연구를 위한 대규모 멀티모달 데이터셋 PhysEditWorld를 소개한다. UE5 replay-and-rendering 파이프라인으로 동일 초기 상태·action sequence를 다양한 중력 설정에서 재현해 controlled physical variation을 생성하며, 12개 UE5 씬·100시간+ 게임플레이·6천만+ 프레임 규모다. RGB, depth, normal, audio, action trace, camera trajectory, semantic annotation, 중력 레이블을 동기화 제공한다.</p><div class="f"><span class="lbl">기여</span><span>암묵적 상관관계 학습에 의존하던 기존 world model 접근과 달리, 명시적 물리 파라미터(중력)를 가진 controlled dataset을 최초로 제공한다. UE5 replay 패러다임으로 동일 action sequence를 복수 물리 설정에서 재실행해 인과적으로 귀속 가능한 물리 변이 데이터를 생성한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>100시간+ 게임플레이·60M+ 프레임 대규모 — 명시적 중력 레이블 포함</li><li>RGB/depth/normal/audio/action trace 등 동기화 멀티모달 신호</li><li>UE5 replay 패러다임 — controlled 물리 변이 생성의 확장성</li><li>초기 utility study로 generative video model + world understanding model 모두에 적용 가능성 실증</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>현재 버전은 중력만 다룸 — 마찰·탄성 등 다른 물리 파라미터 미포함</li><li>게임 엔진 기반 — real-world domain gap 존재</li><li>12개 씬 한정 — 시각적 다양성 제한</li><li>초기 utility study만 — downstream benchmark 미성숙</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 데이터셋·벤치마크 (물리 편집 가능 WM용)</span></div><div class="f"><span class="lbl">데이터셋</span><span>PhysEditWorld (자체 구축): 12 UE5 scenes, 100h+ gameplay, 60M+ frames, 명시적 중력 레이블</span></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.27163" target="_blank" rel="noopener">Learning to Fold: prizewinning solution at LeHome Challenge 2026 (1st place online, 2nd offline)</a></h3>
+        <div class="badges"><span class="badge conf">🎓 ICRA 2026</span><span class="badge up">▲ 4</span></div>
+        <div class="meta"><span class="id">2606.27163</span> · <a href="https://arxiv.org/abs/2606.27163" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">ICRA 2026 LeHome Challenge(62팀) 온라인 1위·실환경 2위 garment folding VLA 솔루션. flow-matching VLA에 AWR+RECAP RL을 결합하고, policy가 action 예측과 함께 success/progress 예측(가치함수 겸용)을 수행한다. inference-time hyperparameter 최적화(Thompson sampling) + HuggingFace Hub 비동기 분산 파이프라인 + DAgger-like HIL 데이터 수집을 하나의 모듈식 레시피로 제공한다.</p><div class="f"><span class="lbl">기여</span><span>flow-matching VLA가 자체 value function을 겸하는 구조(AWR+RECAP)로 advantage 추정·실시간 실패 감지·후보 선택을 통합한다. Thompson sampling으로 inference-time hyperparameter를 최적화하는 방법과 HuggingFace Hub를 통한 비동기 분산 학습/롤아웃 파이프라인을 실용적 레시피로 공개한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>ICRA 2026 LeHome Challenge 온라인 1위(62팀) — 경쟁적 검증</li><li>Policy=Value function 겸용으로 advantage 추정·실패 감지 통합 — 별도 critic 불필요</li><li>비동기 분산 파이프라인으로 학습 효율성 향상</li><li>레시피 모듈화 — 각 구성 요소를 독립적으로 적용 가능</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>단일 저자 솔루션 — 재현·스케일 확인 필요</li><li>의류 접기 특화 — 다른 manipulation task 직접 적용 미검증</li><li>실제 대회 결과 오프라인 2위 — 실환경 gap 여전히 존재</li><li>RL 안정성에 AWR+RECAP 하이퍼파라미터 민감도 잠재적 문제</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (VLA+RL, 의류 접기)</span></div><div class="f"><span class="lbl">데이터셋</span><span>LeHome Challenge 2026 (bimanual garment folding, simulation + real)</span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LeHome Challenge 2026 온라인(시뮬)</td><td class="mt">순위</td><td class="me">1st / 62팀</td><td> <span class="note">경쟁 대회</span></td></tr><tr><td>LeHome Challenge 2026 오프라인(실환경)</td><td class="mt">순위</td><td class="me">2nd</td><td> <span class="note">경쟁 대회</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.27872" target="_blank" rel="noopener">S²-VLA: State-Space Guided Vision-Language-Action Models for Long-Horizon Manipulation</a></h3>
+        <div class="badges"><span class="badge conf">🎓 IJCAI 2026</span></div>
+        <div class="meta"><span class="id">2606.27872</span> · <a href="https://arxiv.org/abs/2606.27872" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">장기 조작 태스크에서 누적 오차 전파 문제를 해결하기 위해 State-Space Guided Adaptive Attention(SSGAA) 메커니즘을 제안한다. SSGAA는 task 진행 상태를 추적하는 belief state를 유지하고, 이를 기반으로 visual/language/temporal action 세 표현의 동적 gating weight를 생성해 태스크 단계별 적응 융합을 수행한다. 2B 파라미터로 LIBERO·SimplerEnv에서 7B 규모 모델들을 능가한다.</p><div class="f"><span class="lbl">기여</span><span>고정 weight 정적 융합 대신 belief state 기반 동적 gating(SSGAA)을 도입해 장기 태스크의 단계별 표현 요구 변화에 적응한다. 2B 소형 모델로 7B 대형 모델 초월이라는 파라미터 효율성을 실증한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>2B로 7B 모델 능가 — 파라미터 효율성 실증</li><li>LIBERO·SimplerEnv 두 벤치마크 SOTA</li><li>belief state로 task 진행 상태 명시적 추적 — 단계 전환 처리</li><li>IJCAI 2026 채택 — peer-reviewed</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>belief state 차원·업데이트 규칙 abstract에 미설명 — 설계 세부 불명확</li><li>LIBERO·SimplerEnv 외 다른 벤치마크 검증 미공개</li><li>long-horizon 정의 기준(스텝 수·태스크 복잡도) 불명확</li><li>실제 로봇 실험 여부 abstract에 미언급</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (SSGAA 적응 융합, 장기 조작)</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, SimplerEnv</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">7B-scale VLA models</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.27807" target="_blank" rel="noopener">SpikeVLA: Vision-Language-Action Models with Spiking Neural Networks</a></h3>
+        <div class="badges"><span class="badge conf">🎓 ICML 2026</span></div>
+        <div class="meta"><span class="id">2606.27807</span> · <a href="https://arxiv.org/abs/2606.27807" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">대형 transformer 기반 VLA의 추론 지연·에너지 소비 문제를 Spiking Neural Networks(SNN)로 해결하는 SpikeVLA 아키텍처를 제안한다. Spike-V(spiking vision encoder), Spike-L(multimodal spiking LLM, token-level event-driven sparsity), Spike-A(Laplacian-kernel population coding + SNN action policy)의 세 컴포넌트로 구성한다. 내비게이션·로봇 제어 태스크에서 에너지·연산 비용을 대폭 절감하면서 경쟁력 있는 성능을 유지한다.</p><div class="f"><span class="lbl">기여</span><span>VLA 전체 파이프라인(비전 인코더 → LLM → 액션 정책)을 spiking neural network로 교체한 포괄적 SNN VLA 아키텍처. Laplacian-kernel population coding으로 spiking 활성을 연속 제어 신호로 안정적으로 디코딩하는 방법을 제안한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>에너지 소비·연산 비용 대폭 절감 — 저전력 실시간 배포 가능</li><li>ICML 2026 채택 — 방법론 peer-reviewed</li><li>전 파이프라인(V+L+A) SNN 교체 — 포괄적 에너지 효율 설계</li><li>event-driven sparsity로 토큰 수준 연산 절약</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>&quot;경쟁력 있는&quot; 성능이지만 기존 VLA 대비 정확한 성능 gap 불명확</li><li>SNN 학습 불안정성(surrogate gradient 문제) 언급 부재</li><li>내비게이션·로봇 제어 이외 정밀 조작 태스크 미검증</li><li>하드웨어별(neuromorphic chip vs. GPU) 실제 에너지 절감 수치 부재</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (SNN 기반 에너지 효율 VLA)</span></div><div class="f"><span class="lbl">데이터셋</span><span>navigation tasks, robotic control tasks (구체적 벤치마크 미명시)</span></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.27268" target="_blank" rel="noopener">E-TTS: A New Embodied Test-Time Scaling Framework for Robotic Manipulation</a></h3>
+        <div class="badges"><span class="badge conf">🎓 ECCV 2026</span></div>
+        <div class="meta"><span class="id">2606.27268</span> · <a href="https://arxiv.org/abs/2606.27268" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">추가 학습 없이 VLA의 추론 시간 계산을 확장해 성능을 향상시키는 E-TTS 프레임워크를 제안한다. reasoning-action 결합 샘플링 + history buffer로 이전 상태 문맥을 활용하고, feedback 생성으로 closed-loop 반복 정제를 수행한다. 4개 벤치마크·6개 환경·3개 embodiment·4개 VLA 모델에서 시뮬 +33.14%·실환경 +26.62% 향상을 달성한다.</p><div class="f"><span class="lbl">기여</span><span>reasoning scaling(CoT)과 action scaling(후보 샘플링·검증)을 history-aware closed-loop 반복으로 통합한 embodied TTS 프레임워크. 기존 open-loop TTS의 역사적 문맥 부재 문제를 history buffer와 feedback 생성으로 해결한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>추가 학습 없이 4개 VLA baseline 전부 개선 — plug-and-play</li><li>시뮬 +33.14%·실환경 +26.62% 향상 — 대규모 실험(4벤치·6환경·3embodiment)</li><li>closed-loop 반복으로 추론 효율·환경 적응력 향상</li><li>ECCV 2026 채택 — peer-reviewed</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>reasoning+action 반복 샘플링으로 추론 지연 증가 — latency 문제</li><li>vision-language verifier 품질에 성능 종속</li><li>history buffer 크기·업데이트 정책 설계에 민감할 수 있음</li><li>실환경 개선폭이 시뮬보다 작음(+26.62% vs +33.14%) — sim-to-real gap 잔존</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (test-time 추론 스케일링)</span></div><div class="f"><span class="lbl">데이터셋</span><span>4 benchmarks, 6 environments, 3 embodiments (구체적 명칭 abstract 미공개)</span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>4 benchmarks (시뮬레이션 평균)</td><td class="mt">Success Rate 상대 향상</td><td class="me">+33.14%</td><td> <span class="note">abstract 수치</span></td></tr><tr><td>real-world</td><td class="mt">Success Rate 상대 향상</td><td class="me">+26.62%</td><td> <span class="note">abstract 수치</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">ForesightSafety-VLA: A Unified Diagnostic Safety Benchmark for Vision-Language-Action Models</a></h3>
+        <div class="badges"><span class="badge conf">🎓 IROS 2026</span></div>
+        <div class="meta"><span class="id">2606.27079</span> · <a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">VLA 모델의 embodied safety를 1차 평가 목표로 삼는 진단 벤치마크 ForesightSafety-VLA를 제안한다. 물리 상호작용 안전(Safe-Core)·명령 측 안전(Safe-Lang)·인식 측 안전(Safe-Vis) 3대 축, 13개 카테고리 safety taxonomy로 VLA를 평가하며, cumulative safety cost(CC)와 risk exposure time(RET)이라는 process-level 위험 지표를 도입한다. RoboTwin에서 5개 embodiment·66개 safety-augmented 시나리오로 기준 VLA들을 평가한다.</p><div class="f"><span class="lbl">기여</span><span>VLA safety를 성공률의 부수지표가 아닌 1차 평가 목표로 설정하고, CC·RET 프로세스 지표로 이진 성공/실패 너머의 위험 노출을 정량화한다. 씬 구조·언어·시각 3차원 변인 제어로 실패 원인을 분리 진단하는 방법론을 제시한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>13-카테고리 포괄적 safety taxonomy (물리·언어·시각 3축 커버)</li><li>CC·RET 프로세스 지표로 이진 성공/실패 너머 위험 노출 정량화</li><li>3차원 변인 제어(씬 구조·언어·시각)로 실패 원인 분리 진단</li><li>5개 embodiment·66개 시나리오 — 다양한 평가 범위</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>IROS 2026 제출 단계 — peer-review 미완료</li><li>RoboTwin 시뮬레이터 한정 — real-world safety 포착 한계</li><li>benchmark 외부 타당도(실환경 위험과의 상관) 검증 부족</li><li>현재 평가된 VLA baseline 수 제한적</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 안전·벤치마크 (VLA safety 진단)</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin (66 safety-augmented scenarios, 5 embodiments)</span></div>
       </div>
     </article>
   </section>
@@ -467,7 +588,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-06-29 15:03 · WM_surveybot</footer>
+<footer>built 2026-06-29 15:22 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
