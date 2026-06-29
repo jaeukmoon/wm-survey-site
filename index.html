@@ -20,6 +20,11 @@ header p a{color:#9db4ff}
 .btn.ghost:hover{background:rgba(255,255,255,.2)}
 #upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
 main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
 h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .card.big{border-left:4px solid #e03131}
@@ -92,9 +97,10 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">28</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">8</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">10</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">6</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">4</span></button></div>
   <section>
     <h2 class="date">2026-06-17 · 1편</h2>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.19531" target="_blank" rel="noopener">ImageWAM: Do World Action Models Really Need Video Generation, or Just Image Editing?</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -108,7 +114,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-06-15 · 1편</h2>
-    <article class="card">
+    <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13856" target="_blank" rel="noopener">Output-Level Regularization Eliminates the Seed Lottery in Single-GPU VLA Fine-Tuning</a></h3>
         <div class="badges"><span class="badge conf">🎓 CoRL 2026 (submitted)</span></div>
@@ -122,7 +128,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-06-12 · 4편</h2>
-    <article class="card big">
+    <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11324" target="_blank" rel="noopener">Embodied-R1.5: Evolving Physical Intelligence via Embodied Foundation Models</a></h3>
         <div class="badges"><span class="badge org">🔴 Tencent Hunyuan</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 10</span></div>
@@ -133,7 +139,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">사용자 instruction과 image observation을 입력받아 spatial grounding(pointing)·trajectory·natural language reasoning을 출력하는 8B EFM. cognition·planning·pointing을 단일 모델로 통합해 long-horizon manipulation을 self-correction 포함 closed-loop으로 자율 수행. Tianjin Univ + Tencent Hunyuan.</p><div class="f"><span class="lbl">기여</span><span>pointing specialist였던 선행 Embodied-R1을 cognition·planning·pointing 통합 종합 EFM으로 확장하고, multi-task balanced RL recipe + Planner-Grounder-Corrector(PGC) closed-loop로 자율적 long-horizon 실행과 failure correction을 달성.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>24개 embodied VLM 벤치 중 16개 SOTA — 주요 21개 평균 70.4%로 Gemini-Robotics-ER-1.5 대비 +17.0%</li><li>LIBERO에서 action pretraining 없이 97.3% — 대규모 action data 기반 방법과 동급</li><li>3개 자동화 데이터 파이프라인으로 15B+ token 데이터 시스템 구축, 모델·데이터·EvalKit 전부 공개</li><li>실로봇 zero-shot에서 instruction following·affordance grounding·articulated manipulation 검증</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>복잡한 3D manipulation 실로봇 성공률 낮음 (Door Open 16.6%, Cup Disassembly 66.6%)</li><li>PGC memory가 단순 FIFO buffer — 저자도 더 정교한 memory 전략 필요성 인정</li><li>Planner-Grounder-Corrector 다중 inference call 조율로 배포 시 추론 비용·복잡도 증가</li><li>cognition/spatial reasoning에서의 우위 margin은 pointing 대비 상대적으로 작음</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 EFM (embodied reasoning VLM)</span></div><div class="f"><span class="lbl">데이터셋</span><span>24 embodied VLM 벤치(ERQA·RoboVQA 등) + SimplerEnv·LIBERO(-Plus) + 실로봇 zero-shot</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Gemini-Robotics-ER-1.5</span><span class="cmp">GPT-5.4</span><span class="cmp">GPT-4o</span><span class="cmp">Gemini-2.5-Pro</span><span class="cmp">Qwen3-VL-8B</span><span class="cmp">RoboBrain-2.0-7B</span><span class="cmp">Embodied-R1</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">OpenVLA-OFT</span><span class="cmp">GR00T-N1.6</span><span class="cmp">RT-2-X</span><span class="cmp">Diffusion Policy</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>21 embodied VLM 벤치 (avg)</td><td class="mt">acc %</td><td class="me">70.4</td><td> <span class="note">16/24 SOTA · +17.0 vs Gemini-Robotics-ER-1.5</span></td></tr><tr><td>LIBERO (action pretrain 없이)</td><td class="mt">SR %</td><td class="me">97.3</td><td>π0.5 93.6 <span class="note">Table 9</span></td></tr><tr><td>Planning &amp; Correction (avg)</td><td class="mt">acc %</td><td class="me">65.3</td><td>GPT-5.4 53.8 · Gemini-Robotics-ER-1.5 41.3 <span class="note">Table 1</span></td></tr><tr><td>SimplerEnv Google Robot (VM)</td><td class="mt">SR %</td><td class="me">92.4</td><td>π0.5 72.7 <span class="note">Table 6</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.12105" target="_blank" rel="noopener">DAM-VLA: Decoupled Asynchronous Multimodal Vision Language Action model</a></h3>
         <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -144,7 +150,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">RGB(25Hz)·proprioception(100Hz)·force/torque(100Hz)·language를 modality별 latent buffer에 각자 센서 주기로 비동기 갱신하며 manipulation action을 생성하는 VLA. contact-rich 7개 실로봇 태스크 평균 95.2%를 100Hz smooth·reactive 제어로 달성. KIT 주도 + NVIDIA.</p><div class="f"><span class="lbl">기여</span><span>모든 센서를 단일 clock에 동기화하던 기존 VLA와 달리 modality별 비동기 latent buffer(decoupled temporal processing)를 제안하고, gated cross-attention으로 고주파 modality를 pretrained VLM backbone 손상 없이 통합.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>7개 contact-rich 태스크 평균 95.2% vs 최강 동기 baseline 40.95% (+54.25%p)</li><li>동기 baseline이 거의 0%인 socket insertion 80.0%, Lego arranging 93.3%</li><li>100Hz 설정 중 최저 SPARC(8.1)로 가장 smooth한 action, tracking lag 0.116s (25Hz baseline 0.189s)</li><li>RTX 4060 Ti 단일 GPU에서 100Hz 반응 제어</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>action chunk 내부에서 force 신호로 action을 보정하지 않아 극단적 contact-heavy 태스크 제한 (socket insertion 80%)</li><li>단일 플랫폼(Franka Panda) 7개 태스크 평가 — 일반화 검증 부족</li><li>vision decoupling이 불완전 (scene 변화가 아닌 고정 timer 기반 camera update)</li><li>전용 F/T 센서 없이 Franka 내장 joint-torque 추정 의존 — 타 플랫폼 확장성 미검증</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action (비동기 멀티모달)</span></div><div class="f"><span class="lbl">데이터셋</span><span>7개 contact-rich real-world 태스크 (Franka Panda, 태스크당 50-60 demo)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">X-VLA25 (sync 25Hz)</span><span class="cmp">X-VLA100 (naive 100Hz)</span><span class="cmp">X-VLA_AFM (force+memory concat)</span><span class="cmp">DAM-VLA /F/M</span><span class="cmp">DAM-VLA /F</span><span class="cmp">DAM-VLA /M</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>7 contact-rich real tasks (avg)</td><td class="mt">SR %</td><td class="me">95.2</td><td>X-VLA25 40.95 · X-VLA_AFM 54.3 · DAM-VLA /M 66.7 <span class="note">Table 2 · 백본 X-VLA</span></td></tr><tr><td>Socket insertion</td><td class="mt">SR %</td><td class="me">80.0</td><td>X-VLA25 6.7</td></tr><tr><td>Lego</td><td class="mt">SR %</td><td class="me">93.3</td><td>X-VLA25 0.0 · DAM-VLA /M 13.3</td></tr><tr><td>Button press</td><td class="mt">SR %</td><td class="me">93.3</td><td>X-VLA25 13.3</td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13355" target="_blank" rel="noopener">Real-Time Execution with Autoregressive Policies</a></h3>
         <div class="badges"><span class="badge org">🔴 Google Research</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -155,7 +161,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">Autoregressive VLA(π₀-FAST 계열)를 비동기 inference로 실시간 실행: tokenization horizon 조정으로 action horizon과 inference 주기를 분리하고, constrained decoding(coin-change DP logit masking)으로 latency 상한을 보장하며, multi-trajectory decoding으로 성능을 보강 (π₀-REALFAST). KIST+SNU+Google Research.</p><div class="f"><span class="lbl">기여</span><span>실시간 로봇 제어가 diffusion/flow-matching policy의 전유물이 아님을 입증 — constrained decoding 기반 latency 보장과 horizon-주기 분리로 AR policy의 경쟁력 있는 real-time execution 달성.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>LIBERO 평균 95.7%로 RTC 적용 π₀(89.4~94.8%)를 일관되게 상회</li><li>~6k training steps(~6 epochs)만에 최고 성능 도달하는 빠른 수렴</li><li>DROID zero-shot 실로봇에서 π0.5에 비견, 동기식 π₀-FAST 대비 큰 폭 개선</li><li>외부 latency 변동에도 동일 inference 빈도에서 강건 (RTC는 빈도 증가 시 성능 저하)</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>정적 환경의 single-arm tabletop manipulation에 평가 한정</li><li>bimanual/동적 환경 확장 시 더 많은 토큰 디코딩이 필요해 latency 제약 심화</li><li>LIBERO는 실제 실행 지연을 반영하지 못해 인위적 제약으로 real-time을 모사</li><li>복잡한 시나리오용 AR action expert 아키텍처는 open question</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 실행/추론 기법 (real-time AR)</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO 4종 · DROID zero-shot 실로봇 8 task · Kinetix</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0 + RTC</span><span class="cmp">π0.5 + RTC</span><span class="cmp">π0-FAST (sync)</span><span class="cmp">π0 (sync)</span><span class="cmp">π0.5 (sync)</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO avg (real-time, m=4)</td><td class="mt">SR %</td><td class="me">95.7</td><td>π0+RTC 94.8 · π0.5+RTC 97.0 <span class="note">Table 1 · π0.5+RTC가 최고</span></td></tr><tr><td>LIBERO sync 참고 (m=0)</td><td class="mt">SR %</td><td class="me">—</td><td>π0 94.2 · π0.5 96.9 · π0-FAST 88.8 <span class="note">real-time 아님</span></td></tr><tr><td>DROID real zero-shot</td><td class="mt">정성 (Fig 4)</td><td class="me">π0 상회·π0.5 비등</td><td> <span class="note">수치 표 없음</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card">
+    <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13578" target="_blank" rel="noopener">LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 39</span></div>
@@ -169,7 +175,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-06-10 · 4편</h2>
-    <article class="card big">
+    <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11129" target="_blank" rel="noopener">WorldOlympiad: Can Your World Model Survive a Triathlon?</a></h3>
         <div class="badges"><span class="badge org">🔴 Alibaba DAMO</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 20</span></div>
@@ -180,7 +186,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">비디오 world model을 Physical(물리 법칙)·Geometry(3D 기하 일관성)·Interaction(action 추종) 3트랙으로 동시 평가하는 triathlon식 벤치마크. robotics 400 + gaming 400 + real-world 200, 총 1,000개 long video로 8개 파이프라인을 평가 — MLLM-as-judge(Gemini-3-Pro) + Gaussian splatting 재구성 + CLIP 점수 결합.</p><div class="f"><span class="lbl">기여</span><span>physical-law adherence·3D geometric consistency·chunk-by-chunk interactive generation을 하나의 multi-dimensional 평가 체계로 묶은 최초의 통합 long-video world model 벤치마크. 1,000개 long video 데이터셋과 체계적 평가 결과 공개.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>3개 도메인 1,000개 long video로 물리·기하·상호작용 통합 평가하는 첫 프로토콜</li><li>Geometry 트랙이 Gaussian splatting 재구성으로 3D 구조 일관성을 직접 정량화 (S_recon/S_meta/S_traj)</li><li>진단적 발견: 상위 모델도 3D consistency 최고 0.424 — geometry-simulation gap 노출 (physical regularity는 0.86-0.94)</li><li>human evaluation과 Spearman ρ=0.95 상관으로 자동 평가 타당성 검증</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>MLLM-as-judge가 Gemini-3-Pro 단일 모델 의존 — 독립 검증 부족</li><li>트랙 점수 equal-weight 집계의 근거 부재</li><li>human eval 정합성 표본이 8개 모델로 작음</li><li>실패 원인 분석이 얕고 평가 파이프라인 계산 비용 논의 부재</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 벤치마크/평가 (모델 아님)</span></div><div class="f"><span class="lbl">데이터셋</span><span>자체 벤치 1,000 long videos (robotics/gaming/real-world) · 평가대상 8개 video world model pipeline</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">LingBot-World</span><span class="cmp">Cosmos-Predict-2.5</span><span class="cmp">Rolling Forcing</span><span class="cmp">Yume-1.5</span><span class="cmp">LongLive</span><span class="cmp">Hunyuan-WorldPlay</span><span class="cmp">WoW</span><span class="cmp">Matrix-Game 2.0</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>Overall (All) 리더보드</td><td class="mt">score[0-1]</td><td class="me">—</td><td>LingBot-World 0.683① · Cosmos-Predict-2.5 0.671② · Rolling Forcing 0.610③ · Yume-1.5 0.604④ · LongLive 0.584⑤ · Hunyuan-WorldPlay 0.477⑥ · WoW 0.434⑦ · Matrix-Game 2.0 0.231⑧ <span class="note">Table 3</span></td></tr><tr><td>Physical 트랙</td><td class="mt">score[0-1]</td><td class="me">—</td><td>LingBot-World 0.942 (최고) · Matrix-Game 2.0 0.325 (최저) <span class="note">물리 법칙</span></td></tr><tr><td>3D Geometry 트랙</td><td class="mt">score[0-1]</td><td class="me">—</td><td>Hunyuan-WorldPlay 0.424 (최고) · WoW 0.250 (최저) <span class="note">최고도 0.424 — 3D 일관성 갭</span></td></tr><tr><td>Interaction 트랙</td><td class="mt">score[0-1]</td><td class="me">—</td><td>LingBot-World 0.734 (최고) · Matrix-Game 2.0 0.113 (최저) <span class="note">action 추종</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.07723" target="_blank" rel="noopener">VoLo: A Physical Orchestrator for Open-Vocabulary Long-Horizon Manipulation</a></h3>
         <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 1</span></div>
@@ -191,7 +197,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">VLM orchestrator(VoLoAgent)가 interruptible VLA/WAM(π₀.₅, DreamZero)·perception tool(GroundingDINO, SAM2/3, Molmo2)·action primitive를 callable tool로 부리며, instruction을 atomic subgoal로 분해해 0.2Hz monitoring으로 continue/next/recovery를 라우팅하는 closed-loop. asynchronous tool 실행·fast/slow memory·safety-aware idling으로 &#x27;physical orchestration&#x27; 문제를 해결.</p><div class="f"><span class="lbl">기여</span><span>VLA/WAM을 중단 가능한 tool로 합성하는 tool-augmented robotic agent(VoLoAgent)와 4개 suite 126 task의 open-vocabulary long-horizon 벤치마크(RoboVoLo)를 제안, action model·code-as-policy·TAMP 계열과 대규모 비교.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>RoboVoLo 126 task에서 cross-suite 41.80% vs π₀.₅ 단독 12.57% (3배+), Common Sense suite 54.44% vs 11.11%</li><li>실로봇 14 task에서 42.9% vs 14.3% (3배), 95% CI + 통계 검정(p&lt;0.05) 제시</li><li>n=90 failure audit으로 completion-monitor 오류가 67%+임을 정량 분석</li><li>ablation(No VLA 17.76 / Only VLA 34.97 / Full 41.80)으로 orchestration 효과 분리 검증</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>orchestrating VLM의 cloud per-call latency 1~5초 — 빠른 failure를 놓칠 수 있음 (저자 명시)</li><li>single-arm + parallel-jaw 단일 embodiment — bimanual/dexterous 확장은 VLA 교체 필요</li><li>safe idling이 &#x27;팔 정지&#x27;로 환원 — balancing humanoid류에 일반화 불가</li><li>World Knowledge suite 이득 +2.1%p로 미미, 실로봇 ablation 통계 검정력 부족 (저자 인정)</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 agentic orchestration (VLA/WAM을 tool로)</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboVoLo(자체 벤치 126 task) + 실로봇 14 task</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">π0-FAST</span><span class="cmp">MolmoBot</span><span class="cmp">MolmoAct2</span><span class="cmp">DreamZero</span><span class="cmp">CaP-X</span><span class="cmp">TiPToP</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>RoboVoLo cross-suite Overall</td><td class="mt">SR %</td><td class="me">41.80</td><td>π0.5 12.57 · Only-VLA (abl) 34.97 · No-VLA (abl) 17.76 <span class="note">Table 2 ablation</span></td></tr><tr><td>real Franka FR3 (14 tasks)</td><td class="mt">SR %</td><td class="me">42.9</td><td>π0.5 14.3 · No-VLA 45.2 <span class="note">Table 3 · No-VLA가 근소 우위</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11187" target="_blank" rel="noopener">Next Forcing: Causal World Modeling with Multi-Chunk Prediction</a></h3>
         <div class="badges"><span class="badge org">🔴 Ant/Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -202,7 +208,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">Causal video world model의 next-chunk만 학습하는 myopic supervision 문제를 해결: main model의 4개 intermediate layer feature를 융합해 1~3 chunk 앞 미래를 causal chain으로 예측하는 경량 MCP module(depth당 3 transformer block)을 부착. LLM의 multi-token prediction을 continuous video latent로 이전한 설계.</p><div class="f"><span class="lbl">기여</span><span>Multi-token prediction을 video chunk 도메인으로 확장 — temporal chunk shifting + 독립 noise 주입 + multi-layer feature fusion으로 myopic supervision을 해소하고 학습 수렴 가속과 추론 병렬화(2x)를 동시 달성.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>RoboTwin SOTA: Clean 94.1% / Random 93.5% (LingBot-VA 92.9/91.5 대비)</li><li>수렴 가속: 5k step에서 70.2/61.6% vs LingBot-VA 45.5/31.9%, 50fps 기준 2.3x training speedup</li><li>2x inference 가속에도 정확도 유지 (94.1→93.5%)</li><li>일반화: video pretraining FVD 58%/52% 감소, PhyWorld abnormal ratio 8% vs 12%</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>MCP module의 추가 training cost (논문 명시)</li><li>RoboTwin(시뮬)·PhyWorld(합성) 중심 평가 — real-world robot 검증 부재</li><li>일부 설정에서 병렬 추론 시 정확도 하락 (12fps Random 93.5→90.6)</li><li>lookahead가 MCP depth 3 chunk로 제한</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM (causal·video 생성형)</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin(94.1/93.5 Clean/Random)·PhyWorld·일반 video pretraining (vs LingBot-VA)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">LingBot-VA</span><span class="cmp">Fast-WAM</span><span class="cmp">Being-H0.7</span><span class="cmp">Motus</span><span class="cmp">π0.5</span><span class="cmp">π0</span><span class="cmp">X-VLA</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>RoboTwin (50 tasks, Clean/Random)</td><td class="mt">SR %</td><td class="me">94.1 / 93.5</td><td>LingBot-VA 92.9 / 91.5 · Fast-WAM 91.9 / 91.8 · π0.5 82.7 / 76.8 <span class="note">Table 1 SOTA</span></td></tr><tr><td>RoboTwin @5k steps</td><td class="mt">SR %</td><td class="me">70.2 / 61.6</td><td>LingBot-VA 45.5 / 31.9 <span class="note">수렴 2.3x 가속</span></td></tr><tr><td>PhyWorld</td><td class="mt">FVD↓ (OOT/IT)</td><td class="me">4.7 / 3.2</td><td>LingBot-VA 5.3 / 3.5 <span class="note">Table 3</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card">
+    <article class="card" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11120" target="_blank" rel="noopener">Monte Carlo Pass Search: 3D Counterfactual Pass Evaluation in Football</a></h3>
         <div class="badges"><span class="badge conf">🎓 CVPR</span></div>
@@ -216,7 +222,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-06-08 · 1편</h2>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.09828" target="_blank" rel="noopener">Mirage: Latent Spatial Memory for Video World Models</a></h3>
         <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -230,7 +236,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-06 · 1편</h2>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">τ0-WM (tau-zero) — A Unified Video-Action World Model for Robotic Manipulation</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -244,7 +250,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-04 · 1편</h2>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2604.05014" target="_blank" rel="noopener">StarVLA</a></h3>
         <div class="badges"><span class="badge conf">🎓 arXiv (Technical Report, open-source VLA infra)</span></div>
@@ -258,7 +264,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-03 · 2편</h2>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2603.16666" target="_blank" rel="noopener">Fast-WAM</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -269,7 +275,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">멀티뷰 카메라 이미지와 언어 지시(+proprioception)를 입력받아 짧은 action chunk를 출력하는 로봇 제어 모델이다. 학습 시에는 미래 video latent를 함께 예측하는 World-Action Model(WAM)이지만, test-time에는 미래 frame 생성을 통째로 빼고 첫 관측 latent만으로 백본을 1회 forward해 action expert가 곧바로 행동을 디코딩한다. 그 결과 ~190ms 실시간 제어로 imagine-then-execute WAM(~810ms) 대비 4배+ 빠르면서 LIBERO 97.6%·RoboTwin 2.0 91.8%의 경쟁력 있는 정확도를 유지한다.</p><div class="f"><span class="lbl">기여</span><span>기존 WAM은 추론 시 예측 미래 영상을 반복 denoise한 뒤 행동을 고르는 느린 &quot;imagine-then-execute&quot; 레시피를 썼는데, Fast-WAM은 world model의 이득이 추론-시 미래 생성이 아니라 &quot;학습-시 video co-training&quot;에서 온다는 것을 보이고, test-time 미래 상상을 제거한 direct-policy 인터페이스로 정확도를 유지한 채 4배+ 가속을 달성한 점이 새롭다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>test-time 미래 생성 제거로 ~190ms 실시간 제어, imagine-then-execute(~810ms) 대비 4배+ 가속</li><li>정확도 유지: LIBERO 97.6%, RoboTwin 2.0 91.8%로 pretraining 쓴 LingBot-VA 등과 경쟁력 (ablation으로 video co-train 제거 시 RoboTwin 91.8%→83.8%로 떨어져 학습-시 co-training의 기여를 직접 입증)</li><li>별도 cross-attention 없이 MoT(Mixture-of-Transformers)로 video-DiT(~5B)와 action expert(1B)가 attention만 공유하는 단순·확장 가능한 구조</li><li>코드·가중치·전처리 벤치마크 데이터(LIBERO/RoboTwin2.0)를 공개</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>test-time direct-policy 인터페이스라 추론 시 plain VLA(①)처럼 읽힐 수 있는 분류 모호점이 핵심 caveat (학습이 MoT joint world-modeling이라 분류는 ② WAM)</li><li>백본이 conventional VLM이 아니라 video diffusion transformer(Wan2.2-5B)라 &#x27;VLA/VLM&#x27; 명칭이 느슨하게 적용됨</li><li>실세계 평가가 towel-folding 단일 태스크(Galaxea R1 Lite 60h 텔레오퍼레이션)에 한정되고 해당 실세계 데이터는 비공개</li><li>백본 Wan2.2-5B의 영상 사전학습 소스가 불명확하고 embodied pretraining 없이 평가됨</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습/평가: LIBERO(Spatial/Object/Goal/Long 4 suites) + RoboTwin 2.0(~2.7만 demos, &gt;50 tasks) + 자체 실세계 towel-folding(Galaxea R1 Lite, 60h 텔레오퍼레이션). 백본 Wan2.2-5B는 영상생성 데이터로 별도 사전학습.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">imagine-then-execute WAM (Fast-WAM-IDM, ~810ms)</span><span class="cmp">Fast-WAM-Joint (joint-modeling 변형)</span><span class="cmp">Fast-WAM w.o. video co-train (ablation)</span><span class="cmp">OpenVLA</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">LingBot-VA</span><span class="cmp">Motus</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO (4 suites avg)</td><td class="mt">success rate (%)</td><td class="me">97.6</td><td>Fast-WAM-Joint 98.5 · Fast-WAM-IDM 98.0 · LingBot-VA 98.5 · Motus 97.7 · π0.5 96.9 · π0 94.1 · OpenVLA 76.5 <span class="note">arXiv v2 Table 2 기준; Fast-WAM은 test-time 미래 생성 없이 동급 정확도</span></td></tr><tr><td>RoboTwin 2.0</td><td class="mt">success rate (%) avg</td><td class="me">91.8</td><td>LingBot-VA (w/ pretraining) 92.2 · Fast-WAM-IDM 91.3 · Fast-WAM-Joint 90.6 · Motus (w/ pretraining) 87.8 · Fast-WAM w.o. video co-train 83.8 · π0.5 (w/ pretraining) 79.8 <span class="note">arXiv v2 Table 1 기준; video co-train 제거 시 83.8%로 하락해 학습-시 co-training 기여 입증. Fast-WAM은 embodied pretraining 없음</span></td></tr><tr><td>Inference latency</td><td class="mt">ms (lower=better)</td><td class="me">190</td><td>Fast-WAM-IDM (imagine-then-execute) 810 <span class="note">arXiv v2 Figure 4; ~4배+ 빠름</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card">
+    <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2603.19312" target="_blank" rel="noopener">LeWorldModel (LeWM)</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -283,7 +289,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-02 · 3편</h2>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.10098" target="_blank" rel="noopener">VLA-JEPA</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -294,7 +300,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">멀티뷰 RGB 장면 카메라와 언어 지시를 입력받아, 장면이 어떻게 변할지를 픽셀이 아닌 추상 latent(JEPA embedding) 공간에서 상상하면서 연속 end-effector action chunk를 출력하는 VLA 정책이다. VLM 백본(Qwen3-VL-2B)이 latent action token과 action token을 내면, 작은 predictor(latent world model)가 미래 latent state를 예측하고 flow-matching head(DiT-B)가 행동을 생성한다. leakage-free state prediction으로 appearance bias·카메라 motion·정보 누출에 강건한 조작 정책을 달성했다(LIBERO 97.2%, LIBERO-Plus 79.5%).</p><div class="f"><span class="lbl">기여</span><span>기존 latent-action VLA pretraining은 latent가 raw 픽셀 변화에 anchoring돼 appearance bias·nuisance motion·information leakage에 취약했는데, VLA-JEPA는 미래 frame을 V-JEPA2 target encoder로 인코딩해 지도 target으로만 쓰고 학습자는 현재 관측만 보게 하는 leakage-free state prediction으로 이를 설계 차원에서 회피한다. 다단계 latent-action 파이프라인 대신 JEPA pretraining → action-head fine-tuning의 단순한 2단계 레시피로 일반화·강건성을 끌어올린 점이 새롭다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>leakage-free state prediction: 미래 frame을 지도 target으로만 사용하고 학습자는 현재만 보게 해 latent action이 미래를 베껴 치팅하는 information leakage를 구조적으로 차단</li><li>픽셀이 아닌 JEPA latent 공간에서 dynamics를 예측해 카메라 motion·배경 변화 등 action-irrelevant한 디테일에 강건</li><li>human video(alignment loss만) + robot data(alignment+action joint)의 cross-domain co-training으로 행동 라벨 없는 대규모 영상도 world-model 학습에 활용</li><li>LIBERO 97.2%, LIBERO-Plus 79.5%, SimplerEnv(Google 65.2%/WidowX 57.3%)로 π0.5·OpenVLA-OFT·UniVLA·villa-X 등 강한 baseline 대비 일관된 우위 + 코드·가중치 공개</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>venue 없는 preprint(2026-02 공개) — peer review 미통과</li><li>분류 경계가 모호: 미래 latent 예측은 pretraining 보조 목적이고 행동은 별도 flow-matching head라 ② WAM이되 ①(VLM+ActionExpert)로 읽을 여지도 있음(③/④는 분명히 아님)</li><li>action head가 predictor의 예측 future latent를 입력으로 받아 디코딩하는 구조가 아니라 단지 alignment loss target일 뿐 — &#x27;상상한 미래로 행동을 만든다&#x27;는 직관과는 다름</li><li>fine-tuning 시 proprioception 입력 사용 여부 미확인; arXiv abstract에는 수치가 없고 점수는 HTML 본문 표에서만 확인됨</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습: (JEPA pretraining) Something-Something-v2(인간영상) + 로봇데이터 DROID·BridgeData V2·Fractal(RT-1), LeRobot 포맷 / 평가: LIBERO·LIBERO-Plus·SimplerEnv + 실로봇</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">π0-Fast</span><span class="cmp">OpenVLA-OFT</span><span class="cmp">UniVLA</span><span class="cmp">villa-X</span><span class="cmp">LAPA</span><span class="cmp">DreamVLA</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO</td><td class="mt">평균 success rate (%)</td><td class="me">97.2</td><td>OpenVLA-OFT 97.1 · π0.5 96.9 · UniVLA 95.2 · villa-X 90.1 <span class="note">HTML v2 Table 1 기준 (abstract에는 수치 없음)</span></td></tr><tr><td>LIBERO-Plus</td><td class="mt">평균 success rate (%)</td><td class="me">79.5</td><td>OpenVLA-OFT 69.6 · π0-Fast 61.6 · UniVLA 42.9 <span class="note">HTML v2 Table 3 기준</span></td></tr><tr><td>SimplerEnv (Google Robot)</td><td class="mt">평균 success rate (%)</td><td class="me">65.2</td><td>villa-X 44.9 <span class="note">HTML v2 Table 2 기준; WidowX는 VLA-JEPA 57.3 vs villa-X 40.8</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.09849" target="_blank" rel="noopener">BagelVLA (Tsinghua + ByteDance Seed)</a></h3>
         <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -305,7 +311,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">카메라 RGB 관측과 언어 지시를 입력으로 받아, 한 트랜스포머 안에서 언어 계획(linguistic planning) · 시각 예측(visual forecasting) · 행동 생성을 interleave하여 텍스트 추론 + 예측 시각 feature + 로봇 행동을 함께 출력하는 통합 VLA다. 사전학습 통합 이해·생성 모델(BAGEL 계열)에서 초기화하고, Residual Flow Guidance(RFG)로 미래 영상을 전부 합성하지 않고도 저지연 foresight를 행동에 주입한다. 시뮬(CALVIN·RoboTwin) 및 실로봇(dual-arm AgileX) 벤치마크에서, 특히 multi-stage 추론이 필요한 long-horizon 조작에서 기존 baseline 대비 큰 폭의 우위를 보고했다.</p><div class="f"><span class="lbl">기여</span><span>기존 VLA가 언어 계획 또는 시각 예측 중 하나만 행동 guide에 쓴 것과 달리, 둘을 행동 실행 루프에 동시 interleave한다는 점이 새롭다. 핵심 차별점은 Residual Flow Guidance(RFG)로, 현재 관측에서 초기화해 single-step denoising만으로 &quot;예측 시각 feature&quot;를 뽑아 행동을 조건화함으로써, 미래 frame을 반복 denoise로 완전 합성하는 ③(WM+IDM) 방식의 지연 비용 없이 foresight를 제공한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>언어 계획과 시각 예측을 분리하지 않고 한 모델·한 실행 루프에서 동시에 행동 guide로 사용 (long-horizon multi-stage 조작에 강점)</li><li>RFG의 single-step denoising으로 미래 영상 full 합성을 회피해 저지연 foresight 달성 (③ WM+IDM의 추론 지연 문제 우회)</li><li>사전학습 통합 이해·생성 모델(BAGEL: SigLIP2+FLUX VAE, 이해+생성 MoT)에서 초기화해 강한 시각-언어 prior 활용</li><li>시뮬(CALVIN·RoboTwin)과 실로봇(dual-arm AgileX) 양쪽에서 baseline 대비 큰 폭 우위를 보고</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>arXiv HTML 본문 미제공(404) — 구조·수치·그림 URL이 abstract(verbatim) + 2차 요약 기반이며 본문 직접 대조 불가 (정확 성공률·param·action chunk 형식 미확인)</li><li>abstract에 구체적 벤치마크 수치가 전혀 없어 &#x27;significant margin&#x27;이 정량 검증 불가</li><li>abstract가 base 모델로 BAGEL을 명시 인용하지 않음 — &#x27;통합 이해·생성 모델&#x27; 초기화를 팀·이름·계열상 BAGEL로 해석한 것 (거의 확실하나 abstract 직접 명시 아님)</li><li>코드/가중치 공개 여부 미확인 (프로젝트 페이지만 존재); arXiv 2602.09849는 미래 날짜 id라 peer-reviewed venue 대조 불가</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM</span></div><div class="f"><span class="lbl">데이터셋</span><span>CALVIN, RoboTwin (시뮬), 실로봇 dual-arm AgileX</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">BAGEL (통합 이해·생성 MoT, base init)</span><span class="cmp">InternVLA-A1 (3-expert MoT 발상 유사한 동계열)</span></span></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.06949" target="_blank" rel="noopener">DreamDojo</a></h3>
         <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -319,7 +325,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2026-01 · 5편</h2>
-    <article class="card big">
+    <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.11404" target="_blank" rel="noopener">ACoT-VLA</a></h3>
         <div class="badges"><span class="badge org">🔴 AgiBot</span><span class="badge conf">🎓 CVPR 2026</span></div>
@@ -330,7 +336,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">RGB 관측 + 자연어 지시(+일부 세팅에선 robot state)를 입력받아 짧은 action chunk를 출력하는 범용 조작 정책이다. 핵심은 행동하기 전에 추론을 언어(Language-CoT)나 이미지(Visual-CoT)가 아닌 &quot;행동 공간 그 자체&quot;에서 수행한다는 것으로, Explicit Action Reasoner(거친 reference trajectory를 flow-matching으로 스케치)와 Implicit Action Reasoner(VLM layer별 learnable query로 cross-attend해 latent action prior 추출)가 함께 flow-matching action head를 조건화한다. LIBERO 98.5%, LIBERO-Plus 86.6%(zero-shot), VLABench PS 47.4%를 달성했다.</p><div class="f"><span class="lbl">기여</span><span>기존 VLA가 image+text를 행동으로 직접 번역하거나 sub-task 텍스트(Language-CoT)·goal image(Visual-CoT) 같은 간접 신호로 중간 추론을 넣던 것과 달리, 추론 산출물 자체를 거친 &quot;행동 스케치&quot;로 두는 Action Chain-of-Thought(EAR explicit + IAR implicit) 패러다임을 처음 제안해 더 grounded하고 정밀한 정책을 만든다. pi0.5 위에 추론 모듈만 얹어 모든 벤치마크에서 pi0.5를 상회한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>추론을 행동 공간에서 수행 — Language/Visual-CoT의 간접성(세밀함 손실)을 회피하고 정책을 직접 grounding</li><li>EAR(읽을 수 있는 거친 trajectory) + IAR(latent action prior) 두 신호의 상보적 결합으로 정밀도 향상</li><li>pi0.5 베이스라인 대비 LIBERO/LIBERO-Plus/VLABench 전반에서 일관된 우위; LIBERO 98.5% SOTA급</li><li>코드 공개(Apache-2.0, OpenPI 기반) + AgiBot World Challenge @ ICRA 2026 공식 베이스라인으로 재현·비교 용이</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>미래 frame/goal image를 예측하지 않는 순수 정책 — 명시적 world model이 아니라 long-horizon 예측·planning 능력은 구조적으로 부재</li><li>벤치마크별 정확한 카메라 수/배치가 논문에 미공개(단일 224x224 frame 입력만 명시) → 재현 시 입력 구성 불확실</li><li>자체수집 실로봇 4종(Wipe Stain·Pour Water·Open-set Pick, AgiBot G1+AgileX) 데이터 공개 여부 미명시 = 부분공개</li><li>추론 모듈(EAR+IAR)을 얹어 구조·연산이 늘어남에 비해 LIBERO-Plus zero-shot 등 일부 항목 이득은 pi0.5 대비 마진이 작음</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습/평가: LIBERO + LIBERO-Plus + VLABench(시뮬) + 자체수집 실로봇(AgiBot G1·AgileX: Wipe Stain·Pour Water·Open-set Pick)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">pi0</span><span class="cmp">pi0.5</span><span class="cmp">OpenVLA</span><span class="cmp">DreamVLA</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO</td><td class="mt">Success Rate avg (%)</td><td class="me">98.5</td><td>pi0.5 96.9 · DreamVLA 92.6 · OpenVLA 76.5 <span class="note">arXiv v2 Table 1 검증. 4-task(Spatial 99.4/Object 99.6/Goal 98.8/Long 96.0) 평균</span></td></tr><tr><td>LIBERO-Plus</td><td class="mt">Zero-shot Success Rate avg (%)</td><td class="me">86.6</td><td>pi0.5 85.7 <span class="note">arXiv v2 Table 2 검증값(Camera/Robot/Language 평균). lineage 노트의 84.1%와 불일치 → arXiv 표값 채택</span></td></tr><tr><td>VLABench</td><td class="mt">Progress Score avg (%)</td><td class="me">47.4</td><td>pi0.5 43.1 <span class="note">arXiv v2 Table 3 PS 평균 검증(IS는 ACoT 63.5 vs pi0.5 60.2)</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.18692" target="_blank" rel="noopener">LingBot-VLA (Robbyant / Ant Group)</a></h3>
         <div class="badges"><span class="badge org">🔴 Ant Group, Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -341,7 +347,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">멀티뷰 RGB-D 3뷰(양 손목 2 + head 1)와 자연어 지시(+proprioception 로봇 상태)를 입력받아, flow matching으로 양팔(dual-arm) 로봇의 H=50 step 연속 action chunk를 출력하는 범용 조작 VLA foundation model이다. ~20,000시간·9종 양팔 embodiment 실데이터로 사전학습하고, 1.5~2.8× 빠른 학습 코드베이스와 depth 증류를 결합해 적은 데이터·GPU로 새 로봇·태스크에 옮겨 붙는 비용 효율과 morphology 일반화를 동시에 노린다. 자체 공개 실로봇 벤치 GM-100(100 task × 3 플랫폼)에서 π0.5 대비 평균 SR +4.28%p / PS +7.76%p를 달성한 오픈소스 모델이다.</p><div class="f"><span class="lbl">기여</span><span>π0/π0.5와 사실상 동일한 &quot;VLM + flow-matching action expert(MoT)&quot; 구조축을 공유하되, 차별점을 월드모델이 아니라 (1) 9종 양팔 ~20,000h 실데이터로 깐 morphology 일반화, (2) throughput을 1.5~2.8× 끌어올린 효율적 오픈 코드베이스, (3) 별도 LingBot-Depth의 depth token에 VLM query를 정렬하는 vision distillation(현재 장면 3D grounding)이라는 데이터·시스템·기하 증류 축에 둔 점이 새롭다. 즉 &quot;실용적(pragmatic)&quot; 엔지니어링으로 기존 오픈 VLA 코드베이스(OpenPI/StarVLA/Dexbotic)의 낮은 학습 throughput 문제를 정면으로 해결한 것이 선행 대비 핵심이다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>~20,000h·9종 양팔 embodiment 실데이터 사전학습으로 morphology(로봇 형태) 일반화를 데이터로 직접 확보하고, 3k→20k시간 scaling law까지 보고</li><li>학습 throughput 261 samples/s(8-GPU)로 OpenPI/StarVLA/Dexbotic 대비 1.5~2.8× 빠른 코드베이스 — 대규모 실로봇 데이터를 싸게 돌릴 수 있음</li><li>vision distillation(LingBot-Depth depth token 정렬)으로 3D 기하 감각을 백본에 주입, &#x27;w/ depth&#x27; 변형이 w/o depth 대비 SR/PS 모두 상승(17.30/35.41 vs 15.74/33.69)</li><li>코드·base model·벤치 데이터(GM-100)·프로젝트 페이지를 모두 공개한 오픈소스 파운데이션 모델</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>미래 image/world state를 일절 예측하지 않는 순수 반응형 VLA(①) — &#x27;world model&#x27; 문서에 들어가지만 본질은 월드모델이 아니라 π0/π0.5의 대조군. depth 증류도 미래 예측이 아닌 현재 장면 grounding일 뿐</li><li>총 파라미터 수와 제어 주파수가 논문 미명시, 라이선스 종류도 미확인</li><li>벤치마크(GM-100)가 저자 팀이 직접 공개한 자체 실로봇 벤치 — 외부 표준 벤치 비교가 RoboTwin 2.0 시뮬 외에는 제한적</li><li>성공률 절대값 자체는 낮은 편(최고 SR 17.30%)이라 실로봇 조작 난이도가 여전히 높음을 시사</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습: ~20,000h 실세계 teleop 양팔 데이터(9종 embodiment — AgiBot G1, AgileX, Galaxea R1Lite/R1Pro, Realman Rs-02, Leju KUAVO 4 Pro, Qinglong, ARX Lift2, Bimanual Franka). 평가: GM-100(자체 공개 실로봇 벤치, 100 task × 3 플랫폼[AgileX·AgiBot G1·Galaxea R1Pro], task당 130 post-training episode) + RoboTwin 2.0(시뮬 50 task, clean+randomized)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">GR00T N1.6</span><span class="cmp">WALL-OSS</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>GM-100 (real-robot, 3-platform avg)</td><td class="mt">Success Rate (SR) %</td><td class="me">17.30 (w/ depth); 15.74 (w/o depth)</td><td>π0.5 13.02 · GR00T N1.6 7.59 · WALL-OSS 4.05 <span class="note">w/ depth가 π0.5 대비 +4.28%p SR. arXiv abstract/표에서 확인</span></td></tr><tr><td>GM-100 (real-robot, 3-platform avg)</td><td class="mt">Progress Score (PS) %</td><td class="me">35.41 (w/ depth); 33.69 (w/o depth)</td><td>π0.5 27.65 · GR00T N1.6 15.99 · WALL-OSS 10.35 <span class="note">w/ depth가 π0.5 대비 +7.76%p PS. arXiv abstract/표에서 확인</span></td></tr><tr><td>Training throughput (8-GPU)</td><td class="mt">samples/s</td><td class="me">261</td><td>OpenPI/StarVLA/Dexbotic 1.5~2.8× slower <span class="note">abstract에서 1.5~2.8× speedup 명시</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.16163" target="_blank" rel="noopener">Cosmos Policy</a></h3>
         <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -352,7 +358,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">멀티뷰 카메라 이미지(3인칭+손목 cam) + 언어 지시 + 로봇 proprioception(관절/pose)을 입력받아 짧은 action chunk(기본 16스텝)를 출력하고, 선택적으로 미래 관측/상태 frame과 성공 가능성 value 점수까지 함께 내놓는다. 사전학습된 video world model(Cosmos-Predict2-2B-Video2World)을 구조 변경 0으로 post-train해 단일 video-diffusion DiT가 정책·world model·value function을 동시에 수행한다. LIBERO 98.5%, RoboCasa 67.1%, 실세계 양팔 ALOHA 평균 1위로 from-scratch diffusion policy·fine-tuned VLA를 능가했다.</p><div class="f"><span class="lbl">기여</span><span>선행 VLA가 video backbone에 별도 action head를 붙이거나 inverse-dynamics 모델을 따로 두는 것과 달리, &quot;latent frame injection&quot;으로 action chunk를 VAE latent의 가짜 video frame처럼 sequence에 끼워 넣어 픽셀과 동일한 단일 EDM denoising 과정에서 행동·미래 관측·value를 함께 생성한다(action head·구조 변경 없음). 큰 사전학습 video world model이 단 한 단계 post-training만으로 최상위 조작 정책이자 test-time best-of-N planning용 world model·value function이 됨을 보였다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>사전학습 video world model을 구조 변경 0으로 재활용 — 별도 action head 없이 단일 DiT 한 sequence에서 정책·world model·value function을 동시에 수행</li><li>latent frame injection으로 행동을 video frame처럼 diffusion 생성 → world model 사전학습 표현을 그대로 행동 생성에 전이</li><li>LIBERO 98.5% / RoboCasa 67.1%, 실세계 양팔 ALOHA 평균 1위로 from-scratch diffusion policy 및 fine-tuned VLA 베이스라인 능가</li><li>코드(Apache-2.0)·체크포인트 3종·학습데이터 3종 전부 공개(ALOHA 실세계분도 게이팅 없이 완전공개)로 재현성 높음</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>가중치는 NSCLv1 비상업 라이선스라 상업 활용 제약(코드·데이터는 개방이지만 weight는 게이팅)</li><li>test-time best-of-N planning은 후보 다수를 world model로 roll해 채점하므로 추론 비용·지연이 큼</li><li>조건화 T5 text encoder 크기(T5-XXL)가 fetched source에 명시되지 않아 약간 hedge 필요 (lineage 주의)</li><li>평가가 주로 조작 도메인(주방 24작업·양팔 pick-and-place)에 한정 — 더 넓은 task 일반화는 미검증</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM</span></div><div class="f"><span class="lbl">데이터셋</span><span>학습: LIBERO-Cosmos-Policy(2000 demos) + RoboCasa-Cosmos-Policy(1200 demos=24task×50) + 자체수집 실세계 양팔 ALOHA-Cosmos-Policy(185 demos). 평가 벤치마크: LIBERO, RoboCasa, 실세계 bimanual ALOHA.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">diffusion policy (trained from scratch)</span><span class="cmp">video model-based policies</span><span class="cmp">state-of-the-art VLA (fine-tuned on the same robot demonstrations)</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO</td><td class="mt">average success rate</td><td class="me">98.5%</td><td> <span class="note">arXiv abstract headline number. from-scratch diffusion policy·fine-tuned VLA를 능가했다고 기술하나 abstract에 베이스라인별 수치 표가 없어 baselines 미기재.</span></td></tr><tr><td>RoboCasa</td><td class="mt">average success rate</td><td class="me">67.1%</td><td> <span class="note">arXiv abstract headline number. 베이스라인별 수치는 abstract에서 검증 불가.</span></td></tr></tbody></table></div>
       </div>
     </article>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.05230" target="_blank" rel="noopener">Learning Latent Action World Models In The Wild (JEPA-Wild)</a></h3>
         <div class="badges"><span class="badge org">🔴 Meta (FAIR)</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -363,7 +369,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
         <p class="sum">행동 라벨이 전혀 없는 in-the-wild 인터넷 영상(YouTube-Temporal-1B, 약 20M 영상·10억 프레임)을 입력으로, V-JEPA 2 encoder가 만든 latent 공간에서 다음 frame latent를 예측하는 world model과, 연속 frame 사이의 latent action을 복원하는 IDM을 함께 학습한다. 출력은 예측된 next-frame latent이며, 작은 controller가 실 로봇 행동을 latent action으로 매핑해 현재 이미지+목표 이미지로부터 goal-conditioned 행동 sequence를 plan한다. 라벨 없이 학습했음에도 action-conditioned baseline과 유사한 planning 성능을 달성한다.</p><div class="f"><span class="lbl">기여</span><span>기존 latent-action world model이 로봇 시뮬·게임·조작 데이터에 국한되고 대개 vector quantization(VQ)으로 행동을 discretize했던 것과 달리, 풍부한 실세계 dynamics를 잡기 위해 VQ 대신 sparsity/noise 정보 병목으로 정규화한 연속(continuous-but-constrained) latent action 공간을 라벨 없이 IDM으로 복원한다. 이를 10억 프레임 규모의 uncurated 인터넷 영상으로 scale하고, 영상 간 환경 변화 transfer와 카메라 기준으로 localize된 행동 학습을 보이며, controller(universal interface)로 실 로봇 planning까지 연결한 점이 새롭다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>라벨 없는 uncurated 인터넷 영상(약 10억 프레임)으로 latent-action world model을 인터넷 규모로 scale</li><li>VQ(고정 codebook snap)가 무너뜨리는 풍부한 in-the-wild motion을, 연속이되 sparsity/noise 제약을 둔 latent action으로 포착 — VQ 대비 우위를 명시적으로 보임</li><li>영상 간 환경 변화 transfer(예: 방에 사람이 들어오는 변화) 등 in-the-wild 특화 행동 학습을 입증</li><li>가벼운 controller가 실 로봇 행동↔latent action을 매핑하는 universal interface 역할로, 라벨 없이 학습했음에도 action-conditioned baseline과 유사한 planning 성능 달성</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>공통 embodiment이 없어 학습된 latent action이 카메라 기준 공간에 localize되는 데 그침 — 일반화된 행동 의미를 직접 학습하지는 못함(저자 자인 limitation)</li><li>정확한 planner(CEM/receding-horizon MPC)는 선행작 V-JEPA 2-AC에서의 추론이며 본 논문이 직접 명시한 것이 아님</li><li>공식 코드·가중치 repo 미확인, 학습데이터(YT-Temporal-1B)도 GCS 버킷 셧다운으로 원본 프레임 접근 불가(메타데이터만, 유튜브 직접 수집 필요) — 재현성 제약</li><li>abstract·메타데이터에 정량 벤치마크 수치가 제시되지 않아 planning 성능이 &#x27;baseline과 유사&#x27; 수준의 정성 서술에 머무름; pixel-decoder loss가 정확히 L1인지 등 일부 세부는 미확인</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">③ WM+IDM</span></div><div class="f"><span class="lbl">데이터셋</span><span>YouTube-Temporal-1B (YT-Temporal-1B; MERLOT Reserve 유래, 약 20M 유튜브 영상 ≈10억 프레임, uncurated, 행동 라벨 0). 평가: goal-conditioned 로봇 image-goal planning (action-conditioned baseline 비교, V-JEPA 2-AC 계열 설정).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">V-JEPA 2</span><span class="cmp">V-JEPA 2-AC (arXiv 2506.09985)</span><span class="cmp">Vector Quantization (VQ) latent-action 계열 (Genie류)</span><span class="cmp">action-conditioned baselines</span></span></div>
       </div>
     </article>
-    <article class="card">
+    <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.02456" target="_blank" rel="noopener">InternVLA-A1</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -377,7 +383,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2025-12 · 1편</h2>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2512.24497" target="_blank" rel="noopener">JEPA-WMs (Joint-Embedding Predictive World Models)</a></h3>
         <div class="badges"><span class="badge org">🔴 Meta FAIR</span><span class="badge conf">🎓 TMLR</span></div>
@@ -391,7 +397,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2025-10 · 1편</h2>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2511.00062" target="_blank" rel="noopener">Cosmos-Transfer2.5 (Cosmos-Transfer2.5-2B)</a></h3>
         <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -405,7 +411,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2025-05 · 1편</h2>
-    <article class="card big">
+    <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2505.14683" target="_blank" rel="noopener">BAGEL (BAGEL-7B-MoT)</a></h3>
         <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
@@ -419,7 +425,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2024-10 · 1편</h2>
-    <article class="card big">
+    <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2410.24164" target="_blank" rel="noopener">π0 / π0.5 (Physical Intelligence)</a></h3>
         <div class="badges"><span class="badge org">🔴 Physical Intelligence</span><span class="badge conf">🎓 RSS 2025</span></div>
@@ -433,7 +439,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </section>
   <section>
     <h2 class="date">2023-10 · 1편</h2>
-    <article class="card">
+    <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2310.10639" target="_blank" rel="noopener">SuSIE (Zero-Shot Robotic Manipulation with Image-Editing Diffusion)</a></h3>
         <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
@@ -445,8 +451,23 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
       </div>
     </article>
   </section>
+  <script>
+function filterGroup(g, btn){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  document.querySelectorAll('main section').forEach(sec=>{
+    let vis=0;
+    sec.querySelectorAll('article.card').forEach(card=>{
+      const show = (g==='ALL') || (card.getAttribute('data-group')===g);
+      card.style.display = show ? '' : 'none';
+      if(show) vis++;
+    });
+    sec.style.display = vis ? '' : 'none';
+  });
+}
+</script>
 </main>
-<footer>built 2026-06-29 05:34 · WM_surveybot</footer>
+<footer>built 2026-06-29 15:03 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
