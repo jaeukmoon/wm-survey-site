@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and Planning — Deep-Dive</a></h1>
+    <p>딥다이브 · <a href="deepdives.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: Cosmos_Policy_deepdive.md)</p></article>
+  <script>
+  const MD = "# Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and Planning — Deep-Dive\n\n> **이 논문이 달성하려는 것**: 사전학습된 **video world model(NVIDIA Cosmos-Predict2-2B)을 구조 변경 0으로** 로봇 정책으로 재활용한다. 핵심 트릭 = **latent frame injection** — robot proprioception·action chunk·value를 **\"가짜 video frame\"(latent frame)** 으로 인코딩해 video diffusion 시퀀스에 끼워넣고, **어느 프레임을 조건으로/어느 프레임을 denoise 타깃으로 두느냐(conditioning)** 만 바꿔 **하나의 DiT가 policy·world model·value를 동시** 수행. 대규모 action supervision 없이도(video prior만으로) **LIBERO 98.5·RoboCasa 67.1 SOTA**, 실물 ALOHA 1위, π0.5·OpenVLA-OFT+ 능가. 추가로 그 world model+value로 **test-time best-of-N planning**까지.\n\n| 항목 | 값 |\n|---|---|\n| arXiv | 2601.16163 · 2026-01 |\n| 저자/소속 | NVIDIA |\n| 코드 | https://github.com/NVlabs/cosmos-policy (Apache-2.0; weight는 NSCLv1) |\n| 백본 | **Cosmos-Predict2-2B-Video2World**(2B, latent video diffusion) + Wan2.1 VAE + T5-XXL text |\n| 벤치 | LIBERO · RoboCasa · 실물 ALOHA(dual-arm) |\n\n> 읽는 법: **§4.1(latent frame injection)** + **§3(EDM diffusion)** 이 핵심. \"action을 video frame처럼 시퀀스에 삽입 → 단일 DiT가 conditioning만 바꿔 3역할\" 이 한 문장이 전부. planning은 §4.3.\n\n---\n\n## 1. Introduction\n\n- **핵심**: 최근 로봇 정책은 video generation model을 predictive prior로 쓴다. 기존은 video backbone에 **별도 action head/inverse-dynamics를 붙이거나** 구조를 바꾼다. Cosmos Policy는 **아무 architectural change 없이**, robot modality(proprioception·action·value)를 latent frame으로 인코딩해 video diffusion 시퀀스에 삽입 → 단일 model이 **policy + world model + value**를 담당. 그 결과 video prior만으로 강한 정책 초기화 + 그 world model/value로 planning.\n- **왜 / 직관**: video model은 이미 \"세상이 어떻게 변하나\"를 학습한 화가. 로봇 팔을 시키려고 새 부품을 붙이는 대신, 로봇의 관절·행동·가치를 **한 장의 그림(latent frame)** 으로 바꿔 원래 그리던 필름 릴 빈 칸에 끼워넣는다. 화가는 여전히 \"노이즈 낀 프레임을 깨끗한 프레임 보고 복원(denoise)\"만 하는데, 그 프레임 중 하나가 사실 action이라 복원하면 그게 곧 정책 출력.\n- **그림 / 구조도**:\n\n  원본 그림 1: [arXiv Figure 1](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_figure1.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_figure1.jpeg)\n  → Cosmos-Predict2-2B에서 fine-tune. multimodal·multi-view 입력을 받아 **(1) action chunk (2) future state(proprio+image) (3) value**를 예측. **구조 변경 없이 하나의 video diffusion objective로 jointly modeling**.\n\n## 2. Related Work (요지)\n\n- **핵심**: WAM 계열은 video generation을 robot policy의 predictive prior로 쓴다. 초기 WAM = 전체 future video/visual rollout 예측 → inverse dynamics로 action 변환. 최근은 video model을 representation extractor·value·interactive WM으로 확장하나 **여전히 video generation prior 위에 별도 구조**. Cosmos Policy는 **구조를 안 바꾸고** modality를 latent frame으로 흡수한다는 점이 차별.\n\n---\n\n## 3. Preliminaries (★ EDM diffusion + MDP)\n\n- **핵심**:\n  - **backbone** = pretrained **Cosmos-Predict2-2B-Video2World**(시작 이미지 1장 + 텍스트 → 이후 프레임 예측하는 latent video diffusion). tokenizer = **Wan2.1 spatiotemporal VAE**, 텍스트 조건 = T5-XXL.\n  - 학습 = **EDM denoising score matching**(Karras 2022): denoiser $D_\\theta$가 노이즈 낀 latent에서 clean latent $x_0$를 복원. 텍스트 $c$는 **cross-attention**, 노이즈 $\\sigma$는 **AdaLN**으로 조건화.\n  - **첫 프레임 특수 처리**: VAE가 첫 프레임만 단독 인코딩하고 나머지는 4개씩 시간 압축 → 학습 시 첫 latent frame은 clean(무노이즈)으로 두고 이후만 노이즈. (이 비대칭 구조가 §4 latent frame injection 배치의 근거.)\n  - **MDP 정식화**: sparse reward finite-horizon MDP. value는 **Monte Carlo return** 라벨(rollout 끝까지 굴려 관측 종료보상을 각 스텝에 되전파, TD 부트스트랩 없음).\n\n- **30초 큰 그림**: EDM diffusion = 원본 그림에 얼룩(노이즈 $n$)을 끼얹고 \"지우개로 지워 원본 복원\"($D_\\theta$가 $x_0$를 맞힘)하는 연습.\n\n**수식**:\n\n$$\n\\mathcal{L}(D_{\\theta},\\sigma)=\\mathbb{E}_{\\mathbf{x}_{0},\\mathbf{c},\\mathbf{n}}\\big[\\lVert D_{\\theta}(\\mathbf{x}_{0}+\\mathbf{n};\\sigma,\\mathbf{c})-\\mathbf{x}_{0}\\rVert_{2}^{2}\\big],\\qquad \\mathbf{n}\\sim\\mathcal{N}(\\mathbf{0},\\sigma^{2}\\mathbf{I}) \\qquad (1)\n$$\n\n- **무슨 식?**: 노이즈 낀 latent $x_0+n$를 넣어 원본 $x_0$를 맞히게 하는 **EDM 복원 손실**. $D_\\theta$=DiT denoiser, $c$=T5-XXL 텍스트, $\\sigma$=노이즈 레벨.\n- **콕 집어 못박기**: Cosmos Policy는 policy·world model·value를 **모두 이 단일 objective 하나로** 학습한다(별도 head/loss 없음).\n\n$$\n(1+T)\\times H\\times W\\times 3 \\;\\longrightarrow\\; (1+T')\\times H'\\times W'\\times 16,\\quad T'=\\tfrac{T}{4},\\ H'=\\tfrac{H}{8},\\ W'=\\tfrac{W}{8} \\qquad (2)\n$$\n\n- **무슨 식?**: Wan2.1 VAE 압축 — **시간 4배·공간 8배·채널 16**. 좌변 첫 프레임(1+의 1)은 **시간 압축 없이 단독 인코딩** → 단일 이미지 조건화 + injection 배치의 기반.\n\n$$\n\\langle S,A,T,R,H\\rangle,\\quad R(s_t,a_t)=0\\ (t<H),\\ R(s_H,a_H)\\in[0,1] \\qquad (3)\n$$\n\n$$\nV^{\\pi}(s)=\\mathbb{E}_{\\tau\\sim\\pi}\\Big[\\textstyle\\sum_{k=t}^{H}\\gamma^{k-t}R(s_k,a_k)\\Big]=\\mathbb{E}_{\\tau\\sim\\pi}\\big[\\gamma^{H-t}R(s_H,a_H)\\big] \\qquad (4)\n$$\n\n- **무슨 식?**: (3) 끝에서만 [0,1] 성공점수를 주는 **sparse-reward** MDP. (4) value = 미래 할인보상 합인데, sparse라서 **할인된 종료보상 한 항** $\\gamma^{H-t}R(s_H,a_H)$로 접힘 → 이 값을 MC return으로 라벨링해 latent 시퀀스의 마지막 프레임으로 예측.\n\n---\n\n## 4. Cosmos Policy: Adapting Video Model for Control & Planning\n\n### 4.1 Latent Frame Injection (★ 핵심)\n\n- **핵심**:\n  - 기본 Cosmos-Predict2는 (image+text)→single-view 영상만. robot proprioception 입력·action/value 출력·multi-view를 지원 못 함.\n  - **제안**: architectural change 없이 추가 modality를 **새 latent frame**으로 인코딩해 latent diffusion 시퀀스에 삽입(interleave). **비이미지 modality**(proprioception·action chunk·value)는 값을 $[-1,+1]$로 normalize 후 $H'\\times W'\\times C'$ latent volume에 **duplicate(복제 도배)** 해 한 프레임으로 위장. **추가 카메라 뷰**는 더 단순 — image 시퀀스에 사진을 그냥 삽입.\n  - 시퀀스 순서 = $(s,\\ a,\\ s',\\ V(s'))$ → 좌→우 **autoregressive decoding**(action→future state→future value). $s$·$s'$는 각각 시각 $t$·$t+K$ observation만($K$=action chunk size; history 미사용, 다중 미래 프레임 미예측).\n\n- **모듈 분해**:\n  - **A) Base video WM backbone (Cosmos-Predict2-2B DiT)** — 구조 변경 0. 입력→출력: noised latent 시퀀스 $(1+T')\\times H'\\times W'\\times 16$ + text → denoised 시퀀스.\n  - **B) VAE tokenizer** — image→latent frame. **blank(all-zero) placeholder** 이미지도 latent로 인코딩(첫 프레임 단독 인코딩 대칭 맞춤용 자리).\n  - **C) Latent frame injection (modality injector)** — proprio/action/value 벡터 → $[-1,+1]$ 정규화 후 $H'\\times W'\\times C'$에 복제 채운 latent frame.\n  - → 연결: 이미지 latent frame 사이에 modality frame을 $(s,a,s',V)$ 순으로 배치 → 단일 DiT가 denoise.\n\n**수식**:\n\n$$\n\\text{비이미지 modality} \\xrightarrow{[-1,+1]\\ \\text{normalize},\\ \\text{duplicate}} H'\\times W'\\times C'\\ \\text{(1 latent frame)} \\qquad (5)\n$$\n\n- **무슨 식?**: 저차원 벡터(관절·action·value)를 이미지 크기 캔버스에 **정규화+복제 도배**해 \"단색 이미지 프레임\"으로 만든다 → VAE latent 자리에 그대로 앉힘.\n\n- **그림 / 구조도**:\n\n  원본 그림 2: [arXiv Figure 2](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_main_version.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_main_version.001.jpeg)\n  → raw image→latent frame 토큰화 → 새 modality 삽입 → **noised latent frame을 clean frame 조건으로 denoise** 3단계.\n\n  원본 그림 8(상세): [arXiv Figure 8](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_detailed_for_appendix.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_detailed_for_appendix.001.jpeg)\n  → blank placeholder 삽입·첫 프레임 단독 인코딩·이미지 4장 복제=1 timestep 등 구현 디테일.\n\n  구조 정리(노트 — 11-frame 예: 3인칭 2 + wrist):\n  ```\n   idx: 1      2       3      4       5      6      7        8       9      10      11\n       [blank][propri][wrist][cam1 ][cam2 ][ACT ][propri'][wrist'][cam1'][cam2'][VALUE]\n        place  (s)     (s)    (s)    (s)    (a)   (s')     (s')    (s')  (s')   V(s')\n        └──────── current state s ────────┘ └a┘ └──────── future state s' ───────┘ └val┘\n     new modality(정규화+복제): (2)(6)(7)(11)   추가 카메라(이미지 삽입): (3)(5)(8)(10)\n     blank(1) = VAE (1+T/4) 첫 프레임 단독 인코딩 → 자리맞춤용 여백\n     (3인칭 1대면 4,5,9,10 제거 → 7 latent frames)   순서 (s,a,s',V(s')) = 좌→우 AR decode\n  ```\n\n### 4.2 Joint Training — 하나의 DiT, conditioning만 바꿔 3함수\n\n- **핵심**: 전체 latent 시퀀스는 고정, **\"어느 프레임을 clean 조건으로/어느 프레임을 denoise 타깃으로\" 두느냐(conditioning)** 만 바꿔 세 함수를 학습:\n\n**수식**:\n\n$$\n\\underbrace{p(a,s',V(s')\\mid s)}_{\\text{policy}}\\qquad \\underbrace{p(s',V(s')\\mid s,a)}_{\\text{world model}}\\qquad \\underbrace{p(V(s')\\mid s,a,s')}_{\\text{value}} \\qquad (6)\n$$\n\n- **무슨 식?**: policy=현재 $s$만 조건 → $a,s',V$ 생성(**auxiliary target** $s',V$가 policy 성능↑). world model=$(s,a)$ 조건 → $s',V$. value=$(s,a,s')$ 조건 → $V(s')$.\n- **balanced batch(50/25/25)**: 배치 50% demonstrations→policy, 50% rollouts→WM 25% + value 25%.\n- **value 형태는 input mask로**: $s,a$ mask → $V(s')$(model-based) / $s'$ mask → $Q(s,a)$(model-free).\n- **parallel vs autoregressive decoding**: planning 없는 direct policy는 action만 필요 → **parallel(빠름)**. planning은 future state/value 품질 위해 **autoregressive**.\n\n  원본 그림 12: [arXiv Figure 12](https://arxiv.org/html/2601.16163v1/fig/balanced_batches_figure.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/balanced_batches_figure.001.jpeg)\n  → balanced batch + conditioning으로 세 함수 선택 + value/Q masking 도해.\n\n### 4.3 Planning — model-based best-of-N + dual deployment\n\n- **핵심**:\n  - **dual deployment**: 원본 checkpoint = **policy model**(action 제안), rollout으로 fine-tune한 checkpoint = **planning model**(WM+value; 배치 90%를 WM/value, 10% policy → on-policy 학습 보장).\n  - **왜 rollout 필요?**: demonstration만이면 성공 궤적만 봐서 WM/value가 좁은 분포만 학습 → 실패 예측 못 함(Fig 6 상단). rollout(성공/실패)로 fine-tune해야 정확.\n  - **best-of-N**: (1) policy가 $N$개 action proposal 샘플 → (2) planning model이 각 proposal의 future state·value 예측(**action당 WM 3회 × value 5회 = 15개 value**를 **majority-mean** 집계: 다수결로 성공/실패 판정 후 다수 그룹 평균 → outlier robust) → (3) 예측 value 최대 action 선택. $N$ GPU 병렬, **receding-horizon 대신 action chunk 전체 실행**(연산 억제).\n  - **model-based** $V(s')$ > model-free $Q(s,a)$ (Fig 7).\n\n  원본 그림 7: [arXiv Figure 7](https://arxiv.org/html/2601.16163v1/fig/planning_results.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/planning_results.001.jpeg)\n  → model-based($V(s')$) planning이 최고 성능.\n\n  구조 정리(best-of-N):\n  ```\n   현재 s ─► policy model ─► N action proposals {a_1..a_N}   (N GPU 병렬)\n                                  │ 각 a_i\n                    planning model ─► WM 3회 × value 5회 = 15 V 예측 ─► majority-mean ─► V̂(a_i)\n                                  └─► argmax_i V̂(a_i) = a* ─► chunk 전체 실행\n  ```\n\n---\n\n## 5. Experiments\n\n- **핵심 (planning 없는 순수 policy, §5.2)**:\n  - **LIBERO 98.5% · RoboCasa 67.1%** 평균 SR = 시뮬 SOTA. 실물 ALOHA도 1위(4개 중 3개 태스크 최고).\n  - **대규모 action supervision 받은 VLA(π0.5·OpenVLA-OFT+)를 능가** — Cosmos Policy는 그런 action 사전학습 없이도. → **video prior만으로 강한 정책 초기화**.\n  - 어려운 태스크에서 차이: 'put candies in bowl'(높은 action multimodality), 'candy in ziploc'(고정밀 grasp). OpenVLA-OFT+는 사탕 둘 '사이'로 손 뻗음(L1 regression이 multimodal 분포를 평균으로 뭉갬); diffusion인 Cosmos Policy는 한 mode를 골라 정확히 집음(Fig 5).\n- **Ablation**: auxiliary joint objectives($p(a|s)$ 대신 $p(a,s',V|s)$) 제거 → **−1.5%p**. video prior 없이 from-scratch → **−3.9%p**. ALOHA fold shirt: from-scratch 80.8 vs full ~99.5(−18.7, jerky motion).\n- **planning (§5.3)**: base Cosmos Policy에 model-based best-of-N을 얹으면 어려운 initial state에서 성능↑, model-based($V(s')$)가 model-free보다 우수(Fig 7).\n\n  원본 그림 4: [arXiv Figure 4](https://arxiv.org/html/2601.16163v1/fig/aloha_task_performance_results_v2.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/aloha_task_performance_results_v2.001.jpeg)\n  → 실물 ALOHA 4-task: Cosmos Policy 종합 최고.\n\n---\n\n## Appendix (요지)\n\n### A.2.1 Noise Distribution\n- base Cosmos-Predict2는 **log-normal** $\\ln\\sigma\\sim\\mathcal{N}(P_{\\mathrm{mean}}{=}1.39,\\ P_{\\mathrm{std}}{=}1.2)$. Cosmos Policy는 이를 **hybrid log-normal-uniform**(고노이즈 쪽 가중↑)으로 바꿔 test-time 생성 정확도↑(Fig 9).\n\n  원본 그림 9: [arXiv Figure 9](https://arxiv.org/html/2601.16163v1/fig/noise_schedules_figure.001.jpeg)\n  ![](https://arxiv.org/html/2601.16163v1/fig/noise_schedules_figure.001.jpeg)\n  → 좌 base log-normal → 우 Cosmos Policy hybrid(고노이즈 가중).\n\n  > ⚠️ 노트: 초기 추출이 \"표준 policy 학습=log-normal, hybrid=planning용\"이라 했으나 적대적 검증이 **반대로 교정** — base가 log-normal, **Cosmos Policy 학습이 hybrid**로 바꾼 것(Fig 9 캡션 근거).\n\n### A.4.2 Inference Latency\n- best-of-N은 $N$ GPU 병렬 + action chunk 전체 실행으로 latency 억제(정확 수치는 원문 A.4.2 — 본 노트 미정독).\n\n---\n\n## 한눈에 정리\n\n- **문제**: video WM을 policy로 쓰려면 보통 별도 action head/구조 변경이 필요.\n- **해법 = latent frame injection**: proprio·action·value를 $[-1,+1]$ 정규화+복제로 **latent frame**화해 video diffusion 시퀀스 $(s,a,s',V(s'))$에 삽입 → **구조 변경 0**. 단일 EDM DiT가 **conditioning만 바꿔** policy $p(a,s',V|s)$·WM $p(s',V|s,a)$·value $p(V|s,a,s')$ 3역할.\n- **학습**: balanced batch 50/25/25(demo→policy, rollout→WM/value), hybrid log-normal-uniform noise. dual deployment(policy model + rollout-finetuned planning model).\n- **planning**: model-based best-of-N(action당 15 value, majority-mean), $V(s') > Q$.\n- **성과**: **LIBERO 98.5·RoboCasa 67.1 SOTA**, 실물 ALOHA 1위, **π0.5·OpenVLA-OFT+ 능가**(대규모 action supervision 없이). ablation: auxiliary −1.5%p, video prior 없으면 −3.9%p.\n- **의미**: NVIDIA Cosmos WM 계보를 policy로 잇는 대표작 — \"video prior가 action 지식보다 근본적·전이 잘 됨\"의 실증.\n\n## ⚠️ 확인 필요 / 나중에 (TODO)\n\n- [ ] **§5 per-task 성공률 표**(LIBERO/RoboCasa/ALOHA 개별): 본 노트는 평균 SR(98.5/67.1)·ablation(−1.5/−3.9%p)·정성만. 개별 수치는 원문 Table/Fig 4에서.\n- [ ] A.4.2 inference latency 정확 수치, A.2.2/2.3/2.4 벤치별 학습 하이퍼파라미터 미정독.\n- [ ] noise schedule: 본 노트는 Fig 9 캡션(base log-normal N(1.39,1.2) → Cosmos Policy hybrid log-normal-uniform)으로 교정 채택. 정확한 hybrid 정의식은 A.2.1 재확인 권장.\n- [ ] T5-XXL 크기·정확 param, planning $N$·discount $\\gamma$ 값 미명시(원문 확인).\n\n---\n## Source Provenance\n- Source: HTML (arxiv.org/html/2601.16163v1) — Map + 섹션별 정독 (§3·§4.1이 수식/메커니즘 핵심)\n- Fetched: 2026-07-01/02\n- Parse reliability: High (§3·§4.1·§4.2 verify 통과; §4·§5.2 경미 ISSUE=그림 caption paraphrase·noise schedule 방향 → 본문 교정 반영)\n- Verified by: paper-deepdive 멀티에이전트 워크플로 (run `wf_f12c08b1-5ad`, 총 61 agents; 1차 세션한도로 §4.1·verify 실패 → 세션 리셋 후 resume으로 완전 추출·검증)\n- Unconfirmed: 위 TODO (per-task 수치·latency·hybrid noise 정의식·N/γ)\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-01 15:12 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>
