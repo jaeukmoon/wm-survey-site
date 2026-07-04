@@ -109,12 +109,13 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </ul>
   </details>
   <details class="bg-group" open>
-    <summary>🌀 생성 · 확산 (Diffusion/Flow/Video)<span class="cnt">4</span></summary>
+    <summary>🌀 생성 · 확산 (Diffusion/Flow/Video)<span class="cnt">5</span></summary>
     <ul class="dd-list">
       <li><a href="bg_flow-matching.html">Flow Matching</a></li>
       <li><a href="bg_edm-denoising.html">EDM denoising</a></li>
       <li><a href="bg_diffusion-transformer.html">Diffusion Transformer (DiT)</a></li>
       <li><a href="bg_wan.html">Wan — video diffusion transformer (FastWAM·Mirage의 백본)</a></li>
+      <li><a href="bg_forcing-family.html">Forcing family (teacher / diffusion / self / next forcing) — autoregressive 영상 생성 학습 패러다임</a></li>
     </ul>
   </details>
   <details class="bg-group" open>
@@ -142,14 +143,24 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
       <li><a href="bg_lerobot.html">LeRobot 데이터 포맷 (LeRobotDataset)</a></li>
     </ul>
   </details>
-  <details class="bg-group" open>
-    <summary>🗂 기타 (미분류)<span class="cnt">1</span></summary>
+  <details class="bg-group">
+    <summary>🕳 작성 후보 — 반복 개념 자동 감지<span class="cnt">21 · 2026-07-04 14:06</span></summary>
     <ul class="dd-list">
-      <li><a href="bg_forcing-family.html">Forcing family (teacher / diffusion / self / next forcing) — autoregressive 영상 생성 학습 패러다임</a></li>
+      <li>world model (개념 자체) <span class="cnt">34 docs · 224회 · 🌀 생성 · 확산</span></li>
+      <li>proprioception <span class="cnt">17 docs · 54회 · 🤖 로봇 · 제어 · 환경</span></li>
+      <li>inverse dynamics (IDM) <span class="cnt">13 docs · 111회 · 🎮 Action · 정책</span></li>
+      <li>subgoal · goal image <span class="cnt">12 docs · 183회 · 🎮 Action · 정책</span></li>
+      <li>VAE · latent space <span class="cnt">12 docs · 104회 · 🌀 생성 · 확산</span></li>
+      <li>chain-of-thought · reasoning <span class="cnt">11 docs · 56회 · 🧠 VLM · 이해</span></li>
+      <li>KV cache <span class="cnt">9 docs · 106회 · 🧠 VLM · 이해</span></li>
+      <li>attention mask 설계 <span class="cnt">9 docs · 45회 · 🧠 VLM · 이해</span></li>
+      <li>JEPA <span class="cnt">8 docs · 142회 · 🧠 VLM · 이해</span></li>
+      <li>knowledge distillation · DMD <span class="cnt">7 docs · 52회 · 📚 학습 · 데이터 · 전이</span></li>
     </ul>
+    <p class="empty" style="padding:4px 0 10px">bg_gaps.py 감지 결과 — /bg-topic &lt;개념&gt; 으로 작성하면 목록에서 빠진다.</p>
   </details>
 </main>
-<footer>built 2026-07-04 04:26 · WM_surveybot</footer>
+<footer>built 2026-07-04 05:13 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
