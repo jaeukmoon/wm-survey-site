@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Proprioception (고유감각)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Proprioception (고유감각)\n\n> 출처: 고유감각 개념의 신경과학 기원은 Sherrington (1906, Nobel 1932). 로봇 표준 교과서: Spong et al. \"Robot Modeling and Control\" (Wiley, 2005) §2. 우리 계보 등장: π0 · π0.5 · π0.7 · BagelVLA · LingBot-VLA · Cosmos Policy 외 다수.\n\n**한 줄 정의**: 로봇이 **카메라 없이 자신의 관절이 몇 도인지 스스로 아는 것** — 관절 인코더·토크 센서에서 읽은 숫자 벡터 $\\mathbf{q}_t \\in \\mathbb{R}^d$.\n\n> **30초 큰 그림 비유 — \"눈 감은 체조선수\"**: 눈을 감아도 팔이 어디 있는지 느낀다. 근육 속 근방추(muscle spindle)가 \"팔꿈치 90도, 손목 30도\"를 뇌에 보내기 때문이다. 로봇은 그 근방추 대신 **관절 인코더**(광학식 눈금자)가 달려 있어, 매 스텝 \"어깨 −5°, 팔꿈치 31°, 손목 −20°…\"를 수치로 읽는다. 이 비유가 이 토픽 전체를 관통한다 — proprioception을 볼 때마다 \"내부 센서로 현재 관절 각도를 수치로 아는 것\"으로 읽으면 된다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n카메라(exteroception, 외부감각)만 있으면 팔이 어디 있는지 **보는** 건 가능하다. 그러나 두 가지 문제가 생긴다:\n\n1. **지연**: 카메라 프레임 캡처 + 이미지 처리에는 수십 ms 지연이 불가피하다. 관절 인코더는 **1 kHz** 주기로 각도를 즉시 돌려준다. 1 kHz 제어(예: Franka)에서 카메라만 쓰면 99%의 스텝에 신호가 없다.\n2. **폐색(occlusion)**: 팔이 물체 뒤로 들어가거나 손이 겹치면 카메라로 관절 위치를 추정할 수 없다. 내부 인코더는 항상 읽힌다.\n\nVLA(Vision-Language-Action model) 논문의 관측이 $\\mathbf{o}_t = (\\mathbf{I}_t,\\, \\mathbf{q}_t)$로 구성되는 이유가 바로 이것이다. $\\mathbf{I}_t$는 \"무엇이 있나\"(외부 장면), $\\mathbf{q}_t$는 \"지금 내 팔이 어디 있나\"(내부 상태) — 둘 중 하나만 있으면 정책이 행동을 결정하기에 불완전하다.\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> \"눈 감은 체조선수\" 비유로 각 식을 번역한다.\n\n- **EQ1 상태 벡터** $\\mathbf{q}_t = [\\theta_1,\\dots,\\theta_d]^\\top$ — 지금 이 순간($t$) 체조선수의 **관절 각도 체크리스트**. $\\theta_i$ = 관절 $i$의 각도(라디안). $d$ = 관절 수(자유도). Franka 단일 팔이면 $d=7$.\n- **EQ2 z-score 정규화** $\\hat{\\mathbf{q}}_t = (\\mathbf{q}_t - \\boldsymbol{\\mu}) / \\boldsymbol{\\sigma}$ — \"평소 자세를 빼고, 흔들리는 폭으로 나눠서\" 평균 0·표준편차 1로 맞춘다. $\\boldsymbol{\\mu}$, $\\boldsymbol{\\sigma}$는 데이터셋 전체 통계. 관절마다 개별 적용(원소별).\n- **EQ3 범위 정규화 (Cosmos)** $\\tilde{q}^{(i)} = 2(q^{(i)} - q_{\\min}^{(i)}) / (q_{\\max}^{(i)} - q_{\\min}^{(i)}) - 1$ — 각 성분을 물리 한계 기준으로 $[-1,\\,+1]$ 안에 압축. 이미지 latent와 스케일을 맞춰 \"가짜 video frame\"으로 끼워 넣을 때 사용([Cosmos Policy](deepdive_Cosmos_Policy.html) 핵심 트릭).\n\n#### ⚠️ 초보 함정\n\n1. **\"$\\mathbf{q}_t$는 카메라에서 온다\"고 외우면 틀림.** $\\mathbf{q}_t$는 **관절 인코더(내부 센서)** 에서 직접 읽는다. 논문에서 \"관측 $\\mathbf{o}_t = (\\mathbf{I}_t, \\mathbf{q}_t)$\"라 쓸 때, $\\mathbf{I}_t$만 비전 경로이고 $\\mathbf{q}_t$는 별도 채널이다.\n2. **\"항상 같은 차원\"이 아니다.** Franka 단일 팔 $d=7$, ALOHA 양팔 $d=14$, Unitree 휴머노이드는 그 이상이다. π0는 cross-embodiment를 위해 최대 **18D**로 zero-padding하며, 논문마다 $d$ 값이 다르니 항상 확인해야 한다.\n3. **\"position만 있으면 충분\"이 아닌 경우.** 접촉이 많은(contact-rich) 작업에서는 **joint torque**(힘 피드백)도 proprioception에 포함한다. Franka의 관절 토크 센서가 이를 가능케 한다. 논문이 \"$\\mathbf{q}_t$\"만 표기해도 실제 입력에 torque가 함께 들어가는 경우가 있다.\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n**상황**: Franka 단일 팔(7 DoF), 컵을 잡으려는 자세. 7개 관절 인코더가 아래 값을 돌려줬다.\n\n| 관절 | 원시값 $\\theta_i$ (rad) | 직관 |\n|------|------------------------|------|\n| J1 (어깨 회전) | −0.08 | 약간 몸통 안쪽 |\n| J2 (어깨 올리기) | 0.31 | 앞으로 ≈18° |\n| J3 (팔꿈치 아래 회전) | −0.04 | 거의 중립 |\n| J4 (팔꿈치 굽히기) | −1.92 | ≈110° 접음 |\n| J5 (손목 회전) | 0.07 | 거의 중립 |\n| J6 (손목 올리기) | 2.23 | ≈128° 들어올림 |\n| J7 (손목 비틀기) | −0.23 | ≈13° 안쪽 |\n\n$\\mathbf{q}_t = [-0.08,\\;0.31,\\;-0.04,\\;-1.92,\\;0.07,\\;2.23,\\;-0.23]^\\top \\in \\mathbb{R}^7$\n\n**Step 1 — z-score 정규화 (EQ2)**. 데이터셋 통계 $\\boldsymbol{\\mu} = [0,\\,0.30,\\,0,\\,-1.90,\\,0,\\,2.20,\\,0]$, $\\boldsymbol{\\sigma} = [0.50,\\,0.30,\\,0.40,\\,0.30,\\,0.50,\\,0.40,\\,0.30]$로 성분별 계산:\n\n$$\n\\hat{\\theta}_1 = \\frac{-0.08 - 0}{0.50} = -0.16,\\quad\n\\hat{\\theta}_2 = \\frac{0.31 - 0.30}{0.30} \\approx 0.033,\\quad\n\\hat{\\theta}_4 = \\frac{-1.92 - (-1.90)}{0.30} \\approx -0.067\n$$\n\n$\\hat{\\mathbf{q}}_t \\approx [-0.16,\\;0.03,\\;-0.10,\\;-0.07,\\;0.14,\\;0.075,\\;-0.77]^\\top$. 모든 값이 대략 $[-2,\\,+2]$ 범위 안으로 들어온다 — 신경망이 어느 관절도 \"값이 너무 작아서\" 무시하지 않게 된다.\n\n**Step 2 — 범위 정규화 (EQ3, Cosmos 방식)**. J1의 물리 한계 $[q_{\\min},\\,q_{\\max}] = [-2.90,\\,+2.90]$ rad이라면:\n\n$$\n\\tilde{\\theta}_1 = \\frac{2 \\times (-0.08 - (-2.90))}{2.90 - (-2.90)} - 1\n= \\frac{2 \\times 2.82}{5.80} - 1\n= 0.972 - 1 = -0.028\n$$\n\n$-0.028 \\in [-1,\\,+1]$. 7개 관절 전부 이렇게 변환한 뒤 $H' \\times W' \\times C'$ latent 형태로 복제해 video diffusion 시퀀스에 끼워 넣는 것이 [Cosmos Policy](deepdive_Cosmos_Policy.html)의 핵심 트릭이다.\n\n**Step 3 — cross-embodiment zero-padding (π0)**. 7D 벡터를 18D로 zero-pad:\n\n$$\n\\mathbf{q}_t^{\\mathrm{pad}} = [-0.08,\\;0.31,\\;-0.04,\\;-1.92,\\;0.07,\\;2.23,\\;-0.23,\\;\\underbrace{0,\\;\\dots,\\;0}_{11\\text{개}}]^\\top \\in \\mathbb{R}^{18}\n$$\n\nALOHA(14D)였으면 4칸만 패딩하면 된다. 모델은 항상 18D 입력을 기대하므로 어떤 embodiment든 같은 action expert가 처리한다. → [로봇 하드웨어 플랫폼](bg_robot-hardware-platforms.html) · [Action Expert](bg_action-expert.html) 참조.\n\n### 수식 (정식)\n\n**(1) 관절 상태 벡터**\n\n$$\n\\mathbf{q}_t = \\begin{bmatrix} \\theta_1 \\\\ \\vdots \\\\ \\theta_{d_q} \\end{bmatrix} \\in \\mathbb{R}^{d_q},\\qquad\n\\dot{\\mathbf{q}}_t = \\begin{bmatrix} \\dot{\\theta}_1 \\\\ \\vdots \\\\ \\dot{\\theta}_{d_q} \\end{bmatrix} \\in \\mathbb{R}^{d_q}\n$$\n\n- **무슨 식?**: $\\mathbf{q}_t$는 시각 $t$의 관절 **위치**(각도, rad), $\\dot{\\mathbf{q}}_t$는 **속도**(rad/s). 함께 묶으면 완전 상태 $[\\mathbf{q}_t;\\,\\dot{\\mathbf{q}}_t] \\in \\mathbb{R}^{2d_q}$. 많은 VLA 논문은 위치만 쓰고(속도 생략) $\\mathbf{q}_t$로만 표기한다.\n- **비유**: \"어깨 현재 각도 체크리스트\"($\\mathbf{q}_t$) + \"어깨 현재 회전 속도 체크리스트\"($\\dot{\\mathbf{q}}_t$). 피아노 건반 어디 손이 있는지 + 건반을 얼마나 빨리 누르는지.\n\n**(2) z-score 정규화**\n\n$$\n\\hat{\\mathbf{q}}_t = \\frac{\\mathbf{q}_t - \\boldsymbol{\\mu}}{\\boldsymbol{\\sigma}},\\qquad\n\\boldsymbol{\\mu} = \\mathbb{E}_{\\mathcal{D}}[\\mathbf{q}],\\quad\n\\boldsymbol{\\sigma} = \\sqrt{\\operatorname{Var}_{\\mathcal{D}}[\\mathbf{q}]}\n$$\n\n- **무슨 식?**: 데이터셋 $\\mathcal{D}$ 전체의 관절별 평균·표준편차로 **원소별(elementwise)** 나누기. 나누기 기호 `/`는 브로드캐스팅으로 $d_q$ 성분 각각에 독립 적용된다.\n- **왜 이렇게?**: 관절마다 값 범위가 다르다(어깨 $\\approx[-\\pi,\\,+\\pi]$ rad, 그리퍼 $[0,\\,0.08]$ m). 정규화 없이 학습하면 범위가 큰 관절이 gradient를 지배해 그리퍼 같은 소범위 관절이 제대로 학습되지 않는다.\n\n**(3) 범위 정규화**\n\n$$\n\\tilde{q}^{(i)} = 2\\,\\frac{q^{(i)} - q_{\\min}^{(i)}}{q_{\\max}^{(i)} - q_{\\min}^{(i)}} - 1 \\;\\in\\; [-1,\\,+1]\n$$\n\n- **무슨 식?**: 각 성분 $i$를 물리 한계 $[q_{\\min},\\,q_{\\max}]$ 기준으로 $[-1,\\,+1]$에 선형 압축.\n- **유도**: $q^{(i)} = q_{\\min}^{(i)}$이면 $\\tilde{q}^{(i)} = 2 \\cdot 0 - 1 = -1$, $q^{(i)} = q_{\\max}^{(i)}$이면 $\\tilde{q}^{(i)} = 2 \\cdot 1 - 1 = +1$. 선형 보간 → 한계값이 정확히 $\\pm 1$이 됨을 두 끝점으로 확인 가능.\n\n**(4) Cross-embodiment zero-padding**\n\n$$\n\\mathbf{q}_t^{\\mathrm{pad}} = \\begin{bmatrix} \\mathbf{q}_t \\\\ \\mathbf{0}_{D - d_q} \\end{bmatrix} \\in \\mathbb{R}^{D},\\qquad D = 18\n$$\n\n- **무슨 식?**: 실제 관절 수 $d_q < D$일 때 나머지를 0으로 채워 항상 같은 입력 차원을 만든다.\n- **왜 이렇게?**: 하나의 action expert가 Franka(7D), ALOHA(14D), 휴머노이드(>14D)를 모두 처리하려면 입력 차원이 통일돼야 한다. 학습 때 어떤 로봇이든 18D로 맞춰 넣고 없는 관절 슬롯은 학습 중 사실상 0-mask로 처리된다. → [VLA 초기화와 cross-embodiment transfer](bg_vla-cross-embodiment-transfer.html) 참조.\n\n### 센서 유형 (어디서 $\\mathbf{q}_t$가 오나)\n\n| 센서 종류 | 측정량 | 기호 | 갱신 주기 | 예시 하드웨어 |\n|-----------|--------|------|----------|-------------|\n| 광학식 로터리 인코더 | 관절 각도 $\\theta$ (rad) | $q$ (position) | 1 kHz | Franka FR3 각 관절 |\n| 각속도 (diff / 타코미터) | 관절 각속도 $\\dot{\\theta}$ (rad/s) | $\\dot{q}$ (velocity) | 1 kHz | 인코더 미분 또는 별도 센서 |\n| 관절 토크 센서 | 관절 토크 $\\tau$ (Nm) | $\\tau$ | 1 kHz | Franka(7 관절 전체), Unitree |\n| 그리퍼 위치 센서 | 집게 너비 $g$ (m) | $g$ | 100–1k Hz | Franka gripper |\n| IMU | 몸통 가속·각속도 | — | 100–400 Hz | Unitree H1 베이스 |\n\n> 논문에서 \"$\\mathbf{q}_t$\"라 쓰면 보통 **관절 위치만**. 속도·토크까지 포함하면 \"full state\" 또는 \"$[\\mathbf{q}_t,\\,\\dot{\\mathbf{q}}_t,\\,\\boldsymbol{\\tau}_t]$\"라 명시한다.\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문 | 표기 | 차원 | 역할 / 변형 |\n|------|------|------|------------|\n| **π0** ([딥다이브](deepdive_pi0.html)) | $q_t \\in \\mathbb{R}^{18}$ | 7→18(pad) | 관절 위치. zero-pad로 cross-embodiment. [Action Expert](bg_action-expert.html) 입력 Block 2로 별도 라우팅. |\n| **π0.5** ([딥다이브](deepdive_pi0.5.html)) | $\\mathbf{q}_t$ | 7 (Franka) | 관측 $\\mathbf{o}_t$의 일부. 이산화해 텍스트 토큰으로 변환 후 VLM에 입력하는 변형도 있음. |\n| **π0.7** ([딥다이브](deepdive_pi0.7.html)) | $\\mathbf{q}_t$ | — | 선형 사영으로 백본 차원에 올림. history state마다 개별 토큰으로 삽입. |\n| **BagelVLA** ([딥다이브](deepdive_BagelVLA.html)) | proprio state | — | [MoT](bg_mixture-of-transformers.html) action pathway 입력. Action Expert가 언어·비전 latent + proprio로 [flow matching](bg_flow-matching.html). |\n| **LingBot-VLA** ([딥다이브](deepdive_LingBot-VLA.html)) | proprio sequence | — | 초기 state + action chunk 시퀀스 전체를 action expert에 입력. |\n| **Cosmos Policy** ([딥다이브](deepdive_Cosmos_Policy.html)) | $\\mathbf{s} \\in \\mathbb{R}^{d}$ | 로봇 의존 | $[-1,\\,+1]$ 범위 정규화 후 $H' \\times W' \\times C'$ latent volume에 복제 도배 → \"가짜 video frame\"으로 video diffusion 시퀀스에 삽입. |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-06 05:26 · WM_surveybot</footer>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+</body></html>
