@@ -20,11 +20,6 @@ header p a{color:#9db4ff}
 .btn.ghost:hover{background:rgba(255,255,255,.2)}
 #upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
 main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
-.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
-.chip:hover{border-color:var(--accent);color:var(--accent)}
-.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
 h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .card.big{border-left:4px solid #e03131}
@@ -39,7 +34,6 @@ h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;paddi
 .badge.conf{background:#e7f5ff;color:#1971c2}
 .badge.arxiv{background:#f1f3f5;color:#495057}
 .badge.up{background:#fff4e6;color:#e8590c}
-.badge.bw{background:#fff3bf;color:#9a6700}
 .R{min-width:0}
 .sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
 .muted{color:#9aa3b2;font-style:italic}
@@ -90,7 +84,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
 <body>
 <header><div class="wrap">
   <div>
-    <h1><a href="index.html">학습 step · batch size · epoch (Training Steps &amp; Global Batch)</a></h1>
+    <h1><a href="index.html">tau-zero (τ0-WM) — Unified Video-Action World Model</a></h1>
     <p>배경지식 · <a href="background.html">← 목록</a></p>
     <div id="upd-status"></div>
   </div>
@@ -106,7 +100,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
 <main>
   <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
   <script>
-  const MD = "# 학습 step · batch size · epoch (Training Steps & Global Batch)\n\n> 위 \"denoise step(추론)\"과 헷갈리지 말 것 — 여기 step은 **학습 optimizer step**.\n\n- **1 step = 배치 1개에 대한 gradient 1회 업데이트**(`optimizer.step()`). 대규모 학습은 epoch이 아니라 **총 step 수**로 학습량을 정한다(거대·스트리밍 데이터라 epoch이 모호).\n- **step은 batch size에 종속** → batch가 바뀌면 같은 데이터를 보는 step 수가 바뀐다. 그래서 **batch-size-독립 단위로 정규화**해 말한다:\n  - `samples seen = steps × global_batch`\n  - `epoch = samples_seen / |dataset|`\n- **global(effective) batch 분해**: `global_batch = b_micro(GPU당) × N_GPU × k_accum`\n  - **`b_micro`**: GPU당 micro-batch — **VRAM이 천장**. activation이 (배치 × 시퀀스길이)에 비례. 비디오 WM은 시퀀스가 거대(프레임 × 공간토큰)라 보통 **1**.\n  - **`N_GPU`**: 데이터 병렬 수 — gradient를 all-reduce로 합침. 통신 대역폭이 변수.\n  - **`k_accum`**: gradient accumulation — 추가 메모리 없이 effective batch를 k배(시간은 k배).\n- **목표 effective batch는 무엇으로 정하나**: gradient noise scale(너무 작으면 노이지, **critical batch** 넘으면 이득 소멸) · throughput(클수록 GPU 활용률↑·step↓) · 일반화. **LR과 한 묶음**(linear/sqrt 스케일링 룰 · warmup).\n- **절차**: \"이 모델군 정석 = effective batch 256\" 잡고 → VRAM이 `b_micro=1`만 허용, GPU 8장 → `k_accum = 256 / (1 × 8) = 32`로 **역산**.\n\n---\n";
+  const MD = "# tau-zero (τ0-WM) — Unified Video-Action World Model\n\n> AgiBot Finch, *\"A Unified Video-Action World Model for Robotic Manipulation\"* (arXiv 2606.01027). FastWAM과 같은 **video-action world model** 계보의 형제 모델. (짧은 카드 — 풀 딥다이브는 추후 `tau-zero_deepdive.md`.)\n\n- **한 줄**: 행동 생성 + 미래 video 예측 + action-conditioned 미래 평가를 한 틀에 통합한 **5.5B** world model. test-time에 \"행동 제안 → 시뮬 → 평가 → 수정\"을 학습된 world model로 수행.\n- **백본/구조**: **Wan2.2-TI2V-5B**(video DiT) + **0.5B action DiT**. 학습은 **flow matching**(video·action 양쪽).\n- **결합 = cross-attention**: action 토큰이 horizon 내 시간 의존성을 self-attn으로 먼저 모델링한 뒤 **intermediate video feature를 cross-attend**. ← FastWAM의 **MoT(self-attention 공유)와 대비되는 핵심 차이**.\n- **action chunk**: receding-horizon, **길이 30**.\n- **초기화**: Wan2.2-TI2V-5B(사전학습 video 모델)에서 init.\n- **학습 데이터**: ~27.3K시간 — real-robot teleop + UMI-style + egocentric video.\n\n**FastWAM ↔ τ0-WM**\n\n| | FastWAM | τ0-WM (tau-zero) |\n|---|---|---|\n| video 백본 | Wan2.2-5B | Wan2.2-TI2V-5B |\n| action 분기 | ~1B action expert | 0.5B action DiT |\n| **결합** | **MoT** (self-attn 공유) | **cross-attention** |\n| 총 파라미터 | ~6B | 5.5B |\n| chunk H | 32 | 30 |\n| 생성 | flow matching | flow matching |\n\n→ 둘 다 Wan2.2-5B를 공유하므로 **백본 init은 호환**되지만, action expert는 **결합 구조가 달라 교환 불가**(→ **VLA 초기화** 섹션).\n\n출처: arXiv 2606.01027 · finch.agibot.com/research/tau0-wm\n\n---\n";
   window.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('dd-body');
     // Math must be handled DURING marked parsing (marked-katex-extension), else
@@ -140,7 +134,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   });
   </script>
 </main>
-<footer>built 2026-07-08 04:40 · WM_surveybot</footer>
+<footer>built 2026-07-03 16:09 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
