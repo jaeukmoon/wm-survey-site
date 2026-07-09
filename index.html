@@ -40,6 +40,14 @@ h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;paddi
 .badge.arxiv{background:#f1f3f5;color:#495057}
 .badge.up{background:#fff4e6;color:#e8590c}
 .badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
 .R{min-width:0}
 .sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
 .muted{color:#9aa3b2;font-style:italic}
@@ -98,13 +106,13 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">54</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">10</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">18</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">16</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">10</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">58</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">11</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">20</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">17</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">10</span></button></div>
   <section>
     <h2 class="date">2026-07-06 · 2편</h2>
     <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.29501" target="_blank" rel="noopener">Learning Transferable Dynamics Priors from Action to World Modeling (A2World)</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 4</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 60 · 우리 모델 이김 +25(마진 20%p) → 필독도 85">필독 A 85⚔</span><span class="badge rig" title="완성도(rigor) 84 · 프록시 추정">완성도 84</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 4</span></div>
         <div class="meta"><span class="id">2606.29501</span> · <a href="https://arxiv.org/abs/2606.29501" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/LogosRoboticsGroup/A2World" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -115,7 +123,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.30534" target="_blank" rel="noopener">Orca: The World is in Your Mind</a></h3>
-        <div class="badges"><span class="badge org">🔴 BAAI/Zhiyuan</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 233</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 90 · 프록시 추정">완성도 90</span><span class="badge org">🔴 BAAI/Zhiyuan</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 233</span></div>
         <div class="meta"><span class="id">2606.30534</span> · <a href="https://arxiv.org/abs/2606.30534" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -129,7 +137,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02501" target="_blank" rel="noopener">Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 1</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 → 필독도 80">필독 A 80</span><span class="badge rig" title="완성도(rigor) 77 · 프록시 추정">완성도 77</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 1</span></div>
         <div class="meta"><span class="id">2607.02501</span> · <a href="https://arxiv.org/abs/2607.02501" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/SEU-PAISys/Embodied.cpp" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.02501v1/x5.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -140,7 +148,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02503" target="_blank" rel="noopener">VT-WAM: Visual-Tactile World Action Model for Contact-Rich Manipulation</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 60 · 우리 모델 이김 +25(마진 20%p) → 필독도 85">필독 A 85⚔</span><span class="badge rig" title="완성도(rigor) 71 · 프록시 추정">완성도 71</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2607.02503</span> · <a href="https://arxiv.org/abs/2607.02503" target="_blank" rel="noopener">arXiv</a> · <a href="https://vt-wam.github.io/" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.02503v1/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -151,7 +159,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02195" target="_blank" rel="noopener">Bridge-WA: Predicting Where and How the World Changes for Robotic Action</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 60 · 우리 모델 이김 +25(마진 20%p) → 필독도 85">필독 A 85⚔</span><span class="badge rig" title="완성도(rigor) 80 · 프록시 추정">완성도 80</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2607.02195</span> · <a href="https://arxiv.org/abs/2607.02195" target="_blank" rel="noopener">arXiv</a> · <a href="https://hcplab-sysu.github.io/BRIDGE-WA" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.02195v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -162,7 +170,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02517" target="_blank" rel="noopener">WorldDirector: Building Controllable World Simulators with Persistent Dynamic Memory</a></h3>
-        <div class="badges"><span class="badge org">🔴 Ant/Robbyant</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 24</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 84 · 프록시 추정">완성도 84</span><span class="badge org">🔴 Ant/Robbyant</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 24</span></div>
         <div class="meta"><span class="id">2607.02517</span> · <a href="https://arxiv.org/abs/2607.02517" target="_blank" rel="noopener">arXiv</a> · <a href="https://worlddirector.github.io" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -173,7 +181,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02417" target="_blank" rel="noopener">LIME: Learning Intent-aware Camera Motion from Egocentric Video</a></h3>
-        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 72 · 프록시 추정">완성도 72</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2607.02417</span> · <a href="https://arxiv.org/abs/2607.02417" target="_blank" rel="noopener">arXiv</a> · <a href="https://boysun045.github.io/LIME-Page/" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.02417v1/image/teaser_v2.jpg" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -184,7 +192,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.01736" target="_blank" rel="noopener">Predicting Closed-Loop Performance of Latent World Models: Offline Checkpoint Selection (CROF)</a></h3>
-        <div class="badges"><span class="badge org">🔴 Meta FAIR</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 62 · 프록시 추정">완성도 62</span><span class="badge org">🔴 Meta FAIR</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2607.01736</span> · <a href="https://arxiv.org/abs/2607.01736" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/nsmoly/LunarLander_RSSM" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.01736v1/figures/mpc_performance.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -195,7 +203,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02466" target="_blank" rel="noopener">Learning to Move Before Learning to Do: Task-Agnostic Pretraining for VLAs (TAP)</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ICML 2026</span><span class="badge up">▲ 5</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 15 → 필독도 15">필독 E 15</span><span class="badge rig" title="완성도(rigor) 85 · 프록시 추정">완성도 85</span><span class="badge conf">🎓 ICML 2026</span><span class="badge up">▲ 5</span></div>
         <div class="meta"><span class="id">2607.02466</span> · <a href="https://arxiv.org/abs/2607.02466" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/sjh0354/Task-Agnostic-Pretrain" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.02466v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -206,7 +214,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.02322" target="_blank" rel="noopener">The Moving Eye: Enhancing VLA Spatial Generalization via Hybrid Dynamic Data Collection</a></h3>
-        <div class="badges"><span class="badge conf">🎓 IROS 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 86 · 프록시 추정">완성도 86</span><span class="badge conf">🎓 IROS 2026</span></div>
         <div class="meta"><span class="id">2607.02322</span> · <a href="https://arxiv.org/abs/2607.02322" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -217,7 +225,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.01658" target="_blank" rel="noopener">Teaching Vision-Language-Action Models What to See and Where to Look (DriveTeach-VLA)</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ECCV 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 80 · 프록시 추정">완성도 80</span><span class="badge conf">🎓 ECCV 2026</span></div>
         <div class="meta"><span class="id">2607.01658</span> · <a href="https://arxiv.org/abs/2607.01658" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/ShivaTeam/DriveTeach-VLA" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -231,7 +239,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.00678" target="_blank" rel="noopener">ABot-M0.5: Unified Mobility-and-Manipulation World Action Model</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM, ImageWAM</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 13</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 60 · 우리 모델 이김 +20(마진 11%p) → 필독도 80">필독 A 80⚔</span><span class="badge rig" title="완성도(rigor) 87 · 프록시 추정">완성도 87</span><span class="badge bw">⚡ vs FastWAM, ImageWAM</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 13</span></div>
         <div class="meta"><span class="id">2607.00678</span> · <a href="https://arxiv.org/abs/2607.00678" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/amap-cvlab/ABot-Manipulation" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -242,7 +250,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.00836" target="_blank" rel="noopener">From World Models to World Action Models: A Concise Tutorial for Robotics</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 51 · 프록시 추정">완성도 51</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2607.00836</span> · <a href="https://arxiv.org/abs/2607.00836" target="_blank" rel="noopener">arXiv</a> · <a href="https://clearlab-sustech.github.io/WorldModelSurvey/" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.00836v2/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -253,7 +261,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.00666" target="_blank" rel="noopener">Domain Arithmetic: One-Shot VLA Adaptation under Environmental Shifts (DART)</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ECCV 2026</span><span class="badge up">▲ 20</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 98 · 프록시 추정">완성도 98</span><span class="badge conf">🎓 ECCV 2026</span><span class="badge up">▲ 20</span></div>
         <div class="meta"><span class="id">2607.00666</span> · <a href="https://arxiv.org/abs/2607.00666" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/snumprlab/dart" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2607.00666v1/x4.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -264,7 +272,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2607.01060" target="_blank" rel="noopener">RoboWorld: Fast and Reliable Neural Simulators for Generalist Robot Policy Evaluation</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ICML 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 0 → 필독도 0">필독 E 0</span><span class="badge rig" title="완성도(rigor) 90 · 프록시 추정">완성도 90</span><span class="badge conf">🎓 ICML 2026</span></div>
         <div class="meta"><span class="id">2607.01060</span> · <a href="https://arxiv.org/abs/2607.01060" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -274,16 +282,63 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     </article>
   </section>
   <section>
-    <h2 class="date">2026-06-17 · 1편</h2>
+    <h2 class="date">2026-06-17 · 4편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.19531" target="_blank" rel="noopener">ImageWAM: Do World Action Models Really Need Video Generation, or Just Image Editing?</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 60 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 83 · 딥다이브 Opus 정독">완성도 83✦</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.19531</span> · <a href="https://arxiv.org/abs/2606.19531" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/yuyangalin/ImageWAM" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.19531v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
       <div class="R">
         <p class="sum">video 생성 기반 WAM이 미래 영상 전체를 합성하는 비용/오류를, pretrained image-editing 모델(OmniGen2 main, +FLUX.2/Ovis-U1)을 backbone으로 재활용해 대체. 추론 시 target frame을 픽셀로 디코딩하지 않고 image-editing denoising의 KV cache(edit-aware 중간표현)에 flow-matching Action Expert를 joint attention으로 conditioning → action chunk a_{t:t+H} 예측. video-WAM 대비 FLOPs ~1/6·latency ~1/4로 VLA baseline(π0/π0.5 등) 능가. manipulation을 &#x27;instruction-guided visual transformation&#x27;으로 보는 관점.</p><div class="f"><span class="lbl">기여</span><span>image-editing 모델을 instruction-conditioned visual backbone으로 repurpose하는 ImageWAM 프레임워크(video 생성 WAM의 대안) 제시; robot manipulation을 instruction-guided visual transformation으로 정식화하고 editing pretraining의 3속성(instruction-to-change alignment / easier·action-relevant proxy / compact inference) 식별; editing-aware representation이 standard visual·VLM backbone보다 action-relevant함을 비교로 실증.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>효율: dense future-video 디코딩 제거 → FLOPs ~1/6 · latency ~1/4 (실시간 control 적합)</li><li>image editing = video보다 action-relevant·easier proxy: 현재→target의 instruction-consistent 변화에만 집중, 무관 temporal/appearance detail에 capacity 안 씀</li><li>부정확 future-video가 action을 오도하는 문제 회피 (Fig 5: video baseline은 task-relevant 객체 주변을 distort → 실패)</li><li>여러 image-editing backbone에 일반화: OmniGen2(main)·FLUX.2·Ovis-U1 (appendix)</li><li>RoboTwin 2.0·LIBERO·LIBERO-Plus·real-world에서 VLA baseline 능가</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>pretrained image-editing 모델(OmniGen2 등) prior에 의존 — 그 품질·도메인이 성능을 좌우</li><li>미래를 &#x27;단일 image-edit(한 장)&#x27;으로 표현 → multi-step temporal dynamics를 명시적으로 모델링하진 않음 (WAM 미래표현 중 가장 압축적)</li><li>backbone별 변형(OmniGen2/FLUX.2/Ovis-U1) 간 trade-off·세부는 appendix 의존</li><li>일부 절대 success-rate 수치는 deepdive 검증에서 unconfirmed(원표 재확인 필요)</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">🖼️ WAM (image-editing backbone — video 생성 대체)</span></div><div class="f"><span class="lbl">데이터셋</span><span>평가: RoboTwin 2.0 · LIBERO · LIBERO-Plus · real-world robot tasks. backbone은 OmniGen2/FLUX.2/Ovis-U1의 image-editing 사전학습 prior 활용.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">FastWAM (video-WAM)</span><span class="cmp">standard visual / VLM backbone (ablation)</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.18943" target="_blank" rel="noopener">Physics-IQ Verified</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 65 · 프록시 추정">완성도 65</span><span class="badge org">🔴 Google DeepMind</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.18943</span> · <a href="https://arxiv.org/abs/2606.18943" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/google-deepmind/physics-iq-benchmark" target="_blank" rel="noopener">code</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.18943v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">Physics-IQ 벤치마크(video generative model의 물리 이해 측정)의 측정 오차를 감사하여, 프롬프트 품질·메트릭 집계·정답 영상의 spurious artifact 세 가지를 개선한 Physics-IQ Verified를 제안한다. 전체 샘플의 절반 이상(약 57.6%)을 수정했고, 6개 I2V 모델을 재평가하니 순위가 유의하게 재편(Wan 2.2 1위→3위, Kendall τ=0.46)되었다. 새 모델을 만드는 대신 평가 프레임워크 자체의 신뢰도를 높인 벤치마크 검증 연구다.</p><div class="f"><span class="lbl">기여</span><span>기존 Physics-IQ가 모호한 프롬프트, 부적절한 메트릭 집계, 정답 영상의 아티팩트 때문에 &#x27;물리 이해&#x27;가 아닌 교란요인을 측정하던 문제를 진단하고, sample-level 동일가중 스코어링과 모델별 best-practice 프롬프트·아티팩트 제거로 이를 교정한 검증판(Verified) 벤치마크를 처음으로 제시했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>전체 샘플의 약 57.6%에 영향을 준 실제 측정 오류를 정량적으로 식별·수정</li><li>각 개선(프롬프트/집계/아티팩트 제거)의 영향을 ablation으로 분리하고 효과크기(Cohen&#x27;s d)로 제시 — 프롬프트 d≥0.55, 아티팩트 제거 d≤-1.0</li><li>sample-level 스코어링으로 이전엔 불가능했던 모델별 failure-mode 분석 가능</li><li>원본 대비 순위 재편을 정량화(Kendall τ=0.46, Spearman ρ=0.65)해 벤치마크 신뢰도 문제를 실증</li><li>코드/데이터를 google-deepmind repo로 공개해 재현 가능</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>데이터셋 수정에 수작업 아티팩트 주석(manual annotation)이 필요해 확장성·재현 비용 부담</li><li>단 6개 I2V 모델만 평가 → 순위/결론의 일반화 근거가 제한적</li><li>폐쇄형 모델(Sora 2 등)의 시간에 따른 성능 변동이 스코어 불안정을 유발</li><li>개선된 프롬프트가 일부 모델엔 도움, 일부엔 오히려 손해 → &#x27;best-practice&#x27;의 모델 의존성으로 공정성 논쟁 여지</li><li>물리 이해를 IoU/MSE 등 픽셀 기반 대리지표로 측정하는 한계(진짜 인과적 물리 이해와의 간극)는 여전히 남음</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 벤치마크/평가 (video generative model의 물리 이해 평가; action·policy 없음, VLA/WAM 4범주 밖)</span></div><div class="f"><span class="lbl">데이터셋</span><span>Physics-IQ / Physics-IQ Verified benchmark (I2V physical-reasoning 영상; 전체 샘플의 약 57.6% 개선)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Grok Imagine Video</span><span class="cmp">HunyuanV-1.5</span><span class="cmp">Wan 2.2</span><span class="cmp">Cosmos3-N</span><span class="cmp">Sora 2</span><span class="cmp">P-Video</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>Physics-IQ Verified (6 I2V VGMs)</td><td class="mt">Physics-IQ Verified score (rank)</td><td class="me">—</td><td>Grok Imagine Video 1st · HunyuanV-1.5 2nd · Wan 2.2 3rd · Cosmos3-N 4th · Sora 2 5th · P-Video 6th <span class="note">Verified 벤치마크 랭킹(Grok&gt;Hunyuan&gt;Wan&gt;Cosmos&gt;Sora2&gt;P-Video). 원본 대비 Kendall τ=0.46, Spearman ρ=0.65로 순위 재편(Wan 2.2 1위→3위). 논문의 raw Physics-IQ 수치는 arXiv HTML 표에서 신뢰가능하게 추출되지 않아 생략(추측 방지).</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.18610" target="_blank" rel="noopener">SC3-Eval: Evaluating Robot Foundation Models via Self-Consistent Video Generation</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 68 · 프록시 추정">완성도 68</span><span class="badge org">🔴 NVIDIA, Physical Intelligence</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.18610</span> · <a href="https://arxiv.org/abs/2606.18610" target="_blank" rel="noopener">arXiv</a> · <a href="https://weichengtseng.github.io/sc3-eval/" target="_blank" rel="noopener">code</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.18610v3/fig/teaser_v6.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">로봇 정책의 초기 관찰 프레임과 정책이 산출한 멀티뷰 action chunk 시퀀스를 입력받아, 정책 rollout을 자기일관적(self-consistent) 비디오로 시뮬레이션하고 per-chunk 불확실성 신호로 성공률/성능을 추정한다. 실제 하드웨어 롤아웃 없이 7개 실세계 정책에 대해 실제 성공률과 Pearson r=0.929(온라인 in-dist)로 상관하며, 실제 실패 모드까지 재현한다.</p><div class="f"><span class="lbl">기여</span><span>action-conditioned video world model을 로봇 파운데이션 모델 평가용 시뮬레이터로 쓰되, 세 가지 self-consistency(forward-inverse dynamics 공동학습, cross-view inpainting, test-time inverse-dynamics 불확실성)를 결합해 autoregressive 누적오차·멀티뷰 불일치·미지 정책 일반화를 명시적으로 완화한 점이 선행 video WM 대비 새롭다. 기존 Ctrl-World/IRASim/Cosmos-Predict 대비 평가 상관(r)↑·오차(MMRV)↓를 큰 폭으로 개선했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>세 가지 self-consistency 설계(forward-inverse dynamics joint training + cross-view inpainting + test-time inverse-dynamics uncertainty)로 compounding error·뷰 불일치·미지 정책 일반화를 각각 겨냥</li><li>실세계 7개 정책에서 실제 성공률과 높은 상관(온라인 in-dist r=0.984, 종합 0.929), baseline 3종 대비 r↑·MMRV↓ 전 항목 우위</li><li>inverse-dynamics 모드를 추론 시 재활용해 별도 학습 없이 per-action-chunk 불확실성 신호를 제공, 실제 실패 모드 재현</li><li>381시간 대규모 실세계 table bussing 데이터로 학습, in-dist/OOD 분할로 일반화 평가</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>계산비용: chunk당 2.3초(단일 GPU)로 물리기반 시뮬레이터보다 수 배(orders) 느림</li><li>short-horizon(에피소드 ~20초)에만 검증, 장기 horizon에서 drift·시각 열화 발생을 저자도 인정</li><li>단일 task 도메인(table bussing/reverse table bussing)·π0.5 계열 정책 중심이라 평가 범위·정책 다양성 제한</li><li>OOD online 설정에서 SC3-Eval r=0.870으로 Cosmos-Predict 2.5(0.871)과 사실상 동률 — OOD 온라인 일반화 이점은 미미</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">🆕 벤치마크/평가 — action-conditioned video WM을 시뮬레이터로 쓴 로봇 파운데이션 모델 정책 평가 프레임워크(정책 자체를 생성하지 않아 VLA/WAM/WM+IDM 4범주 밖)</span></div><div class="f"><span class="lbl">데이터셋</span><span>381시간 실세계 table bussing 데이터셋(12개 객체 카테고리, utensils·trash 등). in-distribution=table bussing, OOD=reverse table bussing(destination-swapped). 평가 대상=7개 실세계 π0.5 정책 롤아웃(in-dist 4 + OOD 3).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Ctrl-World</span><span class="cmp">IRASim</span><span class="cmp">Cosmos-Predict 2.5</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>실세계 정책평가 In-dist Online</td><td class="mt">Pearson r ↑</td><td class="me">0.984</td><td>Ctrl-World 0.871 · IRASim 0.730 · Cosmos-Predict 2.5 0.897 <span class="note">7개 실세계 π0.5 정책; 종합 closed-loop r=0.929</span></td></tr><tr><td>실세계 정책평가 In-dist Online</td><td class="mt">MMRV ↓</td><td class="me">0.022</td><td>Ctrl-World 0.191 · IRASim 0.188 · Cosmos-Predict 2.5 0.090</td></tr><tr><td>실세계 정책평가 In-dist Offline</td><td class="mt">Pearson r ↑</td><td class="me">0.959</td><td>Ctrl-World 0.878 · IRASim 0.773 · Cosmos-Predict 2.5 0.807</td></tr><tr><td>실세계 정책평가 OOD Online</td><td class="mt">Pearson r ↑</td><td class="me">0.870</td><td>Ctrl-World 0.832 · IRASim 0.663 · Cosmos-Predict 2.5 0.871 <span class="note">OOD 온라인은 Cosmos와 사실상 동률</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card" data-group="WM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.18955" target="_blank" rel="noopener">Motion-Focused Latent Action Enables Cross-Embodiment VLA Training from Human EgoVideos</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 15 → 필독도 15">필독 E 15</span><span class="badge rig" title="완성도(rigor) 80 · 프록시 추정">완성도 80</span><span class="badge conf">🎓 IROS 2026</span></div>
+        <div class="meta"><span class="id">2606.18955</span> · <a href="https://arxiv.org/abs/2606.18955" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/shuiyigong/Motion-Focused-Latent-Action" target="_blank" rel="noopener">code</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.18955v2/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">라벨 없는 인간 egocentric 조작 영상(+다운스트림 소수 로봇 시연)을 입력으로 받아 로봇 실행 액션을 출력하는 latent-action 기반 VLA다. 인간 영상만으로 사전학습했음에도 대규모 라벨 데이터로 학습한 SOTA VLA와 경쟁하며, 특정 embodiment 적응에는 단 50개 trajectory만 필요하다.</p><div class="f"><span class="lbl">기여</span><span>물리 마스크를 이용한 Hybrid Disentangled VQ-VAE로 모션 다이내믹스를 환경 배경에서 분리해, 라벨 없는 인간 영상에서 순수 모션에 집중한 cross-embodiment 행동 코드북을 구성한 점이 새롭다. 또한 intent-perception decoupling(VLM은 행동 의도를 예측, 별도 frozen visual encoder가 state feature를 action expert에 제공)으로 action hallucination을 줄인다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>라벨 없는 인간 egocentric 영상만으로 사전학습하고 다운스트림 적응에 단 50 trajectory만 필요 — 강한 데이터 효율/스케일 이점</li><li>물리 마스크 기반 disentangled VQ-VAE가 배경과 모션을 분리해 순수 모션 잠재공간을 만들어 human-to-robot·robot-to-robot cross-embodiment 전이를 용이하게 함</li><li>LIBERO 평균 91.8%로 대규모 라벨 학습 SOTA(villa-x 90.1, pi0-fast 85.5)를 상회하고, 특히 Long suite 84.0으로 villa-x 74.5·pi0-fast 60.2 대비 큰 우위(장기 태스크 강건성)</li><li>RoboTwin 2.0 평균 67.7%로 UniVLA 63.6·pi0 65.2를 상회, intent-perception decoupling으로 hallucination 저감 효과 확인</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>(저자 명시 limitation) discrete action codebook의 표현 용량이 고정밀 제어가 필요한 fine-grained manipulation에는 부족</li><li>RoboTwin 2.0 개별 태스크에선 baseline 대비 열세가 다수(Place phone stand 28 vs pi0 35, Pick dual bottles 52 vs pi0 57, Grab roller 90 vs DP 98) — 평균 우위가 태스크별로 고르지 않음</li><li>LIBERO 비교의 villa-x*·pi0-fast*는 별표(재현/재평가치)라 공정 비교 여지가 있음</li><li>human↔robot embodiment gap 해소를 물리 마스크·모션 disentangle 가정에 의존하고, 정밀 힘/접촉 제어 평가는 제한적이며 실환경 검증도 단일 dual-arm 플랫폼에 국한</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">WM+IDM (잠재행동 사전학습): Hybrid Disentangled VQ-VAE의 인코더가 프레임 전이에서 순수 모션 잠재행동을 추출(IDM 역할)하고 디코더가 미래 프레임을 복원(WM 역할)해, 라벨 없는 인간 영상에서 cross-embodiment 행동 코드북을 만들어 VLM/VLA를 사전학습하는 LAPA·UniVLA 계열의 latent-action 방식</span></div><div class="f"><span class="lbl">데이터셋</span><span>Training: BridgeV2(WidowX robot), EgoDex(human egocentric videos, 라벨 없음). Evaluation: LIBERO(Spatial/Object/Goal/Long 4 suites), RoboTwin 2.0, FurnitureBench, 실환경 dual-arm robot platform</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">UniVLA-Bridge</span><span class="cmp">villa-x</span><span class="cmp">pi0-fast</span><span class="cmp">SpatialVLA</span><span class="cmp">UniVLA</span><span class="cmp">RDT</span><span class="cmp">pi0</span><span class="cmp">ACT</span><span class="cmp">Diffusion Policy</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>LIBERO (avg of Spatial/Object/Goal/Long)</td><td class="mt">success rate (%)</td><td class="me">91.8</td><td>villa-x* 90.1 · UniVLA-Bridge 88.1 · pi0-fast* 85.5 · SpatialVLA 78.1 <span class="note">Table I. * = 재현/재평가치. 본 모델 Long suite 84.0으로 villa-x 74.5·pi0-fast 60.2 대비 큰 우위</span></td></tr><tr><td>RoboTwin 2.0 (10-task average)</td><td class="mt">success rate (%)</td><td class="me">67.7</td><td>pi0 65.2 · UniVLA 63.6 · RDT 52.5 · ACT 51.2 · Diffusion Policy 49.7 <span class="note">Table II, 10개 태스크 평균</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-06-16 · 1편</h2>
+    <article class="card big" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2606.17598" target="_blank" rel="noopener">MuseVLA: An Adaptive Multimodal Sensing Vision-Language-Action Model for Robotic Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 28 → 필독도 28">필독 E 28</span><span class="badge rig" title="완성도(rigor) 72 · 프록시 추정">완성도 72</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2606.17598</span> · <a href="https://arxiv.org/abs/2606.17598" target="_blank" rel="noopener">arXiv</a></div>
+        <img class="fig" src="https://arxiv.org/html/2606.17598v1/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">RGB만 쓰는 기존 VLA가 온도·소리·레이더처럼 카메라로 추론하기 어려운 물리 속성을 감지하지 못하는 한계를 겨냥한 어댑티브 멀티모달 센싱 VLA다. 태스크 명령과 시각 컨텍스트가 들어오면 먼저 sensor token + target description을 생성해(도구 호출처럼) 어떤 센서를 언제 쓸지 고르고, 그 측정값을 통일된 중간표현인 grounded sensor image로 변환해 융합·행동 생성한다. 실제 로봇 덱스터러스 핸드 조작(온도 유도 pick-and-place, 음향 기반 물체 탐색, mmWave 레이더 은닉물체 회수)에서 평균 76.4% 성공률로 RGB-only 및 멀티센서 baseline을 크게 앞서고 미학습 태스크 zero-shot 능력도 보인다.</p><div class="f"><span class="lbl">기여</span><span>기존 VLA가 RGB 관측에만 의존하는 것과 달리, 비시각 센서(온도·소리·레이더)를 필요할 때 도구처럼 선택 호출하고 이질적 측정값을 단일 grounded sensor image로 통일해 센서별 처리와 VLA 백본을 분리한다. 또한 기존 RGB 비디오 데이터셋에 합성 grounded sensor image를 증강하는 데이터 파이프라인으로 값비싼 멀티센서 로봇 데이터 수집 없이 미학습 센서 유도 태스크로 일반화한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>비시각 물리 센싱(온도·소리·mmWave 레이더)으로 VLA의 인지 범위를 확장 — sensor token + target description을 도구 호출 인자처럼 생성해 어떤 센서를 언제/무엇에 쓸지 어댑티브하게 결정</li><li>이질적 센서 판독을 통일된 grounded sensor image 중간표현으로 변환해 센서별 처리를 VLA 백본과 분리 → 새 모달리티를 모듈식으로 효율적 통합</li><li>RGB 비디오 데이터셋에 grounded sensor image를 합성 증강하는 파이프라인(9.6K 에피소드·1.05M 프레임·1000+ 객체, MolmoAct/AgiBotWorld-Alpha/VITRA 기반)으로 고비용 멀티센서 로봇 데이터 없이 zero-shot 일반화</li><li>실증 성능 우수: 평균 76.4% vs π0-RGB 20.8%/π0.5-RGB 19.4%, 센서 선택 정확도 학습 태스크 100%·미학습 태스크 센서 100%/타깃 82%, 프리트레이닝 시 미학습 태스크 zero-shot 66.7% vs 27.1%</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>저자 인정 한계 — 실제 로봇 데이터셋 규모가 작음(성공률 4.17% 등에서 셀당 시행 수가 24회 수준으로 통계적 표본이 작음)</li><li>grounded sensor image 생성이 성능 좋은 segmentation 모듈에 의존 → 세그멘테이션 실패가 파이프라인 병목/실패점</li><li>평가가 단일 실로봇 덱스터러스 핸드 셋업과 3개 센싱 모달리티·소수 태스크에 국한, 표준 벤치마크 부재로 폭넓은 비교 곤란(음향 태스크는 58.3%로 상대적으로 낮음)</li><li>이질적 센서 판독을 이미지 공간으로 렌더링하는 방식이 모든 모달리티로 확장될지 불확실하고 파이프라인 복잡도를 추가</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert (순수 VLA) — π0 계열 플로우매칭 action expert 위에 멀티모달 센싱을 얹은 형태로, 미래 상태를 예측하는 world model이 없이 관측→행동을 직접 생성</span></div><div class="f"><span class="lbl">데이터셋</span><span>평가: 실제 로봇 덱스터러스 핸드 조작 태스크 — 온도 유도 pick-and-place, 음향 기반 물체 탐색, mmWave 레이더 은닉물체 회수(다단계 태스크 포함). 프리트레이닝: 합성 grounded sensor image 증강 데이터 9.6K 에피소드/1.05M 프레임/1000+ 객체 (MolmoAct, AgiBotWorld-Alpha, VITRA에서 합성).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0-RGB</span><span class="cmp">π0.5-RGB</span><span class="cmp">π0-Raw</span><span class="cmp">π0.5-Raw</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>실로봇 멀티센싱 조작 (평균 성공률, thermal/acoustic/mmWave)</td><td class="mt">Success rate</td><td class="me">76.4%</td><td>π0-RGB 20.8% · π0.5-RGB 19.4% · π0-Raw 27.8% · π0.5-Raw 23.6% <span class="note">Table 1. 초록은 평균 80.6%로 표기(집계 범위 상이 추정); Table 1의 검증된 세 모달리티 평균은 76.4%. Sensing/Manipulation 단계 분해 시 MuseVLA 95.8%/77.8%</span></td></tr><tr><td>온도 유도 pick-and-place (Thermal)</td><td class="mt">Success rate</td><td class="me">83.3%</td><td>π0-RGB 33.3% · π0.5-RGB 16.7% <span class="note">Table 1</span></td></tr><tr><td>음향 기반 물체 탐색 (Acoustic)</td><td class="mt">Success rate</td><td class="me">58.3%</td><td>π0-RGB 25.0% · π0.5-RGB 33.3% <span class="note">Table 1. 본 모델도 상대적으로 낮은 편</span></td></tr><tr><td>mmWave 레이더 은닉물체 회수 (mmWave)</td><td class="mt">Success rate</td><td class="me">87.5%</td><td>π0-RGB 4.17% · π0.5-RGB 8.33% <span class="note">Table 1. RGB baseline이 사실상 불가능한 태스크</span></td></tr></tbody></table></div>
       </div>
     </article>
   </section>
@@ -292,7 +347,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13856" target="_blank" rel="noopener">Output-Level Regularization Eliminates the Seed Lottery in Single-GPU VLA Fine-Tuning</a></h3>
-        <div class="badges"><span class="badge conf">🎓 CoRL 2026 (submitted)</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 90 · 프록시 추정">완성도 90</span><span class="badge conf">🎓 CoRL 2026 (submitted)</span></div>
         <div class="meta"><span class="id">2606.13856</span> · <a href="https://arxiv.org/abs/2606.13856" target="_blank" rel="noopener">arXiv</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.13856v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -306,7 +361,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11324" target="_blank" rel="noopener">Embodied-R1.5: Evolving Physical Intelligence via Embodied Foundation Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 Tencent Hunyuan</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 10</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 86 · 프록시 추정">완성도 86</span><span class="badge org">🔴 Tencent Hunyuan</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 10</span></div>
         <div class="meta"><span class="id">2606.11324</span> · <a href="https://arxiv.org/abs/2606.11324" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/pickxiguapi/Embodied-R1.5" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.11324v1/x3.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -317,7 +372,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.12105" target="_blank" rel="noopener">DAM-VLA: Decoupled Asynchronous Multimodal Vision Language Action model</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 28 → 필독도 28">필독 E 28</span><span class="badge rig" title="완성도(rigor) 80 · 프록시 추정">완성도 80</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.12105</span> · <a href="https://arxiv.org/abs/2606.12105" target="_blank" rel="noopener">arXiv</a> · <a href="https://intuitive-robots.github.io/DAM-VLA/" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.12105v1/figures/concept_figure.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -328,7 +383,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13355" target="_blank" rel="noopener">Real-Time Execution with Autoregressive Policies</a></h3>
-        <div class="badges"><span class="badge org">🔴 Google Research</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 71 · 프록시 추정">완성도 71</span><span class="badge org">🔴 Google Research</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.13355</span> · <a href="https://arxiv.org/abs/2606.13355" target="_blank" rel="noopener">arXiv</a> · <a href="https://oddqueue.github.io/realfast" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.13355v1/fig/img/overview.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -339,7 +394,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.13578" target="_blank" rel="noopener">LabVLA: Grounding Vision-Language-Action Models in Scientific Laboratories</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 39</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 89 · 프록시 추정">완성도 89</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 39</span></div>
         <div class="meta"><span class="id">2606.13578</span> · <a href="https://arxiv.org/abs/2606.13578" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/zjunlp/LabVLA" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.13578v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -353,7 +408,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11129" target="_blank" rel="noopener">WorldOlympiad: Can Your World Model Survive a Triathlon?</a></h3>
-        <div class="badges"><span class="badge org">🔴 Alibaba DAMO</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 20</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 88 · 프록시 추정">완성도 88</span><span class="badge org">🔴 Alibaba DAMO</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 20</span></div>
         <div class="meta"><span class="id">2606.11129</span> · <a href="https://arxiv.org/abs/2606.11129" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/alibaba-damo-academy/WorldOlympiad" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.11129v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -364,7 +419,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.07723" target="_blank" rel="noopener">VoLo: A Physical Orchestrator for Open-Vocabulary Long-Horizon Manipulation</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 1</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 72 · 프록시 추정">완성도 72</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 1</span></div>
         <div class="meta"><span class="id">2606.07723</span> · <a href="https://arxiv.org/abs/2606.07723" target="_blank" rel="noopener">arXiv</a> · <a href="https://chicychen.github.io/VoLo/" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.07723v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -375,7 +430,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11187" target="_blank" rel="noopener">Next Forcing: Causal World Modeling with Multi-Chunk Prediction</a></h3>
-        <div class="badges"><span class="badge org">🔴 Ant/Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 · 우리 모델 이김 +16(마진 2%p) → 필독도 96">필독 A 96⚔</span><span class="badge rig dd" title="완성도(rigor) 81 · 딥다이브 Opus 정독">완성도 81✦</span><span class="badge org">🔴 Ant/Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.11187</span> · <a href="https://arxiv.org/abs/2606.11187" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/gangweix/next-forcing" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.11187v1/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -386,7 +441,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.11120" target="_blank" rel="noopener">Monte Carlo Pass Search: 3D Counterfactual Pass Evaluation in Football</a></h3>
-        <div class="badges"><span class="badge conf">🎓 CVPR</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 0 → 필독도 0">필독 E 0</span><span class="badge rig" title="완성도(rigor) 85 · 프록시 추정">완성도 85</span><span class="badge conf">🎓 CVPR</span></div>
         <div class="meta"><span class="id">2606.11120</span> · <a href="https://arxiv.org/abs/2606.11120" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/andrewkang12345/monteCarloPassSearch" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.11120v1/figs/figure1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -400,7 +455,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.09828" target="_blank" rel="noopener">Mirage: Latent Spatial Memory for Video World Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 76 · 프록시 추정">완성도 76</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.09828</span> · <a href="https://arxiv.org/abs/2606.09828" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/microsoft/LatentSpatialMemory" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2606.09828v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -414,7 +469,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">τ0-WM (tau-zero) — A Unified Video-Action World Model for Robotic Manipulation</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 60 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 58 · 딥다이브 Opus 정독">완성도 58✦</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.01027</span> · <a href="https://arxiv.org/abs/2606.01027" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -425,7 +480,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.24597" target="_blank" rel="noopener">Qwen-AgentWorld: Language World Models for General Agents</a></h3>
-        <div class="badges"><span class="badge org">🔴 Alibaba/Qwen</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 139</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 45 · 프록시 추정">완성도 45</span><span class="badge org">🔴 Alibaba/Qwen</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 139</span></div>
         <div class="meta"><span class="id">2606.24597</span> · <a href="https://arxiv.org/abs/2606.24597" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/QwenLM/Qwen-AgentWorld" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -436,7 +491,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.28128" target="_blank" rel="noopener">PhysisForcing: Physics Reinforced World Simulator for Robotic Manipulation</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 30</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 71 · 프록시 추정">완성도 71</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 30</span></div>
         <div class="meta"><span class="id">2606.28128</span> · <a href="https://arxiv.org/abs/2606.28128" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/DAGroup-PKU/PhysisForcing" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -447,7 +502,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.28133" target="_blank" rel="noopener">Translation as a Bridging Action: Transferring Manipulation Skills from Humans to Robots</a></h3>
-        <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 27</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 28 → 필독도 28">필독 E 28</span><span class="badge rig" title="완성도(rigor) 48 · 프록시 추정">완성도 48</span><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 27</span></div>
         <div class="meta"><span class="id">2606.28133</span> · <a href="https://arxiv.org/abs/2606.28133" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -458,7 +513,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.25473" target="_blank" rel="noopener">Causal-rCM: A Unified Teacher-Forcing and Self-Forcing Open Recipe for Autoregressive Diffusion Distillation in Streaming Video Generation and Interactive World Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 23</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 56 · 프록시 추정">완성도 56</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 23</span></div>
         <div class="meta"><span class="id">2606.25473</span> · <a href="https://arxiv.org/abs/2606.25473" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -469,7 +524,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.18953" target="_blank" rel="noopener">Object-Centric Residual RL for Zero-Shot Sim-to-Real VLA Enhancement</a></h3>
-        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 3</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 28 → 필독도 28">필독 E 28</span><span class="badge rig" title="완성도(rigor) 48 · 프록시 추정">완성도 48</span><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 3</span></div>
         <div class="meta"><span class="id">2606.18953</span> · <a href="https://arxiv.org/abs/2606.18953" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -480,7 +535,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.26694" target="_blank" rel="noopener">PhysEditWorld: A Large-Scale Dataset Toward Physics-Editable World Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 Tencent</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 35 · 프록시 추정">완성도 35</span><span class="badge org">🔴 Tencent</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2606.26694</span> · <a href="https://arxiv.org/abs/2606.26694" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -491,7 +546,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.27163" target="_blank" rel="noopener">Learning to Fold: prizewinning solution at LeHome Challenge 2026 (1st place online, 2nd offline)</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ICRA 2026</span><span class="badge up">▲ 4</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 59 · 프록시 추정">완성도 59</span><span class="badge conf">🎓 ICRA 2026</span><span class="badge up">▲ 4</span></div>
         <div class="meta"><span class="id">2606.27163</span> · <a href="https://arxiv.org/abs/2606.27163" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -502,7 +557,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.27872" target="_blank" rel="noopener">S²-VLA: State-Space Guided Vision-Language-Action Models for Long-Horizon Manipulation</a></h3>
-        <div class="badges"><span class="badge conf">🎓 IJCAI 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 49 · 프록시 추정">완성도 49</span><span class="badge conf">🎓 IJCAI 2026</span></div>
         <div class="meta"><span class="id">2606.27872</span> · <a href="https://arxiv.org/abs/2606.27872" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -513,7 +568,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.27807" target="_blank" rel="noopener">SpikeVLA: Vision-Language-Action Models with Spiking Neural Networks</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ICML 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 45 · 프록시 추정">완성도 45</span><span class="badge conf">🎓 ICML 2026</span></div>
         <div class="meta"><span class="id">2606.27807</span> · <a href="https://arxiv.org/abs/2606.27807" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -524,7 +579,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.27268" target="_blank" rel="noopener">E-TTS: A New Embodied Test-Time Scaling Framework for Robotic Manipulation</a></h3>
-        <div class="badges"><span class="badge conf">🎓 ECCV 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 55 · 프록시 추정">완성도 55</span><span class="badge conf">🎓 ECCV 2026</span></div>
         <div class="meta"><span class="id">2606.27268</span> · <a href="https://arxiv.org/abs/2606.27268" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -535,7 +590,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">ForesightSafety-VLA: A Unified Diagnostic Safety Benchmark for Vision-Language-Action Models</a></h3>
-        <div class="badges"><span class="badge conf">🎓 IROS 2026</span></div>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 45 · 프록시 추정">완성도 45</span><span class="badge conf">🎓 IROS 2026</span></div>
         <div class="meta"><span class="id">2606.27079</span> · <a href="https://arxiv.org/abs/2606.27079" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -549,7 +604,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2604.05014" target="_blank" rel="noopener">StarVLA</a></h3>
-        <div class="badges"><span class="badge conf">🎓 arXiv (Technical Report, open-source VLA infra)</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 71 · 프록시 추정">완성도 71</span><span class="badge conf">🎓 arXiv (Technical Report, open-source VLA infra)</span></div>
         <div class="meta"><span class="id">2604.05014</span> · <a href="https://arxiv.org/abs/2604.05014" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/starVLA/starVLA" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2604.05014v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -563,7 +618,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2603.16666" target="_blank" rel="noopener">Fast-WAM</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 · 우리 모델 이김 +19(마진 8%p) → 필독도 99">필독 A 99⚔</span><span class="badge rig dd" title="완성도(rigor) 81 · 딥다이브 Opus 정독">완성도 81✦</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2603.16666</span> · <a href="https://arxiv.org/abs/2603.16666" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/yuantianyuan01/FastWAM" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2603.16666v2/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -574,7 +629,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2603.19312" target="_blank" rel="noopener">LeWorldModel (LeWM)</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 62 · 프록시 추정">완성도 62</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2603.19312</span> · <a href="https://arxiv.org/abs/2603.19312" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/lucas-maes/le-wm" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2603.19312v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -588,7 +643,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.10098" target="_blank" rel="noopener">VLA-JEPA</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 35 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 77 · 딥다이브 Opus 정독">완성도 77✦</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2602.10098</span> · <a href="https://arxiv.org/abs/2602.10098" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/ginwind/VLA-JEPA" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2602.10098v2/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -599,7 +654,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.09849" target="_blank" rel="noopener">BagelVLA (Tsinghua + ByteDance Seed)</a></h3>
-        <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 55 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 74 · 딥다이브 Opus 정독">완성도 74✦</span><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2602.09849</span> · <a href="https://arxiv.org/abs/2602.09849" target="_blank" rel="noopener">arXiv</a> · <a href="https://cladernyjorn.github.io/BagelVLA.github.io" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -610,7 +665,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2602.06949" target="_blank" rel="noopener">DreamDojo</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 55 → 필독도 55">필독 C 55</span><span class="badge rig" title="완성도(rigor) 62 · 프록시 추정">완성도 62</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2602.06949</span> · <a href="https://arxiv.org/abs/2602.06949" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/NVIDIA/DreamDojo" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2602.06949v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -624,7 +679,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.11404" target="_blank" rel="noopener">ACoT-VLA</a></h3>
-        <div class="badges"><span class="badge org">🔴 AgiBot</span><span class="badge conf">🎓 CVPR 2026</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 48 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 77 · 딥다이브 Opus 정독">완성도 77✦</span><span class="badge org">🔴 AgiBot</span><span class="badge conf">🎓 CVPR 2026</span></div>
         <div class="meta"><span class="id">2601.11404</span> · <a href="https://arxiv.org/abs/2601.11404" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/AgibotTech/ACoT-VLA" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2601.11404v2/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -635,7 +690,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.18692" target="_blank" rel="noopener">LingBot-VLA (Robbyant / Ant Group)</a></h3>
-        <div class="badges"><span class="badge org">🔴 Ant Group, Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 48 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 79 · 딥다이브 Opus 정독">완성도 79✦</span><span class="badge org">🔴 Ant Group, Robbyant</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2601.18692</span> · <a href="https://arxiv.org/abs/2601.18692" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/Robbyant/lingbot-vla" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2601.18692v2/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -646,7 +701,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.16163" target="_blank" rel="noopener">Cosmos Policy</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 55 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 81 · 딥다이브 Opus 정독">완성도 81✦</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2601.16163</span> · <a href="https://arxiv.org/abs/2601.16163" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/NVlabs/cosmos-policy" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_main_version.001.jpeg" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -657,7 +712,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.05230" target="_blank" rel="noopener">Learning Latent Action World Models In The Wild (JEPA-Wild)</a></h3>
-        <div class="badges"><span class="badge org">🔴 Meta (FAIR)</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 55 → 필독도 55">필독 C 55</span><span class="badge rig" title="완성도(rigor) 52 · 프록시 추정">완성도 52</span><span class="badge org">🔴 Meta (FAIR)</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2601.05230</span> · <a href="https://arxiv.org/abs/2601.05230" target="_blank" rel="noopener">arXiv</a></div>
         
       </div>
@@ -668,7 +723,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2601.02456" target="_blank" rel="noopener">InternVLA-A1</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 75 · 프록시 추정">완성도 75</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2601.02456</span> · <a href="https://arxiv.org/abs/2601.02456" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/InternRobotics/InternVLA-A1" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2601.02456v1/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -682,7 +737,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2512.24497" target="_blank" rel="noopener">JEPA-WMs (Joint-Embedding Predictive World Models)</a></h3>
-        <div class="badges"><span class="badge org">🔴 Meta FAIR</span><span class="badge conf">🎓 TMLR</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 55 → 필독도 55">필독 C 55</span><span class="badge rig" title="완성도(rigor) 53 · 프록시 추정">완성도 53</span><span class="badge org">🔴 Meta FAIR</span><span class="badge conf">🎓 TMLR</span></div>
         <div class="meta"><span class="id">2512.24497</span> · <a href="https://arxiv.org/abs/2512.24497" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/facebookresearch/jepa-wms" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2512.24497v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -696,7 +751,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2511.00062" target="_blank" rel="noopener">Cosmos-Transfer2.5 (Cosmos-Transfer2.5-2B)</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 55 → 필독도 55">필독 C 55</span><span class="badge rig" title="완성도(rigor) 43 · 프록시 추정">완성도 43</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2511.00062</span> · <a href="https://arxiv.org/abs/2511.00062" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/nvidia-cosmos/cosmos-transfer2.5" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -710,7 +765,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2505.14683" target="_blank" rel="noopener">BAGEL (BAGEL-7B-MoT)</a></h3>
-        <div class="badges"><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gC" title="관련성 55 → 필독도 55">필독 C 55</span><span class="badge rig" title="완성도(rigor) 80 · 프록시 추정">완성도 80</span><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2505.14683</span> · <a href="https://arxiv.org/abs/2505.14683" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/ByteDance-Seed/Bagel" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2505.14683/x2.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -724,7 +779,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card big" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2410.24164" target="_blank" rel="noopener">π0 / π0.5 (Physical Intelligence)</a></h3>
-        <div class="badges"><span class="badge org">🔴 Physical Intelligence</span><span class="badge conf">🎓 RSS 2025</span></div>
+        <div class="badges"><span class="badge pri gB" title="관련성 48 · 딥다이브함=관심 확정 → 바닥 70 → 필독도 70">필독 B 70</span><span class="badge rig dd" title="완성도(rigor) 77 · 딥다이브 Opus 정독">완성도 77✦</span><span class="badge org">🔴 Physical Intelligence</span><span class="badge conf">🎓 RSS 2025</span></div>
         <div class="meta"><span class="id">2410.24164</span> · <a href="https://arxiv.org/abs/2410.24164" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/Physical-Intelligence/openpi" target="_blank" rel="noopener">code</a></div>
         <img class="fig" src="https://arxiv.org/html/2410.24164v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -738,7 +793,7 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
     <article class="card" data-group="WM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2310.10639" target="_blank" rel="noopener">SuSIE (Zero-Shot Robotic Manipulation with Image-Editing Diffusion)</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 56 · 프록시 추정">완성도 56</span><span class="badge arxiv">📄 arXiv</span></div>
         <div class="meta"><span class="id">2310.10639</span> · <a href="https://arxiv.org/abs/2310.10639" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/kvablack/susie" target="_blank" rel="noopener">code</a></div>
         
       </div>
@@ -763,7 +818,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-07-08 04:40 · WM_surveybot</footer>
+<footer>built 2026-07-09 14:38 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
