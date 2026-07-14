@@ -106,7 +106,32 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">67</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">11</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">27</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">19</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">10</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">69</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">12</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">28</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">19</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">10</span></button></div>
+  <section>
+    <h2 class="date">2026-07-13 · 2편</h2>
+    <article class="card" data-group="WM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2607.11397" target="_blank" rel="noopener">WALA: Learning Executable Latent Actions from Action-Labeled Demonstrations and Action-Free Videos</a></h3>
+        <div class="badges"><span class="badge pri gB" title="관련성 60 · 우리 모델 이김 +16(마진 1%p) → 필독도 76">필독 B 76⚔</span><span class="badge rig" title="완성도(rigor) 75 · 프록시 추정">완성도 75</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2607.11397</span> · <a href="https://arxiv.org/abs/2607.11397" target="_blank" rel="noopener">arXiv</a></div>
+        <img class="fig" src="https://arxiv.org/html/2607.11397v1/wala_lam.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">WALA는 행동 라벨이 있는 로봇 시연과 라벨이 없는 대규모 비디오를 함께 써서 &#x27;실행 가능한 잠재 행동(latent action)&#x27;을 학습하는 프레임워크다. 픽셀을 복원하는 대신 DINOv3 특징 공간과 dense depth 공간에서 현재→미래 관측의 delta를 예측해, 외형 변화에 둔감하면서 과제 관련 의미·기하 구조를 보존하는 잠재 행동 모델을 사전학습한다. 정책 학습 시 이 인코더가 안정적인 잠재 행동 타깃을, 디코더가 학습 가능한 잠재 world model 역할을 하여 라벨 있는 시연은 제어 감독을, 라벨 없는 비디오는 dynamics 감독을 제공한다.</p><div class="f"><span class="lbl">기여</span><span>행동 라벨 유무가 섞인 데이터를 하나의 잠재 행동 표현으로 통합해, 값비싼 로봇 행동 라벨 없이도 대규모 action-free 비디오에서 제어에 유효한 dynamics 감독을 끌어내는 학습 틀을 제시한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>픽셀 복원 대신 DINOv3 feature + dense depth의 미래 delta를 예측 → 의미·기하 보존, 외형 민감도 감소</li><li>RoboCasa-GR1-Tabletop 평균 성공률 75.2%로 SOTA(차순위 DIAL 70.2% 대비 +5.0%p)</li><li>action-free 비디오가 dynamics 감독을 제공해 로봇 행동 주석 없이 확장 가능, 실세계 조작 일반화 개선</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>RoboTwin 2.0 Clean에서는 90.6%로 LingBot-VA(92.9%)·Fast-WAM(91.9%)에 다소 뒤짐(Random에서는 역전)</li><li>잠재 행동 품질이 DINOv3·depth teacher 표현에 종속 — teacher 편향이 그대로 전파될 위험</li><li>시뮬(RoboTwin/RoboCasa) 위주 평가, 실세계는 소수 태스크(pick-place·stack·insert 등)로 제한</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">WM+IDM류 — action-free 비디오에서 잠재 행동(IDM 역할) 학습 + 잠재 world model 디코더</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0, RoboCasa-GR1-Tabletop, 실세계 조작 태스크(Pick-Place·Stack Paper Cups·Insert Flowers·Disassemble Blocks)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">pi0.5</span><span class="cmp">X-VLA</span><span class="cmp">StarVLA-α</span><span class="cmp">InternVLA-A1</span><span class="cmp">Motus</span><span class="cmp">Fast-WAM</span><span class="cmp">LingBot-VA</span><span class="cmp">GR00T-N1.6</span><span class="cmp">DiT4DiT</span><span class="cmp">LDA-1B</span><span class="cmp">DIAL</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>RoboTwin 2.0 (Clean)</td><td class="mt">%</td><td class="me">90.6</td><td>LingBot-VA 92.9 · Fast-WAM 91.9 <span class="note">SR</span></td></tr><tr><td>RoboTwin 2.0 (Random)</td><td class="mt">%</td><td class="me">92.8</td><td>LingBot-VA 91.5 · Fast-WAM 91.8 <span class="note">SR</span></td></tr><tr><td>RoboCasa-GR1-Tabletop</td><td class="mt">%</td><td class="me">75.2</td><td>DIAL 70.2 <span class="note">평균 SR · SOTA</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2607.11270" target="_blank" rel="noopener">Lumo-2: Towards Predictive, Aligned, and Scalable Robot Learning</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 76 · 프록시 추정">완성도 76</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2607.11270</span> · <a href="https://arxiv.org/abs/2607.11270" target="_blank" rel="noopener">arXiv</a></div>
+        <img class="fig" src="https://arxiv.org/html/2607.11270v1/x1.png" alt="figure" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="R">
+        <p class="sum">Lumo-2는 잠재 공간에서 world dynamics를 추론해 행동을 생성하는 잠재 world-action model이다. 학습된 잠재 world dynamics가 물리적으로 근거 있는 시각 전이를 포착해 미래 가능성을 인코딩하고, 이를 cross-modal 정렬의 공통 기반으로 삼는다. 핵심 가설은 &#x27;행동 생성 품질이 잠재 공간의 기하에 좌우된다&#x27;는 것으로, 복원 기반 tokenization이 저수준 신호 충실도에 치우쳐 제어 성능과 어긋나는 문제를 다단계 modality 사전정렬(world dynamics→vision→language)로 해소한다.</p><div class="f"><span class="lbl">기여</span><span>복원 충실도와 제어 성능의 불일치를 지적하고, 행동 표현을 잠재 world dynamics·비전·언어에 단계적으로 정렬하는 multi-stage pre-alignment로 예측적 추론에 적합한 구조화된 잠재 공간을 유도한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>잠재 world dynamics 기반 예측적 추론을 경량으로 유지하면서 VLA·WAM baseline을 일관되게 능가</li><li>임베디드 벤치서 4B VLM이 Qwen-3.5 4B 대비 큰 격차(VSIBench 52.34 vs 21.73, MindCube 66.08 vs 39.95)</li><li>long-horizon·dexterous 등 시간적 추론·물리 이해가 필요한 실세계 22개 태스크에서 이득 + scaling·OOD 일반화 체계적 분석</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>실세계 22개 태스크 성적이 본문 표가 아닌 그림(Fig.19-20)에 있어 정확한 수치 비교가 어려움</li><li>핵심 주장(잠재 공간 기하가 행동 품질 좌우)이 상관 분석 위주 — 인과적 검증은 제한적</li><li>다단계 정렬·대규모 코퍼스(FineVision 24.3M 등)에 의존해 재현 비용이 큼</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">WAM — 스스로를 latent world-action model로 규정(잠재 world dynamics 추론으로 행동 생성)</span></div><div class="f"><span class="lbl">데이터셋</span><span>FineVision(24.3M), EgoTaskQA·EPIC-KITCHENS·Ego4D(video), Astribot S1·AGIBot Genie-1·RealSource RS-02(cross-embodiment robot), BLINK·VSIBench·MindCube·CV-Bench·RefSpatialBench·ShareRobot(embodied bench)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">pi0.5</span><span class="cmp">Fast-WAM</span><span class="cmp">Qwen-3.5 4B</span><span class="cmp">RoboBrain-2.5 4B</span><span class="cmp">Rynnbrain 4B</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>BLINK-Depth (4B VLM)</td><td class="mt">score</td><td class="me">91.93</td><td>Qwen-3.5 4B 79.03</td></tr><tr><td>VSIBench (4B VLM)</td><td class="mt">score</td><td class="me">52.34</td><td>Qwen-3.5 4B 21.73</td></tr><tr><td>MindCube (4B VLM)</td><td class="mt">score</td><td class="me">66.08</td><td>Qwen-3.5 4B 39.95</td></tr><tr><td>Real-world 22 tasks</td><td class="mt">SR</td><td class="me">&gt; pi0.5 · Fast-WAM (전 태스크)</td><td> <span class="note">approx · 수치는 Fig.19-20</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+  </section>
   <section>
     <h2 class="date">2026-07-12 · 4편</h2>
     <article class="card big" data-group="WAM">
@@ -926,7 +951,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-07-14 05:55 · WM_surveybot</footer>
+<footer>built 2026-07-14 06:22 · WM_surveybot</footer>
 <script>
 async function runUpdate(){
   const st = document.getElementById('upd-status');
