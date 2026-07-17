@@ -110,18 +110,35 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
 #qlist .qmeta{color:#94a3b8;font-size:11px}
 #qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
 #qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</head>
+</style><style>
+.lab-lock{display:flex;justify-content:center;padding:60px 0}
+.lockbox{background:#fff;border:1px solid #e6e8ee;border-radius:14px;padding:28px 32px;max-width:400px;width:100%;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.lockbox h3{margin:0;font-size:17px}
+.lockbox input[type=password]{padding:9px 12px;border:1px solid #e6e8ee;border-radius:8px;font-size:14px}
+.lockbox .go{padding:9px 14px;border-radius:8px;border:0;background:#3b5bdb;color:#fff;font-weight:700;font-size:13.5px;cursor:pointer}
+.lockbox .lnote{font-size:12px;color:#6b7280;margin:0}
+.dd-lab{background:#fff;border:1px solid #e6e8ee;border-radius:14px;padding:28px 34px;line-height:1.75;font-size:14.5px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.dd-lab h1{font-size:22px;margin-top:0}
+.dd-lab h2{font-size:18px;margin-top:30px;border-bottom:1px solid #e6e8ee;padding-bottom:6px}
+.dd-lab h3{font-size:15.5px}
+.dd-lab code{background:#f1f3f9;padding:1px 5px;border-radius:5px;font-size:12.5px}
+.dd-lab pre{background:#0b1020;color:#dbe4f3;padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:12.5px;line-height:1.6}
+.dd-lab pre code{background:none;color:inherit;padding:0}
+.dd-lab .tbl{overflow-x:auto}
+.dd-lab table{border-collapse:collapse;font-size:13px}
+.dd-lab th,.dd-lab td{border:1px solid #e6e8ee;padding:6px 10px}
+.dd-lab th{background:#f1f3f9}
+.dd-lab blockquote{border-left:3px solid #3b5bdb;margin:8px 0;padding:2px 14px;color:#6b7280}
+.dd-lab img{max-width:100%}
+.lab-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px;align-items:center}
+.lab-chips .lchip{padding:7px 14px;border-radius:999px;border:1px solid #e6e8ee;background:#fff;color:#6b7280;font-size:13px;font-weight:700;cursor:pointer}
+.lab-chips .lchip.on{background:#3b5bdb;color:#fff;border-color:#3b5bdb}
+</style></head>
 <body>
 <header><div class="wrap">
   <div>
-    <h1><a href="index.html">Qwen2-VL — Naive Dynamic Resolution VLM 전체 구조</a></h1>
-    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <h1><a href="index.html">WM / VLA Survey</a></h1>
+    <p>🔒 Lab — 암호화된 연구 노트 (wam-loop)</p>
     <div id="upd-status"></div>
   </div>
   <div class="nav">
@@ -135,41 +152,99 @@ article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14
   </div>
 </div></header>
 <main>
-  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
-  <script>
-  const MD = "# Qwen2-VL — Naive Dynamic Resolution VLM 전체 구조\n\n> Wang et al., *Qwen2-VL* (arXiv:2409.12191). 위 'VLM 구조' 토픽 §4가 Qwen2-VL을 **커넥터 계열**(native dynamic resolution)로 분류한 것을 여기선 **전체 아키텍처**로 펼친다. InternVLA-M1·StarVLA 등 다수 VLA가 System2 백본으로 사용. [ViT](bg_vit.html)를 비전 인코더로 쓰되 3가지를 바꾼다.\n\n### 전체 아키텍처 한눈에\n\n```\n[가변 해상도 이미지 / 비디오 (원해상도·원종횡비 보존)]\n        │\n        ▼\n┌─────────────────────────────────────────────┐\n│ Vision Encoder = ViT (~675M, patch=14)       │  ViT에서 바뀐 점:\n│  · absolute PosEmb 제거 → 2D-RoPE            │   ① 고정 해상도 → Naive Dynamic Resolution\n│  · Naive Dynamic Resolution(가변 패치 수)    │   ② 1D learnable PosEmb → 2D-RoPE\n│  · 비디오: 3D tube(인접 2프레임 묶음)        │   ③ [CLS] 분류 head 없음(patch 토큰 전부 사용)\n└─────────────────────────────────────────────┘\n        │  가변 patch 토큰 (이미지 크기 비례)\n        ▼\n┌─────────────────────────────────────────────┐\n│ MLP Patch-Merge:  인접 2×2 토큰 → 1 토큰      │  토큰 수 1/4로 압축\n└─────────────────────────────────────────────┘\n        │  <|vision_start|> v_1 v_2 … v_k <|vision_end|>\n        ▼\n[ 텍스트 토큰 ⊕ 시각 토큰 을 한 시퀀스로 concat ]  + 위치 = M-RoPE(시간/높이/너비)\n        │\n        ▼\n┌─────────────────────────────────────────────┐\n│ LLM = Qwen2 (decoder-only Transformer)       │   크기: 2B / 7B(~8B total) / 72B\n└─────────────────────────────────────────────┘\n        │\n        ▼\n[ 텍스트 출력 (autoregressive) ]\n```\n\n> 큰 그림: **[ViT](bg_vit.html)로 이미지→패치 토큰 → 2×2로 압축 → 텍스트와 한 줄로 이어 Qwen2 LLM에 넣는다.** LLaVA식 \"projection+concat\"의 확장판인데, **해상도·종횡비를 보존**하고 위치를 **M-RoPE**로 통일한 것이 차별점.\n\n### ① Naive Dynamic Resolution (가변 해상도)\n\n```\nLLaVA/기존 ViT:  모든 이미지 → 224² 강제 resize → 항상 256 패치(고정)\nQwen2-VL:        이미지 원해상도 그대로 → 가변 패치 수\n   작은 이미지(소수 토큰)  ┐\n   큰 이미지(다수 토큰)    ┤→ min_pixels~max_pixels로 토큰 수 상·하한 제어\n   세로/가로 긴 이미지     ┘   종횡비 보존(distortion 없음)\n```\n- ViT의 **absolute position embedding을 제거**하고 **2D-RoPE**(rotary를 가로·세로축으로)로 위치 인코딩 → 임의 해상도/패치 격자에 자연 대응.\n- 효과: OCR·차트·문서·다양한 크기 이미지에 강함. 단 가변 토큰이라 배칭/서빙 메모리 예측이 어려움(그래서 min/max_pixels).\n\n### ② 2×2 Patch-Merge (토큰 압축)\n\n```\nViT 출력 패치 격자                Patch-Merge 후\n┌──┬──┬──┬──┐                    ┌─────┬─────┐\n│v1│v2│v5│v6│  인접 2×2 묶어     │ m1  │ m2  │   토큰 수 1/4\n├──┼──┼──┼──┤  MLP로 1토큰 →     ├─────┼─────┤\n│v3│v4│v7│v8│                    │ m3  │ m4  │   m = MLP(concat(v_a,v_b,v_c,v_d))\n└──┴──┴──┴──┘                    └─────┴─────┘\n```\nLLM에 들어가는 시각 토큰 수를 1/4로 줄여 긴 시퀀스 부담(self-attn O(n²)) 완화. 압축된 토큰열은 `<|vision_start|> … <|vision_end|>` 특수 토큰으로 감싼다.\n\n### ③ 비디오 처리 (3D tube)\n\n```\n비디오 프레임:  f1 f2 f3 f4 f5 f6 …\n                └┬─┘ └┬─┘ └┬─┘\n            3D conv로 인접 2프레임을 하나의 \"tube\"로 묶어 처리(시간 depth=2)\n            → 시간축도 토큰화. (이미지는 동일 프레임 2장으로 취급해 일관성 유지)\n            → 전체 토큰 상한(예: 비디오당 ~16384)으로 길이 제어\n```\n\n### ④ M-RoPE (Multimodal Rotary Position Embedding) — 핵심\n\n```\n일반 1D RoPE:  위치 = 단일 정수 인덱스 (텍스트 전용)\nM-RoPE:        위치 = (temporal, height, width) 3개 성분으로 분해\n\n  텍스트:  (t, t, t)        세 성분 동일 → 사실상 1D RoPE와 동치\n  이미지:  (t_const, h, w)  시간 고정, 높이·너비는 패치 격자 위치\n  비디오:  (t↑, h, w)       프레임마다 t 증가 + 공간 h,w\n```\n\n![Qwen2-VL M-RoPE](https://arxiv.org/html/2409.12191v2/images/mrope.png)\n> Figure 3 (Qwen2-VL): rotary 임베딩을 시간·높이·너비로 분해해 텍스트/이미지/비디오 위치를 한 틀에서 모델링. 텍스트·이미지·비디오를 한 시퀀스에 섞어도 위치가 일관되고, 최대 position id 값이 작아져 **길이 외삽(long-context)** 에 유리.\n\n### 학습 3단계\n\n```\nStage 1: ViT(비전 인코더)만 학습 — 대규모 image-text로 시각-언어 정렬\nStage 2: 전체 파라미터 학습(ViT+LLM) — 멀티모달 본학습(~1.4T 토큰 규모)\nStage 3: LLM instruction tuning — ViT 동결, LLM만 지시-따르기 튜닝\n```\n\n### vanilla [ViT](bg_vit.html) 기반 VLM과의 차이 요약\n\n```\n┌──────────────────────┬───────────────────────┬──────────────────────────┐\n│                      │ LLaVA (vanilla ViT)   │ Qwen2-VL                 │\n├──────────────────────┼───────────────────────┼──────────────────────────┤\n│ 입력 해상도          │ 224²/336² 고정 resize │ 원해상도 가변(dynamic)   │\n│ 비전 위치 인코딩     │ learnable 1D PosEmb   │ 2D-RoPE                  │\n│ 시각 토큰 수         │ 고정(256/576)         │ 가변(크기 비례), 2×2압축 │\n│ 멀티모달 위치        │ 1D(텍스트 RoPE만)     │ M-RoPE(t/h/w)            │\n│ 비디오               │ 약함/프레임 나열      │ 3D tube 통합             │\n│ 커넥터               │ MLP projection        │ MLP merge + 직접 concat  │\n└──────────────────────┴───────────────────────┴──────────────────────────┘\n```\n\n---\n";
-  window.addEventListener('DOMContentLoaded', () => {
-    const el = document.getElementById('dd-body');
-    // Math must be handled DURING marked parsing (marked-katex-extension), else
-    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
-    let katexInMarked = false;
-    try {
-      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
-      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
-      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
-    } catch (e) {}
-    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
-    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
-    try {
-      marked.use({ extensions: [{
-        name: 'noStrike', level: 'inline',
-        start(s) { return s.indexOf('~'); },
-        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
-        renderer(t) { return t.text; }
-      }] });
-    } catch (e) {}
-    el.innerHTML = marked.parse(MD);
-    // Fallback only if the extension failed to load (e.g. offline CDN)
-    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
-      delimiters: [
-        {left: '$$', right: '$$', display: true},
-        {left: '$', right: '$', display: false},
-        {left: '\\(', right: '\\)', display: false},
-        {left: '\\[', right: '\\]', display: true}
-      ], throwOnError: false
-    });
-  });
-  </script>
+<div id="lab-locked" class="lab-lock">
+  <div class="lockbox">
+    <h3>🔒 Lab — 연구 노트</h3>
+    <p class="lnote">암호화된 비공개 노트입니다. 패스프레이즈를 입력하세요.</p>
+    <input type="password" id="lab-pass" placeholder="passphrase" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')labUnlock()">
+    <label class="lnote"><input type="checkbox" id="lab-remember"> 이 기기에서 기억</label>
+    <button class="go" onclick="labUnlock()">열기</button>
+    <p class="lnote" id="lab-msg"></p>
+  </div>
+</div>
+<div id="lab-open" style="display:none">
+  <div class="lab-chips" id="lab-pages"></div>
+  <article class="dd-lab" id="lab-body"></article>
+</div>
+<script>
+const LAB_URL='data/lab.enc.json';
+let LAB=null,LABPAGE=0,MDLIBS=null;
+const labEsc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function labLoadScript(src){return new Promise((ok,err)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=err;document.head.appendChild(s);});}
+async function labLoadMdLibs(){
+ if(MDLIBS)return MDLIBS;
+ const l=document.createElement('link');l.rel='stylesheet';
+ l.href='https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css';
+ document.head.appendChild(l);
+ MDLIBS=(async()=>{
+  await labLoadScript('https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js');
+  try{
+   await labLoadScript('https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js');
+   await labLoadScript('https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js');
+  }catch(e){}
+ })();
+ return MDLIBS;
+}
+async function labUnlock(auto){
+ const pass=document.getElementById('lab-pass').value;
+ const msg=document.getElementById('lab-msg');
+ if(!pass)return;
+ msg.textContent='복호화 중…';
+ try{
+  const enc=await fetch(LAB_URL).then(r=>{if(!r.ok)throw new Error('payload 없음');return r.json();});
+  const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey(
+   {name:'PBKDF2',salt:b64(enc.salt),iterations:enc.iter,hash:'SHA-256'},
+   km,{name:'AES-GCM',length:256},false,['decrypt']);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(enc.nonce)},key,b64(enc.ct));
+  LAB=JSON.parse(new TextDecoder().decode(pt));
+  (document.getElementById('lab-remember').checked?localStorage:sessionStorage).setItem('labpass',pass);
+  msg.textContent='';
+  document.getElementById('lab-locked').style.display='none';
+  document.getElementById('lab-open').style.display='';
+  await labLoadMdLibs();
+  showLabPage(0);
+ }catch(e){
+  LAB=null;
+  sessionStorage.removeItem('labpass');localStorage.removeItem('labpass');
+  msg.textContent=auto===true?'':'복호화 실패 — 패스프레이즈를 확인하세요.';
+ }
+}
+function renderLabNav(){
+ document.getElementById('lab-pages').innerHTML=LAB.pages.map((p,i)=>
+  `<button class="lchip${i===LABPAGE?' on':''}" onclick="showLabPage(${i})">${labEsc(p.title)}</button>`).join('')
+  +`<button class="lchip" style="margin-left:auto" onclick="labLock()">🔒 잠그기</button>`;
+}
+function showLabPage(i){
+ LABPAGE=i;renderLabNav();
+ const el=document.getElementById('lab-body');
+ const md=LAB.pages[i].md;
+ if(window.marked){
+  el.innerHTML=marked.parse(md);
+  el.querySelectorAll('table').forEach(t=>{const w=document.createElement('div');w.className='tbl';t.parentNode.insertBefore(w,t);w.appendChild(t);});
+  if(window.renderMathInElement)renderMathInElement(el,{
+   delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
+   throwOnError:false});
+ }else{
+  el.innerHTML='<pre style="white-space:pre-wrap">'+labEsc(md)+'</pre>';
+ }
+ window.scrollTo(0,0);
+}
+function labLock(){
+ LAB=null;
+ sessionStorage.removeItem('labpass');localStorage.removeItem('labpass');
+ document.getElementById('lab-pass').value='';
+ document.getElementById('lab-open').style.display='none';
+ document.getElementById('lab-locked').style.display='';
+ document.getElementById('lab-msg').textContent='';
+}
+window.addEventListener('DOMContentLoaded',()=>{
+ const saved=sessionStorage.getItem('labpass')||localStorage.getItem('labpass');
+ if(saved){document.getElementById('lab-pass').value=saved;labUnlock(true);}
+});
+</script>
 </main>
 <footer>built 2026-07-17 13:24 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
