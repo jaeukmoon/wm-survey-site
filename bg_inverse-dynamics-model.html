@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Inverse Dynamics Model (IDM)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Inverse Dynamics Model (IDM)\n\n> 출처: [Agrawal] \"Learning to Poke by Poking: Experiential Learning of Intuitive Physics\" (Agrawal et al., arXiv 1606.07419, NeurIPS 2016) — 상태 두 개를 보고 그 사이 행동을 역추론하는 **inverse model**을 ML에서 처음 정식화(forward model과 짝지어 학습). [VPT] \"Video PreTraining (VPT): Learning to Act by Watching Unlabeled Online Videos\" (Baker et al., arXiv 2206.11795, NeurIPS 2022) — 소량 라벨로 IDM을 학습해 대량 무라벨 영상 전체에 행동을 pseudo-label하는 레시피를 마인크래프트에서 대규모로 증명. 우리 계보 등장: DreamZero, FastWAM, LaWAM, LingBot-VA 2.0, Next Forcing, `Native_Video-Action_Pretraining_for_Generalizable_Robot_Control_skim.md`(RepWAM 파생), BagelVLA, ImageWAM, π0.7, `world_model_lineage_easy.md`(④분류 중 \"③ WM+IDM\" 전체).\n\n**한 줄 정의**: \"이전 상태\"와 \"이후 상태\" 두 장만 보고 \"그 사이 무슨 행동이 있었길래 이렇게 바뀌었나\"를 역추론하는 모델 $p(a_t\\mid s_t,s_{t+1})$ — \"행동을 알면 다음 상태를 안다\"인 forward dynamics의 정반대 방향.\n\n> **30초 큰 그림 비유**: \"몸으로 말해요\" 게임을 거꾸로 보는 심판. 원래 게임(forward dynamics)은 제시어(행동)를 보고 몸짓(다음 상태)을 만든다. IDM은 반대로 **\"아까 자세\" 사진 한 장 + \"지금 자세\" 사진 한 장만** 보고 \"둘 사이에 무슨 동작이 있었길래 이렇게 바뀌었지?\"를 알아맞히는 탐정이다. 이 문서에서는 이 비유를 **\"before/after 탐정\"**이라 부른다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n- 로봇 행동 라벨(사람이 teleop한 (관측,행동) 쌍)은 만들기 비싸고 양이 적다. 반면 사람이 물건을 옮기는 유튜브 영상, 남의 로봇이 돌아다니는 영상처럼 **행동 라벨 없이 \"관측만\" 잔뜩 있는 데이터**는 흔하다.\n- IDM은 라벨 없는 (before, after) 관측 쌍만 봐도 \"그 사이 행동이 뭐였을지\"를 스스로 추론한다 → 그 추론값을 **가짜 정답(pseudo-action / latent action)**으로 삼아 대량의 무라벨 영상에서도 지도학습을 돌릴 수 있다.\n- world model(WAM) 계열에서는 한 걸음 더 나아간다: \"① 먼저 미래를 상상(video/latent 예측)하고, ② 그 상상한 미래에 도달하려면 무슨 행동이 필요한지를 IDM으로 역산\"하는 **2단계 파이프라인**(= `world_model_lineage_easy.md`의 \"③ WM+IDM\" 분류)이 됐다. IDM 없이는 \"미래를 상상하는 모델\"과 \"행동을 내는 모델\"을 이어 붙일 방법이 없다.\n\n### 비유로 읽는 수식 (쉬운 버전)\n- **EQ1 forward vs inverse** `p(s_{t+1}|s_t,a_t)` vs `p(a_t|s_t,s_{t+1})` — 당구를 예로 들면, \"이 각도·세기로 치면(행동) 공이 어디로 굴러가나(다음 상태)\"를 맞히는 게 forward, \"아까 공 위치와 지금 공 위치 사진 두 장만 보고 몇 도로 몇 세게 쳤는지\"를 거꾸로 알아맞히는 게 inverse. **입력·출력이 뒤바뀐 게 아니라, \"무엇이 주어지고 무엇을 맞히는가\"가 뒤바뀐 것**이다.\n- **EQ2 WAM 2단계 분해** `p(a,o_T|o,l) = p(o_T|o,l) · p(a|o,o_T)` — 여행 계획 비유: 먼저 목적지 사진 한 장을 정하고(1단계, world model이 \"거기 도착하면 이런 풍경\"을 그림), 그다음 \"현재 위치에서 그 사진까지 가는 경로\"를 사후에 계산한다(2단계, IDM). 둘째 항이 IDM.\n- **EQ3 latent-action bottleneck IDM** `ℓ_t=q_φ(z_t,z_{t+1})` — \"두 장면 사이의 동사만 배우기\". before/after 장면을 통째로 보여주되, 그 사이를 요약하는 통로($\\ell_t$)를 아주 좁게(bottleneck) 뚫어 두면, 신경망은 배경처럼 \"안 변한 것\"은 버리고 \"무엇이 바뀌었나(=동작)\"만 그 좁은 통로에 욱여넣게 된다.\n\n#### ⚠️ 초보 함정\n1. **\"IDM = 로봇 팔 토크를 계산하는 그 고전 제어 공식\"이라 생각하면 틀림.** 이름이 같은 두 개념이 있다 — 고전 로봇공학의 inverse dynamics(원하는 관절 궤적 $q,\\dot q,\\ddot q$를 주면 필요한 토크 $\\tau$를 뉴턴-오일러 방정식으로 계산하는 **결정론적 물리 공식**)와, 이 문서가 다루는 **ML IDM**(관측 두 장 $s_t,s_{t+1}$을 보고 행동/잠재행동을 신경망으로 추론하는 **확률적·학습 기반** 모델)은 \"결과→원인 역산\"이라는 이름의 정신만 같고 계산 대상·방법이 다르다. 우리 계보(WAM 문헌)의 IDM은 전부 후자다.\n2. **\"IDM은 배포(실제 로봇 제어) 순간에도 그대로 쓴다\"고 착각하기 쉬움 — 대개 틀림.** IDM은 정의상 미래 관측 $o_T$/$z_{t+1}$이 **입력으로 필요**한데, 실제 제어 순간엔 그 미래가 아직 일어나지 않았다. 그래서:\n   - \"미래를 실제로 먼저 그려서(diffusion/video 생성) IDM에 넣는\" imagine-then-execute 방식(FastWAM (B) IDM 변형, ~810ms)은 배포 때도 그대로 쓰지만 느리다.\n   - LaWAM·Native Video-Action처럼 latent action을 쓰는 계열은 IDM을 **학습 때 정답 라벨 생성기**로만 쓰고, 배포 때는 미래를 안 보고도 잠재행동을 예측하는 **별도 policy(prior)**를 distillation으로 따로 학습해 그걸 쓴다.\n3. **\"WM+IDM은 항상 물리적으로 분리된 두 네트워크\"라고 생각하면 반은 틀림.** LaWAM·FastWAM(B)처럼 정말 분리된 모듈로 구현하기도 하지만, DreamZero처럼 **수식으로는** forward(video)×inverse(action)로 깔끔히 인수분해되어도 실제로는 **하나의 end-to-end 모델**로 합쳐 학습하는 경우도 있다. 식의 분해 ≠ 모듈의 물리적 분리.\n\n### 손계산 미니 예제\n1차원 컨베이어 위 상자 하나로 IDM의 최소 계산을 손으로 해본다. state = 상자의 위치(정수 좌표), action = 그 사이 이동량.\n\n**(a) forward vs inverse, 숫자로**\n- 이전 상태 $s_t=2$, 행동 $a_t=5$가 주어지면 forward dynamics는 $s_{t+1}=s_t+a_t=2+5=7$을 예측한다(행동이 주어졌으니 쉬움).\n- 반대로 행동을 못 보고 $s_t=2,\\ s_{t+1}=7$만 주어지면, IDM은 $\\hat a_t = s_{t+1}-s_t = 7-2 = 5$로 **역추론**한다. 이 장난감 예제에선 우연히 뺄셈 하나로 정답이 나오지만, 실제 IDM은 이 뺄셈 자체를 신경망이 데이터로부터 배운다(상태가 픽셀/latent처럼 복잡하면 \"뺄셈\"이 아니라 비선형 함수가 필요하기 때문).\n\n**(b) bottleneck이 \"무엇이 바뀌었나\"만 남기는 것을 손으로 확인**\n프레임을 2차원 latent $z=[\\text{위치},\\ \\text{배경밝기}]$로 표현했다고 하자. 배경은 안 바뀌므로 두 번째 칸은 항상 같다.\n\n| $t$ | $z_t$ (위치, 밝기) | $z_{t+1}$ (위치, 밝기) | 진짜 변화 $\\Delta z$ | bottleneck $d_\\ell=1$이 배우는 $\\ell_t$ |\n|---|---|---|---|---|\n| 0 | (2, 10) | (7, 10) | (+5, 0) | $\\ell_0=5$ (위치 변화만) |\n| 1 | (7, 10) | (7, 10) | (0, 0)  | $\\ell_1=0$ (안 움직임) |\n| 2 | (7, 10) | (4, 10) | (−3, 0) | $\\ell_2=-3$ (뒤로 3칸) |\n\n- $\\ell_t=q_\\phi(z_t,z_{t+1})$는 통로가 **숫자 1개**뿐이라(bottleneck, $d_\\ell=1 \\ll \\dim(z)=2$) 밝기(배경, 안 변하는 칸)를 담을 자리가 없다 → 자동으로 \"위치가 몇 칸 바뀌었나\"만 남긴다.\n- FDM으로 되돌려 확인: $\\hat z_{t+1}=f_\\psi(z_t,\\ell_t)=z_t+[\\ell_t,0]$. $t=0$: $(2,10)+[5,0]=(7,10)=z_1$ ✓. $t=2$: $(7,10)+[-3,0]=(4,10)=z_3$ ✓. 손실 $\\mathcal L_\\ell=\\sum_t\\lVert\\hat z_{t+1}-z_{t+1}\\rVert^2$은 이 예제에서 정확히 **0**(완벽 복원) — 실전에선 $\\ell_t$가 dense 픽셀이 아니라 좁은 벡터라 오차가 남지만, \"변화량만 담고 나머지는 버린다\"는 원리는 그대로다.\n\n### 수식 (정식)\n\n**(1) Forward dynamics vs Inverse dynamics — 정의**\n\n$$\n\\underbrace{p(s_{t+1}\\mid s_t, a_t)}_{\\text{forward}} \\qquad\\qquad \\underbrace{p(a_t\\mid s_t, s_{t+1})}_{\\text{inverse (IDM)}}\n$$\n\n- **무슨 식?**: 왼쪽은 \"상태+행동 → 다음 상태\"(전통적 동역학, 시뮬레이터·물리엔진이 하는 일). 오른쪽은 그 조건과 결과를 뒤집어 \"상태 두 개 → 그 사이 행동\"을 묻는다.\n- **왜 이게 학습 가능한가**: $a_t$가 상태 변화의 **원인**이라면, 그 변화를 관측한 뒤 원인을 추론하는 것은 베이즈 정리로 원리상 항상 가능하다: $p(a_t\\mid s_t,s_{t+1})\\propto p(s_{t+1}\\mid s_t,a_t)\\,p(a_t\\mid s_t)$. IDM은 이 사후분포를 직접 신경망으로 근사해, 명시적 베이즈 계산 없이 그 반전을 흉내낸다.\n- **비유**: forward=레시피대로 재료를 조리하면 요리가 나온다(원인→결과). inverse=완성된 요리 사진 두 장(조리 전/후)을 보고 \"무슨 조리법을 썼는지\" 역으로 알아맞히기(결과→원인).\n\n**(2) World model + IDM 2단계 분해** (LaWAM 식(1)과 동형; FastWAM·Next Forcing도 같은 구조)\n\n$$\n\\underbrace{p(a_{1:T}, o_T \\mid o, l)}_{\\text{Joint}} = \\underbrace{p(o_T \\mid o, l)}_{\\text{Future Prediction (world model)}} \\; \\underbrace{p(a_{1:T}\\mid o, o_T)}_{\\text{IDM}}\n$$\n\n- **무슨 식?**: 좌변은 \"현재 관측 $o$·지시문 $l$이 주어졌을 때, 미래 관측 $o_T$와 그 사이 행동 $a_{1:T}$가 함께 나올 확률\". 이걸 \"미래 먼저, 행동 나중\" 순서로 쪼갠 것이 우변이다.\n- **왜 이 순서로 쪼개도 되는가(논문이 생략하는 유도)**: 결합확률은 항상 $p(a,o_T\\mid o,l)=p(o_T\\mid o,l)\\,p(a\\mid o,l,o_T)$로 쓸 수 있다(조건부확률의 정의, 아직 아무 가정도 안 들어간 항등식). 여기서 둘째 항의 조건에서 $l$을 빼고 $p(a\\mid o,o_T)$로 적는 것은 **\"미래 목표 $o_T$가 확정되면, 그 목표에 도달할 행동을 정하는 데 지시문 $l$은 더 필요 없다\"는 근사/모델링 선택**이다(목표 이미지가 이미 지시문의 의도를 담고 있다고 가정). 이 근사가 실제로 정확히 맞는지는 각 논문이 검증 없이 받아들이는 지점.\n- **비유**: 내비게이션 — 먼저 목적지 사진 한 장을 확정하고(1단계, world model), 그다음 \"그 사진까지 가는 최단 경로\"만 풀면 된다(2단계, IDM) — 목적지 사진만 있으면 원래 \"어디 가고 싶다\"는 말(지시문)은 다시 참고할 필요가 없다.\n- **항 설명**: $o$=현재 관측, $l$=언어 지시, $o_T$=$T$스텝(혹은 physical horizon $\\tau$) 뒤 목표 관측, $a_{1:T}$=그 사이를 잇는 action chunk.\n\n**(3) Latent-action IDM/FDM (bottleneck 인코더-디코더 쌍)** (LingBot-VA 2.0 / Native Video-Action, RepWAM 계열)\n\n$$\n\\ell_t = q_\\phi(z_t, z_{t+1}) \\in \\mathbb{R}^{d_\\ell}, \\qquad d_\\ell \\ll \\dim(z_t)\n$$\n\n$$\n\\hat z_{t+1} = f_\\psi(z_t,\\ell_t) = K_t z_t + \\delta_t, \\qquad \\hat z_t = \\bar f_\\psi(z_{t+1},\\ell_t)\n$$\n\n$$\n\\mathcal L_\\ell = \\sum_t \\lVert \\hat z_{t+1}-z_{t+1}\\rVert_2^2 + \\lVert \\hat z_t - z_t\\rVert_2^2\n$$\n\n- **무슨 식?**: $q_\\phi$(IDM/인코더)가 연속한 두 latent 프레임 $z_t,z_{t+1}$에서 \"변화\"를 아주 작은 벡터 $\\ell_t$로 압축한다(action label 없이!). $f_\\psi$(FDM/디코더)는 그 $\\ell_t$만으로 다음 latent을 재구성한다: $K_t$=공간 정보 이동(transport, \"무엇이 어디로 옮겨갔나\"), $\\delta_t$=이동으로 설명 안 되는 나머지(새로 생기거나 사라진 것). 마지막 줄은 앞으로(forward: $z_t\\to z_{t+1}$)뿐 아니라 거꾸로(backward: $z_{t+1}\\to z_t$)도 같은 $\\ell_t$로 복원되도록 강제하는 **왕복 일관성** 손실.\n- **왜 이렇게 하면 \"행동\"이 뽑히는가(핵심 트릭)**: $d_\\ell$이 $\\dim(z_t)$보다 훨씬 작은 **병목(bottleneck)**이라, $\\ell_t$는 두 프레임의 모든 차이를 담을 그릇이 못 된다. 손실을 줄이려면 신경망은 \"재구성에 진짜로 필요한 최소 정보\"만 $\\ell_t$에 남기게 되는데, 그게 바로 (배경처럼 안 변하는 것 말고) **\"무엇이 움직였나\" = 행동에 가까운 신호**다. 사람이 행동이 뭔지 정의해준 적이 없는데도 병목 하나로 그 개념이 튀어나온다.\n- **비유**: 두 스냅샷 사이의 차이를 \"동사 하나\"로 요약하라는 미션. 그릇이 작아서 \"명사(배경)\"는 다 버리고 \"동사(움직임)\"만 담게 된다.\n- **주의(LaWAM 변형)**: LaWAM은 하드 bottleneck 대신 KL 정규화로 같은 효과를 낸다 — $\\mathcal L_{\\mathrm{LAM}}=\\mathcal L_{\\mathrm{wm}}+\\mathcal L_{\\mathrm{aux}}+\\beta\\,D_{\\mathrm{KL}}(q_\\phi(z\\mid u,u_T)\\,\\|\\,\\mathcal N(0,I))$: $\\beta$가 크면 $z$가 사전분포 쪽으로 눌려 \"정말 필요한 정보\"만 남는다 — 차원 제한 대신 **정보량 제한**으로 같은 병목 역할을 한다.\n\n**(4) VPT식 semi-supervised 파이프라인** (Baker et al. 2022, 수식이 아니라 절차 — 참고용)\n\n$$\n\\text{(a) 소량 라벨 } (o,a)\\ \\xrightarrow{\\text{지도학습}}\\ \\mathrm{IDM}(o_{t-k:t+k})\\approx a_t\n\\ \\Rightarrow\\\n\\text{(b) IDM으로 대량 무라벨 영상에 } \\hat a_t\\text{ pseudo-label}\n\\ \\Rightarrow\\\n\\text{(c) pseudo-label 데이터로 policy를 behavior cloning}\n$$\n\n- **무슨 식?**: 세 단계 파이프라인. (a) 사람이 실제로 조작해 (관측,행동) 쌍을 남긴 **적은** 데이터로 IDM을 지도학습한다 — 이때 IDM은 시점 $t$ 전후 여러 프레임(과거+미래, non-causal)을 함께 보고 $a_t$를 맞히므로, 실시간 제어용 policy보다 **훨씬 쉬운 문제**(미래를 이미 알고 맞히니까)를 푼다. (b) 학습된 IDM을 라벨이 없는 웹 스케일 영상(예: 유튜브)에 통과시켜 \"행동이었을 값\"을 대량으로 찍어낸다. (c) 이 pseudo-label을 진짜 라벨처럼 써서 policy를 모방학습시킨다.\n- **왜 이게 되는가**: IDM이 푸는 문제(\"전후 프레임을 보고 행동 맞히기\")는 policy가 푸는 문제(\"현재만 보고 다음 행동 결정하기\")보다 정보가 많아 훨씬 쉽다 → **적은 라벨로도 IDM은 정확**해질 수 있고, 그 정확한 IDM이 \"라벨 대량생산 공장\"이 되어 데이터 부족 문제를 우회한다.\n- **비유**: 반 전체 답안을 채점할 조교(policy)는 못 구해도, \"정답을 이미 알고 채점 기준만 확인하는\" 검수원(IDM)은 소수의 예시만 보고도 금방 훈련된다. 그 검수원을 시켜 답 없는 문제집(무라벨 영상) 전체에 답을 미리 채워 넣게(pseudo-label) 한 뒤, 그 채워진 문제집으로 진짜 학생(policy)을 가르친다.\n\n### 구조/흐름\n\n**(A) ③ WM+IDM 2단계 파이프라인 — 학습 vs 배포의 차이**\n\n```\n[학습 시 — IDM이 \"정답 생성기\"로 쓰이는 공통 패턴]\n  (o, o_T)  ──진짜 미래 있음──►  [ IDM q_φ(a|o,o_T) ]  ──►  a  (정답 label / pseudo-label)\n\n[imagine-then-execute 배포 — FastWAM (B), ~810ms]\n  o ──► [ World Model: 미래 반복 denoise ] ──► 상상한 o_T ──► [ IDM ] ──► a   (느림, 미래를 실제로 그림)\n\n[latent-action prior 배포 — LaWAM / Native Video-Action]\n  o_T 없음 ──► [ policy prior p_θ(ẑ|o,l) ]   (IDM 없이 잠재행동 직접 예측; 학습 때 IDM이 만든 정답 z로 distill됨)\n```\n\n**(B) latent-action IDM/FDM 오토인코더 쌍**\n\n```\n(z_t, z_{t+1}) ──IDM q_φ (인코더, bottleneck)──► ℓ_t ──FDM f_ψ (디코더)──► ẑ_{t+1} 복원\n       └────────────────── backward: f̄_ψ(z_{t+1}, ℓ_t) → ẑ_t 복원(왕복 일관성) ─────────┘\n```\n- IDM=인코더(효과→원인 압축), FDM=디코더(원인→효과 복원) — 표준 오토인코더 패턴을 \"행동\"에 적용한 것.\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문/문서 | IDM을 쓰는 방식 |\n|---|---|\n| `world_model_lineage_easy.md` | 4분류 체계의 \"③ WM+IDM\" 전체 축 — 미래를 먼저 예측하고 별도 IDM/planner로 행동을 복원하는 모델(JEPA-WMs, LeWM, DreamDojo, Cosmos-Transfer2.5, SuSIE 등)을 여기 묶는다. |\n| [DreamZero](deepdive_DreamZero.html) | 식(1): $\\pi_0(o,a\\mid\\cdots)=\\pi_0(o\\mid\\cdots)_{\\text{video prediction}}\\cdot\\pi_0(a\\mid o_{0:l+H},\\cdots)_{\\text{IDM}}$ 로 분해되지만, **두 모델로 나누지 않고 단일 end-to-end** 모델로 학습(식 분해 ≠ 모듈 분리의 예). |\n| [FastWAM](deepdive_FastWAM.html) | 세 변형(Joint/IDM/Fast-WAM) 중 (B) \"IDM/Causal\"=imagine-then-execute(미래 video 먼저 완성 후 action, ~810ms) — IDM 없이 직접 policy를 내는 Fast-WAM 본체(~190ms)와의 4배+ latency 대조군. |\n| [LaWAM](deepdive_LaWAM.html) | $q_\\phi(z\\mid u,u_T)$=IDM encoder(teacher, train에서만 미래 $u_T$로 latent action $z$ 추론) → 배포 땐 미래 없이 $z$를 예측하는 policy prior로 distillation. |\n| [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) / `Native_Video-Action_Pretraining_for_Generalizable_Robot_Control_skim.md`(RepWAM 계열) | $\\ell_t=q_\\phi(z_t,z_{t+1})$ bottleneck IDM + $f_\\psi$ FDM(transport $K_t$+잔차 $\\delta_t$)+backward consistency로 라벨 없이 latent action 추출. |\n| [Next Forcing](deepdive_Next_Forcing.html) | action stream $g_\\psi(a_i\\mid x_{\\le i+1},\\cdots)$가 **예측된** 다음 video chunk까지 조건으로 받아 inverse dynamics로 action 회귀, MoT 안에서 video stream과 cross-modal attention으로 fuse. |\n| [BagelVLA](deepdive_BagelVLA.html) | Scheme 1(Complete Denoise)을 명시적으로 \"WM+IDM(③)\"이라 부르고 **latency·오차누적 때문에 의도적으로 버림** → RFG(single-step feature 조건)로 대체, ②(WAM)로 감. IDM을 \"안 쓰기로 한\" 대조 사례. |\n| [ImageWAM](deepdive_ImageWAM.html) | 기존 video-WAM이 \"미래 video → IDM → action\"으로 번역하던 경로 자체를 image-editing cache로 대체(그래서 IDM 없음) — IDM 있는/없는 설계의 트레이드오프를 설명하는 배경 절에 등장. |\n| [π0.7](deepdive_pi0.7.html) | subgoal image를 주면 action 예측이 \"현재→미래 사이의 inverse dynamics\"로 **쉬워지는 것**을 관찰 — 과의존(overfitting to subgoal) 방지로 배치의 25%에만 subgoal 포함. |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-22 15:22 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
