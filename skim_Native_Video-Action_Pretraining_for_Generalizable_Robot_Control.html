@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">LingBot-VA 2.0 — 쉬운 버전 같이 읽기 노트</a></h1>
+    <p>📖 스키밍 (쉬운 버전) · <a href="deepdives.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: Native_Video-Action_Pretraining_for_Generalizable_Robot_Control_skim.md)</p></article>
+  <script>
+  const MD = "# LingBot-VA 2.0 — 쉬운 버전 같이 읽기 노트\n\n> 원제: **Native Video-Action Pretraining for Generalizable Robot Control** (arXiv 2607.08639, 2026-07, Ant Group / Robbyant)\n> 원문 저장: `Native_Video-Action_Pretraining_for_Generalizable_Robot_Control_source.md`\n> 읽기 방식: 저자 섹션 순서대로, 입문자 눈높이(비유 우선). 섹션마다 멈춰 질문받음.\n\n---\n\n## 이 논문 한 줄 정체\n\n일반 영상 생성 모델(유튜브 영상 만들기용)을 로봇에 **갖다 붙이는** 기존 방식은 물리 세계엔 안 맞다.\n그러니 처음부터 로봇 제어(embodiment)를 위해 **\"다음에 세상이 어떻게 변할지(영상) + 그러려면 어떻게 움직일지(행동)\"**를\n함께 예측하는 foundation model을 **밑바닥부터** 새로 훈련하고, 실제 로봇에서 **실시간(최대 225Hz)**으로 돌게 만든 것.\n\n## 목차 (저자 순서)\n\n1. **Introduction** — 기존 방식의 3가지 한계 + 이 논문의 4대 설계원칙, 기여\n2. **Native Video-Action Model** (핵심 방법)\n   - 2.1 Preliminary — 기존 비디오 생성모델 & 그걸 로봇에 개조하는 공식 리뷰\n   - 2.2 Semantic Visual-Action Tokenizer — **1단계**: 의미·행동이 정렬된 토크나이저\n   - 2.3 Video-action Model Pretraining & Inference — **2단계**: causal MoE DiT\n     (계획 / 구조 / Multi-Chunk Prediction / In-context Learning / 사람-로봇 공동학습 / 학습 레시피 / Foresight Reasoning)\n   - 2.4 Post-training — 증류(distillation) + 추론 가속\n3. **Data Recipe** — 어떤 데이터로 학습했나 (일반 영상 / 로봇 / 사람 1인칭 / ICL)\n4. **Experiments** — 실물 로봇 · 시뮬(RoboTwin) · ablation · 데모\n5. **Related Work**\n6. **Conclusion**\n\n---\n\n## 섹션 1. Introduction — \"왜 기존 방식으론 안 되나 + 우리의 4대 원칙\"   ★★\n\n결국 이 섹션은 **문제제기 + 선언문**이다: \"남이 *유튜브 영상 만들라고* 설계한 엔진을 로봇에 억지로 이식하니 탈이 난다 → 그래서 우리는 처음부터 로봇용으로 엔진을 새로 짠다.\"\n\n### 1.1 video-action model이 뭔데? (배경)\n로봇 정책에는 두 부류가 있다.\n- **VLA (Vision-Language-Action) = 반응형(reactive)**: 화면 보고 → 곧바로 손을 움직임. \"보고 바로 반응하는 반사신경\".\n- **video-action model = 상상형**: 움직이기 전에 \"이렇게 하면 화면이 이렇게 바뀌겠지\"를 머릿속으로 먼저 그려보고(=미래 영상 예측), 그 안에서 행동을 고름. 물리 dynamics에 발을 딛고(grounding) 있어서 **적은 데이터로도 잘 배우고 일반화가 좋다**.\n\n> **이것만 기억**: 이 능력 대부분은 \"영상으로 미리 학습된 backbone(사전학습 토대)\"에서 온다. **정책(policy)보다 토대가 더 중요**하다 — 이게 이 논문 전체를 관통하는 전제다.\n\n### 1.2 기존 방식의 한계 3가지   ★\n기존 video-action model은 **\"일반 영상생성용 부품\"**(복원 전용 VAE + 양방향 video-diffusion)에 나중에 action 모듈만 **덧붙인** 구조다. 여기서 3가지 병이 생긴다.\n\n1. **표현이 겉모습(appearance)에만 최적화됨, dynamics가 아님.** 픽셀 복원용 latent은 *화질*은 잘 살리지만 의미·물리 구조가 빈약하다. 게다가 action 모듈이 따로 붙어서 **world state와 action이 서로 다른 공간에** 놓여 정렬이 안 맞는다.\n2. **추론이 너무 느려 실시간 closed-loop 제어가 불가.** 고차원 video token + 반복 denoising이라 로봇이 요구하는 주파수로 못 돌린다.\n3. **사전학습 신호가 \"제어\"로 이어지지 않음.** 웹 영상은 넘쳐나지만, 일반 영상 목적함수는 \"*행동이 세상을 어떻게 바꾸는가*\"를 안 가르친다. 그래서 action 지식은 결국 **비싼 로봇 데이터**에만 묶여버린다.\n\n### 1.3 진짜 뿌리: 구조적 미스매치 → \"native route\"   ★★\n- 병의 뿌리: backbone은 **양방향(bidirectional) attention**으로 학습됐는데(앞뒤 프레임 다 봄), 실제 제어는 **시간상 앞으로만(strictly forward)** 흐른다(현재가 미래를 볼 수 없음).\n- 1세대 LingBot-VA는 이 스택을 **causal(인과)로 fine-tune**해서 봉합했다. 하지만 이 *개조(retrofit)*는 (a) 희소한 로봇 데이터에 의존하고 (b) 웹 사전학습으로 얻은 넓은 prior를 **오히려 갉아먹는다**.\n- 그래서 저자들은 **native route**를 택한다: 전체 스택(의미 토크나이저 + causal DiT)을 **처음부터 causal 형태로** 웹 이미지·영상에 사전학습. \"빌려와서 뜯어고치는\" 대신 \"처음부터 그 모양으로 짓는다.\"\n\n> **비유**: 오른손잡이용 가위를 왼손잡이가 억지로 쓰는 게 retrofit이라면, 아예 왼손잡이용 가위를 새로 만드는 게 native다.\n\n### 1.4 — 가장 쉬운 버전 (통째 그림, 수식 0)\n\n**목표 한 줄**: \"화면 보자마자 손 움직이는\" 반사형 로봇이 아니라, **움직이기 전에 머릿속으로 \"이러면 화면이 이렇게 변하겠지\"를 그려보고 그 안에서 행동을 고르는** 상상형 로봇을 만든다. 그러려면 로봇이 **생각할 때 쓸 전용 언어**가 필요 → 그 언어를 만들고(1단계) 그 언어로 미래를 이어 쓰는(2단계) 게 §1.4다.\n\n- **1단계 = 언어 만들기 (tokenizer)**: 카메라 픽셀은 크고 의미 없음 → 각 화면을 작은 **요약 메모(latent)**로 압축(*\"탁자 왼쪽 빨간 병\"*). 이 메모에 두 가지를 심는다 — ① **의미**(똑똑한 선생 모델을 닮게 잡아당김: \"이건 잡을 수 있는 병\") + ② **변화=행동**(옆 두 화면 메모를 비교해 \"뭐가 움직였나\"를 작은 코드로; 사람 라벨 없이 영상만으로). **결과: \"지금 상태\"와 \"행동(변화)\"이 같은 노트에 같은 약어로 적힌다** → *상태+행동→다음상태* 계산이 그 노트 안에서 자연스럽게 됨(기존은 상태=픽셀노트·행동=모터노트로 갈라져 안 맞았음).\n- **2단계 = 그 언어로 이어 쓰기 (causal DiT)**: 지금까지 화면 메모 + 말로 된 목표를 보고 → **다음 화면 메모 + 거기로 가는 행동 코드**를 함께 예측(이 행동 코드가 모터 신호가 됨). **causal**=과거만 봄(실시간 방향). **sparse MoE**=전문가 128명 중 8명만 켜 큰 뇌·싼 계산. **MCP**=다음 하나만 맞히라면 현재화면 복붙 커닝하니 여러 미래를 한꺼번에 맞히게 강제.\n- **맞물림**: 1단계가 영상들로부터 (화면 메모 $z$ + 행동 코드 $\\ell$) **정답지**를 대량 생성 → 2단계가 그걸 스스로 만들도록 학습. 1단계가 상태·행동을 한 언어로 정렬했기에 2단계가 \"다음 장면+다음 행동\"을 한 붓에 그림.\n\n> **§1.4 딱 두 줄**: ① 상태·행동을 같은 언어로 적는 노트를 먼저 만든다(1단계) → ② 그 노트로 미래를 이어 쓰는 예측기를 올린다(2단계). (아래는 각 단계의 상세)\n\n### 1.4 LingBot-VA 2.0의 2단계 뼈대\n- **1단계 — semantic visual-action tokenizer**: 관측(영상)을 frozen 비주얼 foundation model에 **의미적으로 정렬**해 압축 latent을 만들고, 라벨 없는 영상에서 **latent action**(전이 변수)을 self-supervision으로 뽑아냄 → world state와 action이 **한 공간**에 산다. 덕분에 라벨 없는 웹 영상도 \"행동 관련 정보\"를 실어 나른다.\n- **2단계 — causal diffusion transformer(DiT)**: 미래 visual latent + 그것들을 잇는 latent action을 예측. 언어 지시는 frozen LM에 **cross-attention**으로 조건. FFN을 **sparse MoE(Mixture-of-Experts, 전문가 혼합)**로 깔아 용량↑·연산↓. 추가로 **MCP(Multi-Chunk Prediction, 다중 청크 예측)**: 옆 chunk가 너무 비슷해서 모델이 \"그냥 화면 복붙\"으로 손실을 줄이는 꼼수를 막으려고, 여러 미래 chunk를 한꺼번에 감독 → 궤적 수준 dynamics를 배우게.\n\n### 1.5 배포 병목 → Foresight Reasoning   ★\n의미 latent + sparse backbone이 있어도 **실물 하드웨어엔 직렬 병목**이 남는다: 로봇은 모델이 다음 예측을 계산하는 *동안에도* 계속 움직여야 한다. 안 그러면 **모델 지연 = 제어 지연**.\n- 해결책 **Foresight Reasoning**: 미래 latent을 행동 실행과 **병렬(비동기)**로 미리 예측.\n- 함정: 순진하게 비동기로 하면 자기가 상상한(stale) latent에 조건을 걸어 **표류(drift)**한다.\n- 핵심 처방: **매 실제 관측이 들어올 때마다 그 상상을 실측으로 다시 붙잡아 교정**(re-ground). 학습된 forward-dynamics로 앞서 두되, 진짜 관측이 오면 덮어쓴다 → **predict-then-correct**.\n- GEN-0의 Harmonic Reasoning과 \"동시 추론\" 동기는 같지만, 여기선 look-ahead를 **학습된 world model에 grounding**하고 **매 관측마다 교정**한다는 점이 다르다.\n\n> **참고 숫자**: 시연 **10–15개**만으로 적응 · embodiment(로봇 몸체) 넘나들기 · 일부는 **zero-shot** · 실시간 peak **225 Hz** · 비교 baseline은 $\\pi_{0.5}$, 1세대 LingBot-VA.\n\n### 1.4–1.5 더 쉽게, 더 자세히 (보강)\n\n#### 공통 준비물: \"latent\"이 뭔지부터\n- 로봇 카메라가 주는 건 픽셀 덩어리(예: 640×480×3, 수십만 숫자). 그대로 다루면 너무 크고 무겁다.\n- 그래서 **encoder**가 이미지를 훨씬 작은 숫자 벡터로 요약한다. 이 요약본이 **latent**(잠재표현). 비유: 사진을 *\"빨간 병이 탁자 왼쪽에 있음\"* 같은 압축 메모로 바꾸는 것.\n- **VAE (Variational Auto-Encoder)** = 이미지를 latent으로 줄였다가(encoder) 다시 이미지로 복원(decoder)하는 한 쌍. 기존 것은 \"복원만 잘 되면 장땡\"이라 **화질은 챙기지만 의미는 안 챙긴다.**\n\n#### 1.4 — 1단계 토크나이저: \"무엇을 담는 요약이냐\"를 바꾼다\n**사진 정리 앱** 두 종류로 상상.\n- (기존) *복원 전용 앱*: 원본을 최대한 똑같이 되살리는 데만 신경 씀. \"빨간 병 픽셀 배열\"은 잘 저장하지만 *\"이건 병이고 잡을 수 있는 물건\"*이라는 의미는 모른다.\n- (이 논문) *의미+행동 요약 앱*: 두 가지를 추가한다.\n  1. **의미 정렬(semantic alignment)**: 이미 세상을 잘 이해하는 **선생 모델**(frozen = 얼려둔 visual foundation model; 여기선 Perception Encoder)이 있다. 학생(우리 tokenizer)의 요약이 선생의 이해와 비슷해지도록 잡아당긴다 → 요약 안에 \"이게 뭔지\"(의미)가 들어감. 비유: 사진마다 *\"탁자 위 빨간 병\"* 캡션을 자동으로 붙이는 것.\n  2. **latent action 뽑기**: 연속한 두 프레임의 요약을 비교해 \"이 사이에 무슨 변화/움직임이 있었나\"를 작은 코드로 뽑는다. 사람이 *\"왼쪽 5cm 이동\"*이라고 적어준 라벨이 **없어도**, 앞뒤 프레임 차이만 보고 자동으로 배운다 = **self-supervision(자기지도)**.\n     - *왜 되나?* \"다음 프레임을 맞히려면 이 작은 코드가 꼭 있어야 하게\" 만들어 두면(정보 병목, bottleneck), 그 코드는 자연히 **\"무엇이 어떻게 변했나 = 행동스러운 정보\"**를 담게 된다.\n     - *핵심 효과*: 지금 화면(world state)과 변화(action)가 **같은 언어(같은 latent 공간)**로 표현됨 → 나중에 *\"이 상태에서 이 행동을 하면 → 저 상태\"* 추론이 매끄러워짐. 게다가 **라벨 0짜리 웹 영상도 행동 교재**가 된다.\n\n> **이것만 기억(1.4-1단계)**: 요약(latent)에 ① 의미와 ② 행동을 억지로 집어넣어서, world state와 action을 **한 공간**에 살게 한 것.\n\n**[Q&A 보강] 토크나이저는 학습되나? 의미정렬과 latent action은 어떻게 연결되나? (상세는 §2.2)**\n- **학습된다 — 두 패스로 분리.** 패스 A: encoder $\\mathcal{E}$·decoder $\\mathcal{D}$·정렬 projection $W_{\\text{align}}$를 **학습**(복원 + 의미정렬), 선생 $G$(Perception Encoder)는 **frozen**. 패스 B: *비주얼 토크나이저를 얼린 뒤* 그 위에서 IDM $q_\\phi$ + FDM $f_\\psi$만 학습(latent action).\n- **연결 = 섞는 게 아니라 층으로 쌓기.** 의미정렬이 z를 *의미 공간*으로 만들어 **바닥**을 깔고, latent action은 그 위에서 **\"의미 latent의 변화량\"**으로 뽑힌다.\n  - 만약 z가 픽셀 latent이면 두 프레임 차이 = 조명/텍스처 잡음. z가 의미적이면 그 차이 $\\ell_t$ = *\"병이 왼쪽으로\", \"그리퍼 닫힘\"* 같은 **제어에 쓸모 있는 변화**. → 의미정렬이 latent action의 재료 품질을 결정.\n  - 정의식이 직접 물림: $\\ell_t=q_\\phi(z_t,z_{t+1})$ (상태→행동), $\\hat z_{t+1}=f_\\psi(z_t,\\ell_t)=K_t z_t+\\delta_t$ (상태+행동→다음 상태). state·action이 같은 z 공간에서 사슬로 연결 = \"하나의 의미 latent 공간\".\n  - 라벨 불필요: 손실은 forward 예측 + backward consistency뿐. $\\ell_t$를 bottleneck으로 작게 눌러 \"변화의 핵심\"만 담게 강제.\n- **IDM/FDM을 함께 쓰는 법 = 전이(transition) 오토인코더.** IDM $q_\\phi$ = **인코더**(before+after 둘 다 보고 변화를 $\\ell_t$로 압축; 효과→원인 = inverse). FDM $f_\\psi$ = **디코더**(과거 $z_t$ + $\\ell_t$만 보고 다음을 복원 $\\hat z_{t+1}=K_t z_t+\\delta_t$; 원인→효과 = forward). 학습 = 실제 쌍 $(z_t,z_{t+1})$로 IDM→FDM 복원 오차 최소화(+backward). **$z_t$를 공짜로 주고 $\\ell_t$를 bottleneck으로 누르니, $\\ell_t$는 \"둘의 차이=행동\"만 담게 됨.** (이 FDM은 §2.3.7 Foresight Reasoning에서 policy 자신이 온라인으로 수행하며 재등장.)\n- **[명확화] IDM/FDM은 학습되는 신경망이고, \"코드\"는 문자 그대로 작은 벡터.** 표기 $q_\\phi,f_\\psi$의 $\\phi,\\psi$ = 학습되는 weight(패스 B에서 토크나이저 frozen, 이 둘만 gradient descent). $\\ell_t\\in\\mathbb{R}^{d_\\ell}$는 비유가 아니라 **실수 벡터**이며 \"작다\"=**차원 $d_\\ell\\ll\\dim(z_t)$**(숫자 개수가 적음). \"code\"는 오토인코더에서 bottleneck 벡터를 부르는 표준 용어(인코더→**code**→디코더). \"뽑는다\"=IDM이 큰 텐서 둘$(z_t,z_{t+1})$을 받아 **작은 벡터 하나로 압축**; 그 안에 뭘 담을지는 사람이 아니라 **신경망이 \"FDM 복원에 유리하게\"를 학습으로 결정**(사람이 읽는 축 아님). **체스 비유**: 상태 z=보드 전체(64칸), $\\ell_t$=한 수 \"e2e4\"(작지만 현재 보드와 합치면 다음 보드가 나옴=행동). 단 체스 수는 사람이 정한 기호, $\\ell_t$는 신경망이 발명한 학습된 코드.\n\n#### 1.4 — 2단계 causal DiT: \"다음 장면 + 다음 행동\"을 이어서 상상\n- **DiT (Diffusion Transformer)** = 노이즈에서 시작해 조금씩 지워가며(denoising) 그럴듯한 결과를 만드는 생성기(diffusion)를 transformer로 구현한 것. 여기선 *\"다음 순간의 latent(장면 요약) + 그걸 잇는 latent action(행동)\"*을 생성.\n- **causal(인과)**: 각 순간은 **과거만** 본다(미래 못 봄). 실제 로봇 제어의 시간 방향과 똑같다 → 한 chunk씩 앞으로 뻗는 자기회귀(autoregressive).\n- **언어 조건**: \"빨간 병을 집어\" 같은 지시는 얼려둔 언어모델(frozen LM)을 통해 cross-attention으로 주입. 매 예측 때 *\"지금 목표가 뭐였지?\"*를 곁눈질.\n- **sparse MoE**: 신경망의 두꺼운 계산층(FFN)을 **전문가 128명**으로 쪼개고, 토큰 하나당 **8명만** 켠다. 비유: 병원에 전문의 128명이 있어도 환자 한 명은 관련 전문의 8명만 만남 → **지식(용량)은 크게, 매번 드는 비용(연산)은 작게.** 실시간 제어에 필수.\n- **MCP(꼼수 방지)**: 고프레임 영상은 옆 프레임이 거의 똑같다. \"다음 chunk만 맞혀봐\"라고 하면 모델이 그냥 **현재 화면을 복붙**해도 점수가 잘 나온다(진짜 dynamics는 안 배우고). 그래서 *\"다음·그다음·그다음다음 chunk를 한꺼번에 맞혀봐\"* → 복붙으론 못 풀고 **세상이 실제로 어떻게 굴러가는지**를 배워야만 함.\n\n#### 1.5 — 배포 병목: 타임라인으로 보기\n문제를 시간축으로 그리면 명확하다. **동기(synchronous)** 방식:\n\n```\n[관측 t] → (모델이 다음 행동 계산… 로봇은 멈춤) → [행동 실행] → [관측 t+1] → (또 멈춤) → …\n```\n모델이 생각하는 동안 로봇은 **가만히 서서 기다린다.** 모델이 느리면 그만큼 로봇이 버벅임 = \"모델 지연 = 제어 지연\".\n\n**Foresight Reasoning = 비동기(asynchronous)**: 흐름 두 개를 동시에 돌린다.\n\n```\n실행 흐름:  [ 행동 a_t 를 실제로 실행 중 .................. ]\n예측 흐름:  ( 그 사이에 다음 행동 a_(t+1) 을 미리 계산 ) → a_(t+1) 준비 완료!\n```\n로봇이 **지금 행동을 하는 동안** 모델은 **다음 행동을 미리** 뽑아둔다 → 현재 행동이 끝나는 순간 다음 게 바로 대기 → **멈춤이 사라진다.**\n\n- **함정**: 다음을 미리 계산하려면 *\"현재 행동을 하고 나면 화면이 어떻게 될지\"*를 알아야 하는데 아직 진짜 관측이 안 왔다. → 모델이 **스스로 상상**(forward-dynamics로 예측)해 그 위에 다음 행동을 얹는다.\n- **더 큰 함정 — 표류(drift)**: 이 상상을 계속 *자기 상상 위에* 쌓으면 실제와 어긋난다. 비유: 눈 감고 *\"10걸음 직진했으면 여기쯤이겠지\"* 하고 상상만 이어가면 점점 틀어짐. 특히 영상 backbone은 \"부드럽게 이어지는 걸\" 좋아해서 물리 피드백을 무시하고 자기 환상을 계속 그려버린다.\n- **핵심 처방 — re-ground(재접지)**: 진짜 관측이 도착하는 **매 순간**, 상상해뒀던 화면을 **실제 화면으로 덮어쓴다.** = \"상상으로 앞서가되, 눈 뜰 때마다 실제 위치로 발을 다시 딛는다.\" → **predict-then-correct**. 눈 감고 걷다가 한 걸음마다 눈 떠서 위치 보정하는 것과 같다.\n\n> **이것만 기억(1.5)**: 앞서 상상해서 지연을 숨기고(**빠름**) + 매 관측마다 실측으로 교정해 안 틀어지게(**안전**) — 이 둘을 **동시에**.\n\n\n### 1.6 기여 3줄 (요약)\n1. **Native video-action pretraining**: 일반 영상용 부품을 개조하는 대신, 의미 토크나이저 + causal DiT 전체를 확장 가능한 self-supervision으로 처음부터 사전학습.\n2. **공유 의미 video-action 표현**: world state와 latent action을 언어정렬 비주얼 foundation model에 앵커된 **하나의 의미 latent 공간**에 → vision-language-action 정렬이 조여져 지시 따르기·행동 정밀도↑.\n3. **일반적·빠르고·정밀한 제어**: few-shot/zero-shot 일반화 + (sparse MoE·few-step 증류·Foresight Reasoning·양자화)로 실시간 실행 + closed-loop 재접지·계층 계획으로 정밀·장기 조작.\n\n\n---\n\n## 섹션 2.1 Preliminary — \"남들은 이렇게 한다\"를 수식으로 세우기   ★\n\n이 절은 이 논문의 방법이 **아니다.** 기존 방식(비디오 생성기를 로봇용으로 개조)을 공식으로 정리해 **기준선을 세우는** 곳. 여기서 세운 **Eq.5(action injection)**가 이후 §2.3 전체에서 계속 재사용되므로, 뼈대만 잡으면 뒤가 편하다.\n\n### 2.1.1 기존 비디오 생성기 = 부품 2개\n**부품 1 — VAE (압축기).** 원본 영상 $o\\in\\mathbb{R}^{T\\times H\\times W\\times 3}$를 작은 latent으로 줄였다 되살린다:\n\n$$ z=\\mathcal{E}(o)\\in\\mathbb{R}^{T'\\times h\\times w\\times c},\\qquad \\hat o=\\mathcal{D}(z)\\approx o $$\n\n- 시간·공간 다운샘플 비율 $f_t=T/T'$, $f_s=H/h=W/w$. → **프레임 수가 $f_t$배 줄어듦** (아래 action chunk의 근거).\n- **오직 복원**이 목표. action·control 개념 0 (§1.2 한계①의 뿌리).\n\n**부품 2 — flow-matching transformer (생성기).** noise $\\epsilon\\sim\\mathcal{N}(0,I)$에서 텍스트 $c_\\text{text}$ 조건으로 latent $z$를 만든다.\n- **직관**: noise↔data 사이에 **직선**을 긋고 ($z^{(s)}=(1-s)\\epsilon+sz$, $s{:}0{=}$noise$\\to1{=}$data), 각 지점에서 \"data 쪽 방향\" $(z-\\epsilon)$를 예측하게 학습. 생성 = noise에서 화살표 따라 걸어가면 data 도착. *비유: 어디서든 목적지 방향을 알려주는 나침반.*\n\n$$ \\mathcal{L}_\\text{gen}=\\mathbb{E}_{s,\\epsilon,z}\\big[\\,\\|v_\\theta(z^{(s)},s\\mid c_\\text{text})-(z-\\epsilon)\\|^2\\,\\big] $$\n\n- attention이 $T'$개 프레임 전체에 **양방향(bidirectional)** — 오프라인 클립 생성엔 OK, 실시간 제어엔 부적합(§1.3).\n\n> **이것만 기억(2.1.1)**: 기존 스택 = \"복원만 하는 VAE\" + \"양방향으로 클립 만드는 flow-matching 생성기\". **둘 다 제어를 모른다.**\n\n### 2.1.2 이걸 로봇으로 개조 = 수술 2개\n먼저 **action chunk**. 카메라/토크나이저는 느리게 샘플($f_t$ 다운샘플)되지만 로봇 모터는 원래 제어 주파수로 빠르게 명령을 받는다. 그래서 **두 latent 사이 한 전이 $z_t\\to z_{t+1}$ = 저수준 명령 $f_t$개의 묶음**:\n\n$$ a_t=u_{t f_t:(t+1)f_t-1},\\qquad t=0,\\dots,N-1\\quad(z_{0:N},\\ N=T'-1) $$\n\n이후 $a_t$는 개별 명령이 아니라 이 **청크**를 뜻한다.\n\n**수술 (i) — Video Causality (인과 마스크).** 양방향 attention을 causal mask로 바꿔 각 프레임이 **과거만** 보게:\n\n$$ p_\\theta(z_{1:N}\\mid z_0)=\\prod_{t=0}^{N-1}p_\\theta(z_{t+1}\\mid z_{\\le t}) $$\n\n→ \"클립 통째 생성\"이 \"과거 보고 다음 한 스텝 예측(자기회귀)\"으로 바뀜.\n\n**수술 (ii) — Action Injection = 마스터 식 Eq.5.** 미래 latent과 action을 함께:\n\n$$ p_\\theta(z_{1:N},a_{0:N-1}\\mid z_0)=\\prod_{t=0}^{N-1}\\underbrace{p_\\theta(z_{t+1}\\mid z_{\\le t},a_{<t})}_{\\text{video generation}}\\;\\underbrace{p_\\theta(a_t\\mid z_{\\le t},a_{<t},z_{t+1})}_{\\text{inverse dynamics}} $$\n\n- 매 스텝이 **두 일**: ① video generation(과거 latent+action → 다음 latent 상상) ② inverse dynamics(과거 + *방금 상상한* 다음 latent → 그 사이를 잇는 $a_t$ 디코드).\n- ★ ②의 inverse dynamics = **§2.2에서 배운 IDM과 같은 발상**(action = before·after의 함수). 단 §2.2는 *토크나이저 학습용*($\\ell$ 뽑기), Eq.5는 *정책 모델의 예측 구조*.\n\n**두 가지 파라미터화** (Eq.5를 실제 신경망으로):\n- **Joint (DreamZero)**: video+action 토큰을 **한 스트림**에 이어붙여 함께 denoise. $\\mathcal{L}_\\text{VA}=\\mathcal{L}_\\text{vid}+\\lambda_\\text{act}\\mathcal{L}_\\text{act}$ (각각 $z_{t+1},a_t$의 velocity를 맞히는 표준 flow-matching MSE; 보간 $z^{(s)}_{t+1}=(1-s)\\epsilon^z_t+sz_{t+1}$, $a^{(s)}_t=(1-s)\\epsilon^a_t+sa_t$). *(원문에서 $\\mathcal{L}_\\text{vid}$ 전개식은 내 추출 과정에서 잘렸으나 표준 flow-matching MSE 형태로 명시됨.)*\n- **Mixture-of-Transformers (MoT, LingBot-VA)**: 두 모달을 **별도 전문가** $\\{v^\\text{vid}_\\theta,v^\\text{act}_\\theta\\}$로, **causal attention은 공유**:\n\n$$ \\hat z_{t+1}=v^\\text{vid}_\\theta(z_{\\le t},a_{<t}),\\qquad \\hat a_t=v^\\text{act}_\\theta(z_{\\le t},a_{<t},\\hat z_{t+1}) $$\n\n- **LingBot-VA 2.0는 이 MoT를 계승**(§2.3.2)하되 video 전문가 FFN을 sparse MoE로 키운다. (표기: $v^\\text{vid},v^\\text{act}$는 velocity field가 아니라 그걸 적분해 얻은 latent/action)\n\n> **이것만 기억(2.1.2)**: 비디오 생성기 → 로봇용으로 만드는 **수술 두 개** = ① causal mask + ② action injection(video-gen + inverse-dynamics 교대). 결과가 **Eq.5**, 이후 모든 절이 이 식의 변주.\n\n\n---\n\n## 섹션 2.2 Semantic Visual-Action Tokenizer — **1단계 상세**   ★★\n\n이 절은 §1.4 Q&A에서 뼈대(왜 학습하나 · IDM/FDM 연결 · bottleneck)를 이미 깊게 다뤘다. 여기선 아직 안 채운 **원문 수식 디테일 3개**를 못박는다: (a) 토크나이저가 이미지를 실제로 어떻게 토큰화하나, (b) 복원+정렬 손실의 정확한 형태(특히 **temporal average pooling**이라는 핵심 설계), (c) latent action 손실 정본. 출처: **RepWAM [99]** 파생(§1.4 Q&A의 \"구조 미명시\" 부분이 이 논문 [99]).\n\n**[구조 한눈에] \"토크나이저\"는 사실 인코더-디코더 쌍 두 층이다.** 논문 이름 *Semantic Visual-Action Tokenizer*는 **우산 이름**이고, 그 안에 토크나이저가 **둘** 쌓여 있다. IDM/FDM은 그중 **②번 행동 토크나이저**의 인코더/디코더이지, ①번 비주얼 토크나이저가 아니다.\n\n| | **① 비주얼 토크나이저** (§2.2.1) | **② latent action 토크나이저** (§2.2.2) |\n|---|---|---|\n| 만드는 토큰 | 화면 토큰 **z** | 행동 토큰 **ℓ** |\n| **인코더** | **E** (픽셀 → z) | **IDM** $q_\\phi$ ($(z_t,z_{t+1})\\to\\ell$) |\n| **디코더** | **D** (z → 픽셀) | **FDM** $f_\\psi$ ($(z_t,\\ell)\\to\\hat z_{t+1}$) |\n| 학습 시점 | 패스 A | 패스 B (**얼린 z 위에서**) |\n| 디코더 역할 | 학습 전용(복원 손실) | 학습 전용(복원 손실) |\n| 배포 때 인코더 | **씀** (관측→z) | **못 씀** (IDM은 미래 $z_{t+1}$ 필요) |\n\n```\n픽셀 ──E──▶ z ──D──▶ 픽셀복원                       ← ① 비주얼 토크나이저 (패스 A → 얼림)\n              │\n      (z_t, z_{t+1}) ──IDM──▶ ℓ ──FDM──▶ ẑ_{t+1}복원   ← ② 행동 토크나이저 (패스 B)\n```\nE↔IDM(둘 다 인코더), D↔FDM(둘 다 디코더·학습전용) — **같은 오토인코더 패턴을 두 번**(\"픽셀→화면요약\" / \"화면요약 쌍→행동\").\n\n★ **비대칭(배포 때)**: E는 배포 때도 관측을 z로 인코딩하지만, **IDM은 배포 때 못 쓴다**(미래를 아직 안 봤으니). 그래서 IDM의 임무 = *학습 때 ℓ 정답지 대량생성*, 배포 때 행동은 **2단계 policy가 ℓ을 스스로 예측**해 냄. (= §1.4 ②의 \"상태는 관측·인코딩하면 되지만 행동은 미래를 못 보니 *예측*해야 한다 → 그 예측기가 2단계\"의 실체.) 디코더 둘(D, FDM)은 배포 때 안 돎(순수 채점기; FDM식 forward-dynamics만 §2.3.7에서 policy가 재수행).\n\n### 2.2.1 Visual Tokenization with Semantic Alignment\n\n**① 토큰화 방식 (ViT 오토인코더 — 새 디테일)**\n- 입력 클립 $o_{1:T}$를 **두 부분**으로 인코딩:\n  - **첫 프레임** = $16{\\times}16$ 공간 패치 (정지 이미지처럼 촘촘히).\n  - **이후 프레임들** = $4{\\times}16{\\times}16$ **시공간 tubelet** (연속 4프레임을 한 덩어리로 묶어 토큰화). 비유: 첫 장면은 사진처럼 자세히, 다음부턴 \"몇 프레임짜리 짧은 클립\"을 토큰 하나로.\n- 이 토큰들을 시퀀스로 이어붙여 encoder $\\mathcal{E}$ → 비주얼 latent $z=\\mathcal{E}(o)$. 대칭 decoder $\\mathcal{D}$로 픽셀 복원 $\\hat o=\\mathcal{D}(z)$.\n- ★ **encoder attention: 프레임 *안*에서는 full spatial(전체 공간 다 봄), 프레임 *사이*에서는 causal(과거만).** → **토크나이저 자체가 이미 causal**이다. §1.3의 \"native route(밑바닥부터 causal)\"가 backbone이 아니라 **여기 토크나이저에서부터** 시작한다는 뜻.\n\n**② 복원 손실 (3항)**\n\n$$ \\mathcal{L}_{\\text{rec}}=\\lambda_1\\|o-\\hat o\\|_1+\\lambda_{\\text{perc}}\\,\\mathcal{L}_{\\text{perc}}(o,\\hat o)+\\lambda_{\\text{gan}}\\,\\mathcal{L}_{\\text{gan}}(\\hat o) $$\n\n- 세 항의 역할: **픽셀 L1**(대충 맞추기) + **perceptual**(특징공간 유사도 = 사람 눈에 비슷하게) + **GAN/adversarial**(디테일 선명·진짜같게). 일반적인 고품질 VAE 레시피.\n\n**③ 의미 정렬 = 핵심 설계는 \"temporal average pooling\"**\n- 선생 $G$ = **frozen Perception Encoder [10]**. 학생 latent $z$와 선생 특징의 차원이 달라 학습가능 projection $W_{\\text{align}}$으로 맞춤. 그 뒤 **시간축 평균낸** 표현끼리 매칭:\n\n$$ \\mathcal{L}_{\\text{align}}=\\big\\|\\operatorname{avg}(W_{\\text{align}}\\,z)-\\operatorname{avg}(G(o))\\big\\|_2^2,\\qquad \\operatorname{avg}=\\text{temporal average pooling} $$\n\n- ★ **왜 \"평균\"이 핵심인가**: 만약 프레임별로 일일이 선생과 맞추면(per-frame align), 복원에 필요한 *프레임 고유 디테일*까지 선생을 따라가라 강요돼 **복원 화질이 죽는다.** 대신 **클립 전체를 평균낸 \"요지\"만** 선생과 맞추면 → **클립 수준 의미(clip-level semantics)는 선생에게 배우되, 프레임별 디테일은 자유롭게 남겨 복원용으로 보존.** 비유: *\"이 영상 전체가 무슨 얘기냐\"*는 선생 말을 따르되, *\"각 장면의 픽셀 디테일\"*은 내 맘대로. → 의미와 화질의 **충돌을 회피**하는 트릭.\n\n$$ \\mathcal{L}_{\\text{vis}}=\\mathcal{L}_{\\text{rec}}+\\lambda_{\\text{align}}\\,\\mathcal{L}_{\\text{align}}\\quad(\\lambda_{\\text{align}}=\\text{의미정렬 강도 손잡이}) $$\n\n> **이것만 기억(2.2.1)**: 토크나이저 = ViT 오토인코더인데 ① 프레임 사이 attention이 **이미 causal**(native의 출발점) + ② 복원(3항) 위에 **\"클립 평균만 선생과 맞추는\" 의미정렬**을 얹음 → 화질도 의미도 둘 다 챙김.\n\n### 2.2.2 Latent Action Tokenization (수식 정본 — 서술은 §1.4 Q&A 참조)\n\n비주얼 토크나이저를 **얼린 뒤**, 그 위에서 IDM/FDM만 학습(라벨 없음). 상세 직관은 §1.4 Q&A에 있고, 여기선 정본 수식만:\n\n$$ \\ell_t=q_\\phi(z_t,z_{t+1})\\in\\mathbb{R}^{d_\\ell},\\quad d_\\ell\\ll\\dim(z_t)\\qquad\\text{(IDM = bottleneck 인코더)} $$\n$$ \\hat z_{t+1}=f_\\psi(z_t,\\ell_t)=K_t z_t+\\delta_t\\qquad\\text{(FDM = transport }K_t\\text{ + 잔차 }\\delta_t\\text{)} $$\n$$ \\hat z_t=\\bar f_\\psi(z_{t+1},\\ell_t)\\qquad\\text{(reverse transport = backward)} $$\n$$ \\mathcal{L}_\\ell=\\sum_t\\|\\hat z_{t+1}-z_{t+1}\\|_2^2+\\|\\hat z_t-z_t\\|_2^2\\qquad\\text{(forward 예측 + backward consistency)} $$\n\n- $(K_t,\\delta_t)$는 $\\ell_t$로부터 예측. $K_t$=공간 latent 토큰 사이 **정보 이동**(=모션=행동스러운 것), $\\delta_t$=이동으로 설명 안 되는 변화. **$\\ell_t$ bottleneck** 때문에 전체 화면 복사 불가 → **control-relevant한 변화만** 담김.\n- **산출물**: 클립마다 쌍 $(z_{0:N},\\ \\ell_{0:N-1})$ → **2단계 causal DiT의 학습 타깃**. 2단계에선 표기를 $a_t\\equiv\\ell_t$로 통일(Eq.5와 정합).\n\n> **이것만 기억(2.2 전체)**: 1단계 산출물 = **(의미정렬된 visual latent $z$) + (라벨 없이 뽑은 latent action $\\ell$)의 쌍.** 이 쌍이 그대로 2단계 모델의 \"정답지\"가 된다. state·action이 한 공간에 정렬돼 있으니, 2단계에서 \"다음 장면 + 다음 행동\"을 한 모델이 매끄럽게 이어 예측할 수 있다.\n\n\n---\n\n## [비교] Fast-WAM vs LingBot-VA 2.0   ★\n\n**한 줄 대비**: 두 논문은 *\"추론 때 미래를 생성해야 하는가?\"*라는 **같은 질문에 정반대로 답한다.** Fast-WAM = \"미래 상상은 *학습* 때만 필요, *추론* 땐 빼도 무해\" → 미래 생성 단계를 **제거**해 가속. LingBot-VA 2.0 = 미래 생성을 **유지**하되, 느리다는 문제를 제거 대신 **비동기 병렬화 + 실측 재접지**로 해결.\n\n| 축 | **Fast-WAM** (arXiv 2603.16666, Tsinghua+Galaxea, 2026-03) | **LingBot-VA 2.0** (arXiv 2607.08639, Ant, 2026-07) |\n|---|---|---|\n| 한 줄 정체 | \"학습은 WAM, 추론은 VLA처럼\" — 추론 때 미래 생성 제거 | native video-action foundation model — 처음부터 causal로 사전학습 |\n| **추론 때 미래 생성** | **제거** (핵심 주장: 정확도에 불필요) | **수행** — Foresight Reasoning으로 미래 latent 예측 |\n| **지연 해결 방식** | 미래 생성 단계 자체를 없앰 → 단일 forward | 미래 생성을 **비동기 병렬** + 실행과 겹침 |\n| **재접지(correction)** | 없음 (생성된 rollout이 없으니 교정 대상 없음) | **매 관측마다 learned forward-dynamics로 rollout을 실측에 재접지** (predict-then-correct) |\n| **토크나이저** | 사전학습 **복원 VAE** (Wan2.2) — 의미정렬·action 없음 | **의미 visual-action 토크나이저**: causal ViT AE + Perception Encoder 정렬(temporal-avg) + latent action(IDM/FDM) |\n| **행동 표현** | **GT action 라벨**을 flow-matching (지도) | **라벨 없이 뽑은 latent action** ℓ, world state와 **같은 의미 latent 공간** |\n| **causal 시작점** | 사전학습 **양방향** Wan2.2에 **attention mask로 causality 부과**(개조 계열) | **토크나이저부터 native causal** (밑바닥 재훈련) |\n| **backbone** | Wan2.2-5B video-DiT + 1B action expert = 6B (**dense**) | causal **sparse MoE** DiT (전문가 128, top-8) |\n| **계획(planning)** | 없음 (단일 subtask) | **계층 VLM planner + low-level video-action policy** |\n| **언어 조건** | T5 text encoder (Wan2.2 내장) cross-attention | frozen LM cross-attention |\n| **사전학습** | 벤치마크별 **from-scratch, embodied pretrain 없음** | **웹스케일 native pretraining** (일반영상+로봇+사람 1인칭) |\n| **shortcut 방지** | attention mask(미래→행동 누설 차단) | **MCP(Multi-Chunk Prediction)** — 여러 미래 chunk 동시 감독 |\n| **공유 DNA** | MoT(attention 공유·weight 분리) + flow matching | **동일** (MoT 계승 + flow matching) |\n| **대표 수치** | 추론 190ms (미래생성 IDM 810ms 대비 4×+) | 실시간 peak **225 Hz**, 시연 10–15개로 적응 |\n\n**미묘한 지점(공정하게)**: 두 논문이 \"미래 생성\"을 쓰는 *목적*이 다르다. Fast-WAM이 \"불필요\"라 판정한 건 *현재 행동을 정하려 미래를 조건부로 그리는 것*(IDM식). LingBot-VA의 Foresight는 *다음 행동을 관측 도착 전에 미리 뽑아 지연을 숨기는 것* + 상상을 실측으로 교정. 다만 LingBot-VA도 Eq.5에서 행동을 **생성된 다음 latent에 대한 inverse dynamics**로 뽑으므로, \"추론 시 미래 생성이 정확도에 도움되나?\"에 두 논문은 **상반된 실증 답**을 낸다(Fast-WAM=No on LIBERO/RoboTwin, LingBot-VA=Yes on long-horizon native). 벤치·규모가 달라 직접 반증은 아니고, 서로가 서로의 가장 강한 반론.\n\n**계보**: LingBot-VA 1.0(retrofit causal) → Fast-WAM(실험에서 LingBot-VA 1.0을 baseline으로 인용, \"추론 상상 빼기\" 제안) → **LingBot-VA 2.0**(native causal + 상상 유지 + 재접지). 즉 2.0의 §1.3이 까는 \"1세대 retrofit\"이 곧 Fast-WAM이 비교한 LingBot-VA 1.0이다.\n\n---\n\n## 섹션 2.3 Video-action Model Pretraining & Inference — **2단계 본체**   ★★★\n\n1단계 산출물 $(z,\\ell)$의 **공유 latent 공간 위에서** causal video-action model을 사전학습. **두 레벨**: ① high-level **planner**(언어 목표 → subtask 분해·진행추적) + ② low-level **video-action policy**(각 subtask 실현 = 미래 visual latent + 잇는 latent action 예측). policy는 **chunk 단위**로 동작(§2.3부터 index $t$는 프레임이 아니라 **chunk**).\n\n**7소절 지도 (3묶음)**:\n| 묶음 | 소절 | 한 줄 |\n|---|---|---|\n| **구조** | 2.3.1 계층 계획 | 느린 VLM planner(2Hz, JSON subtask) + 빠른 policy, 비동기 버퍼로 분리 |\n| | 2.3.2 MoE video stream | MoT 유지, **video expert FFN만 sparse MoE**(128 experts, top-8), action expert는 dense |\n| **학습** | 2.3.3 MCP | 여러 미래 chunk 예측으로 dense 감독(복붙 커닝 차단), Next Forcing식 K=3 |\n| | 2.3.4 ICL | 사람 시연 영상을 in-context latent로 조건 → 언어만으론 부족한 태스크 보강 |\n| | 2.3.5 사람-로봇 공동학습 | 값싼 사람 1인칭 + 로봇 데이터 공동, action space 통일 + per-domain head |\n| | 2.3.6 학습 레시피 | 5태스크(T2I/T2V/TI2VA/ICL/HCT) **coarse-to-fine 공동학습**(순차 커리큘럼 대신) |\n| **추론** | 2.3.7 Foresight Reasoning | 비동기: 미래 미리 상상 + KV-cache **실측 재접지** = predict-then-correct |\n\n---\n\n### 2.3.1 Hierarchical Planning — 느린 감독 + 빠른 배우\n\n**[가장 쉬운 버전 — 촬영장 비유]** 긴 작업(*\"식탁 치워\"*)은 \"계획하는 일(느려도 됨: 단계 쪼개기·지금 몇 단계인지·언제 넘어갈지)\"과 \"실행하는 일(빨라야 함: 매 순간 팔 제어)\"이 섞임. 한 뇌가 둘 다 하면 계획하느라 실행이 버벅임 → **뇌를 둘로**:\n- **감독 = planner**(뒤에서 대본 들고 가끔·느리게 쪽지 씀) / **배우 = policy**(빠르게 계속 연기) / **게시판 = 비동기 버퍼**(둘을 잇되 서로 안 기다리게).\n- 감독이 배우에게 *직접* 지시하면 배우가 멈춰 기다림(버벅임). 대신 감독은 자기 페이스(~2Hz)로 **게시판에 쪽지만 갱신**, 배우는 자기 페이스로 **게시판을 힐끗** 읽음 → **감독이 느려도 배우는 안 멈춤.**\n- 쪽지 = **JSON 4칸**: `done`(끝났나?—스케줄러만 봄) / `instruction`(간결 명령—배우 주신호) / `generation_instruction`(자세한 움직임) / `local_scene_description`(화면 배치). 배우는 텍스트 3칸만 읽음.\n- 형식이 **정확히 일치**해야 하는 이유 = 배우가 딱 이 형식으로 훈련됨. 다른 형식이면 \"연습 안 한 대본\"(OOD) → 무너짐.\n- 감독 훈련의 핵심 = *경계 넘기* 학습: `done=true` 샘플에서 \"방금 단계 끝 → **다음** 단계를 화면+히스토리로 **예측**\". VLM을 **LoRA로 살짝** 손봐(눈=vision tower 얼림) 쪽지 양식만 추가 → 감독은 \"새 정책\"이 아니라 **policy에 언어맥락 공급하는 인터페이스**.\n> **세 줄**: ① 긴 작업=느린 계획+빠른 실행으로 뇌 분리 → ② 게시판으로 이어 감독 느려도 배우 안 멈춤 → ③ 감독=VLM 살짝 손봐 4칸 쪽지로 \"지금 할 단계+언제 넘어갈지\" 공급. *(아래는 상세)*\n\n**왜 계층?** single subtask 안의 연속 제어는 policy가 하지만, long-horizon(긴 작업)은 (a) 목표를 subtask로 쪼개고 (b) 지금 어느 subtask인지 추적 (c) 언제 다음으로 넘어갈지 결정이 필요 → 이걸 상위 planner가 맡음.\n\n- **planner = 사전학습 VLM을 LoRA fine-tune** (vision tower는 frozen). VLM이 이미 visual-language grounding을 갖고 있어 장면 이해를 처음부터 안 배워도 됨. planner는 \"policy에 언어 맥락을 공급하는 **인터페이스 모듈**\"로 취급(별도 최적화되는 정책 아님).\n- **비동기 분리**: planner는 background **~2Hz**로 buffer에 subtask context를 쓰고, policy는 **매 action-chunk 경계**에서 최신 context를 읽는다. → **planner 지연이 policy 실행 루프를 안 막음.**\n- **planner 출력 = 구조화 JSON 4필드**: `done`(완료신호 — **스케줄러만** 사용, 현 subtask 유지/전환 결정), `instruction`(간결 지시 \"Pick up the red bottle\" — policy가 학습 때 본 **주 조건필드**), `generation_instruction`(더 자세한 모션·상호작용 묘사), `local_scene_description`(관측 기반 공간배치). **policy는 텍스트 3필드로 조건**(done 제외).\n  - ★ **핵심 제약**: planner 출력 형식이 policy가 **학습 때 본 조건 필드와 정확히 일치**해야 함. 안 그러면 policy가 추론 때 OOD(분포 밖) 조건을 받아 무너짐.\n- **planner 학습 데이터 = boundary-crossing sampling**: segment 주석된 robot demo에서 경계마다 두 샘플 — `done=false`(관측시각 $t^*$가 현 segment 안 → 현 subtask 4필드 echo) / `done=true`($t^*$가 $g_i\\!\\to\\!g_{i+1}$ 경계 막 넘음 → **다음** subtask 4필드 예측). 입력 = 키프레임 3장($t^*{-}2s,{-}1s,t^*$) + episode 목표 + 완료 segment 텍스트 히스토리 + (false만)현 subtask. task-balanced(고빈도 태스크 지배 방지).\n\n> **직관(2.3.1)**: planner = 느긋한 **감독**(전체 계획·다음 씬 대본 쪽지 JSON), policy = 빠른 **배우**(현재 씬 연기). 감독이 대본을 게시판(buffer)에 붙여두면 배우가 장면 바뀔 때마다 읽음 → 감독이 느려도 배우는 안 멈춤. `done=true` 학습이 감독에게 \"장면 넘길 때를 관측+히스토리로 **예측**\"하게 시키는 부분.\n\n**[Q&A 보강] 자주 헷갈리는 3가지**\n- **왜 ~2Hz?** 원문은 값만 명시(유도 없음). 논리 = subtask는 **초 단위**로 바뀌고 VLM은 비싸니 초당 두어 번이면 전환 놓칠 일 없음 + planner(~2Hz 의미·느림) vs policy(고속 모터, peak 225Hz)의 **주파수 분리**. 정확히 2인 근거는 없음(경험적).\n- **게시판에 쪽지가 쌓이나?** **배우(policy)엔 최신 하나만**(원문: \"reads the **latest** context\"). 반면 **감독(planner) 자기 입력엔 완료 단계 텍스트 히스토리 누적**(원문 명시)=다음 판단 재료. 누적은 감독 쪽, 배우는 최신 한 장.\n- **배우는 단계 끝을 어떻게 아나?** 알 필요 없음. **`done`은 스케줄러만** 읽어 게시판을 다음 subtask로 갈아끼움 → 배우는 \"현재 붙은 instruction\"을 매 청크 따를 뿐, **instruction이 바뀐 것 자체가 신호**. 판단=planner/스케줄러, 실행=현재 쪽지 따르기로 분리.\n\n### 2.3.2 Architecture: Mixture-of-Experts Video Stream — 큰 뇌·싼 계산\n\n- **MoT(Eq.8) 유지**: video expert $v^{\\text{vid}}_\\theta$, action expert $v^{\\text{act}}_\\theta$가 **causal self-attention은 공유**, feed-forward는 분리.\n- **비대칭 스케일**: visual dynamics가 모델링 부담 대부분 → **video expert의 dense FFN을 각 causal DiT 블록에서 sparse MoE routed layer로 교체**, action expert는 dense 유지. (DeepSeekMoE/DeepSeek-V3식.) routing은 causal self-attention **뒤** 토큰별 feed-forward라, expert 수를 늘려도 Eq.5의 causal 의존구조는 그대로.\n- **routing 수식** (토큰 $h\\in\\mathbb{R}^d$):\n  - expert score: $r_i(h)=\\sigma(g_i^\\top h)$ ($\\sigma$=sigmoid, $N_e$=routed expert 수)\n  - **group-limited top-k**: expert를 그룹으로 나눠, 강한 그룹 몇 개 먼저 고르고 그 안에서 top-$k$ 선택. $\\mathcal{R}(h)=\\operatorname{TopK}_{\\text{group}}(r(h)+b,k)$, $|\\mathcal{R}(h)|=k$ ($b$=선택 전용 correction bias)\n  - 정규화 가중: $\\alpha_i(h)=\\gamma\\, r_i(h)/\\sum_{j\\in\\mathcal{R}}r_j(h)$\n  - 출력: $\\operatorname{MoE}(h)=E_{\\text{shared}}(h)+\\sum_{i\\in\\mathcal{R}(h)}\\alpha_i(h)E_i(h)$ — $E_{\\text{shared}}$=모든 토큰 공통 변환, $E_i$=routed SwiGLU experts\n  - **메인 설정 $N_e{=}128$, $k{=}8$** (토큰당 128 중 8만 활성)\n- **load balancing = auxiliary-loss-free** (Loss-Free Balancing, DeepSeek-V3; Moonlight bias update): 매 스텝 관측 토큰 수 $c_i$로 correction bias $b_i$만 갱신($v_i=\\operatorname{sign}(c_i-\\bar c)$ 기반) → 과부하 expert 억제·저사용 촉진하되 **diffusion objective에 큰 balancing gradient를 안 주입**.\n- **검증(Fig.4)**: **MoE-13B-A1.9B**(총 13B, 활성 1.9B) vs **Dense-5B** 같은 setup — 스텝 맞추면 loss 궤적 거의 같음(dense 살짝 낮음), **wall-clock 맞추면 최종 loss 거의 일치** → MoE가 용량을 늘리되 optimization penalty 사실상 없음.\n\n> **직관(2.3.2)**: routing = 병원 접수처가 환자(토큰)를 관련 전문의 **8명에게만**(전체 128명 중) 배정. $E_{\\text{shared}}$ = 모두가 받는 공통 기본진료. load balancing = 특정 전문의에 환자 몰리지 않게 접수처가 **bias만 살짝** 조정(구조 수술 없이). 결과 = \"아는 건 13B만큼, 매번 드는 계산은 1.9B만큼.\"\n\n---\n\n### 2.3.3 Multi-Chunk Prediction (MCP) — 복붙 커닝 차단\n\n- **문제(myopic supervision)**: teacher forcing으로 GT 히스토리에서 각 chunk를 예측하는데, **다음 chunk 하나만 감독**하면 학습신호가 너무 국소적. 고프레임에선 옆 chunk가 시각적으로 거의 같아 모델이 **appearance 복붙**으로 loss를 줄임(진짜 dynamics 안 배움). native video-action FM 목표(행동에 따라 세상이 어떻게 변하나)와 어긋남.\n- **해결(MCP, Next Forcing식)**: 보조 목적. 다음 **K개 chunk 블록**을 한 context에서 예측 → horizon별 미래 조건 감독:\n$$ p_\\theta(z_{t+1:t+K}\\mid z_{\\le t},a_{<t})\\approx\\prod_{k=1}^K p_{\\theta,k}(z_{t+k}\\mid h_t^{(k-1)}),\\quad h_t^{(0)}=f_\\theta(z_{\\le t},a_{<t}) $$\n- **핵심**: step $t$의 표현이 \"다음 $K$ chunk가 어떻게 전개되는지\"를 담아야 함. $h_t^{(k-1)}$=main DiT feature가 쌓인 MCP 모듈들을 통과한 **내부 feature state**(깨끗한/예측된 미래 관측 아님) → horizon $t{+}k$ 예측기는 $z_{t+1:t+k-1}$가 아니라 **이전 MCP feature를 재사용**.\n- **구현**: main DiT에 붙는 **경량 MCP 모듈 각 horizon당 하나**, $K{=}3$(next¹·²·³). 각 모듈은 **더 큰 timestep shift**로 denoise → 자기 noisy 입력만으론 못 풀고 **main 모델 표현에 의존**하게 강제. causal chain(첫 모듈=여러 DiT층 fused feature, 깊은 모듈=이전 것도 조건). 가중치 $(w_1,w_2,w_3)=(0.5,0.2,0.1)$, $\\mathcal{L}_{\\text{MCP}}=\\sum_k w_k\\mathcal{L}^{\\text{MCP}}_k$.\n- **효과**: 미래-chunk denoising gradient가 backbone으로 흘러 **dense temporal supervision** → latent을 **궤적 수준 dynamics** 중심으로 조직(국소 appearance 아님). MCP는 visual stream에만 작동하지만, 더 예측적인 visual state가 공유 attention+inverse-dynamics 경로로 **action decoding도 개선**.\n- ★ **배포 2모드**: MCP 모듈 **버리면 zero-overhead**(학습때 이미 backbone 개선됨) / **유지하면 다음 visual chunk를 현재와 병렬 예측**해 지연↓ (→ §2.3.7 Foresight와 연결).\n\n> **직관(2.3.3)**: 커닝 방지 시험. \"다음 한 장면만 그려\" 하면 현재화면 복붙으로 통과 → \"다음·다다음·다다다음 세 장면을, 그것도 더 흐린 상태에서 한꺼번에 그려\" 하면 복붙 불가 → 세상 굴러가는 법을 표현에 담아야. 그 표현이 좋아지면 행동 뽑기도 덤으로 개선.\n\n### 2.3.4 In-context Learning (ICL) — 말 대신 시범 영상\n\n- **문제**: 기존 video-action model은 **언어 지시**가 주 태스크 명세. 근데 희귀 물체·복잡한 다물체 상호작용·long-horizon은 언어로 **다 못 적음**(세밀한 시간구조 명세 실패).\n- **해결(Zero-WAM/DVA식) = video ICL**: 로봇 영상에 **의미적으로 정렬된 사람 시범 영상**을 짝지음. 사람 영상은 **같은 물체·시점·장면일 필요 없음** — \"이 작업이 어떻게 전개되는지\"의 **동적 시각 예시**. 언어보다 명시적 시간·절차 안내.\n- **방법**: 사람 시범을 semantic tokenizer로 **in-context latent $z_{\\text{icl}}$** 로 인코딩 → Eq.5 목적에 $z_{\\text{icl}}$을 **모든 로봇 chunk 조건에 추가**:\n$$ p_\\theta(z_{1:N},a_{0:N-1}\\mid z_0,z_{\\text{icl}})=\\prod_{t}p_\\theta(z_{t+1}\\mid z_{\\le t},a_{<t},z_{\\text{icl}})\\,p_\\theta(a_t\\mid z_{\\le t},a_{<t},z_{t+1},z_{\\text{icl}}) $$\n- $z_{\\text{icl}}$=외부 task prompt로 모든 스텝이 봄. 로봇쪽 causal mask는 여전히 미래 로봇 chunk 못 보게 함. $z_{\\text{icl}}$은 **로봇 궤적의 미래가 아니라 별도 사람 시범**이라 전체를 봐도 로봇쪽 causality 위반 아님.\n\n> **직관(2.3.4)**: \"빨간 병 집어\"라고 **말로** 하는 대신 **\"이렇게 하는 거야\" 시범 영상 하나를 옆에 틀어주는 것**. 말론 못 담는 순서·손놀림을 영상이 보여줌. 가중치 갱신 없이 few-shot 적응.\n\n### 2.3.5 Human-Robot Data Co-training — 값싼 사람 영상 끌어쓰기\n\n- **동기**: 로봇 데이터=비싸고 다양성 적음 / 사람 1인칭 조작영상=싸고 태스크·장면 넓음. 사람→로봇 전이됨(특히 로봇 데이터 희소 시). 그래서 **사람+로봇 공동학습**(사전학습 후 적응 대신).\n- **두 갭**: **action-space 불일치**(사람 손 vs 로봇 그리퍼) + **motion gap**(자연스런 사람 동작 vs 로봇 kinematics). video-action WM에선 **과거 action이 예측 context로 피드백**(Eq.5)돼서, 어긋난 사람 action이 **공유 dynamics를 오염**시켜 특히 해로움.\n- **해결**: 사람 손자세를 **로봇 action space로 매핑** + embodiment별 action enc/dec를 **공유 world model 주위에** 둠. 손→**기능적 그리퍼 열림**으로 매핑(placeholder 아님)해 사람 action도 \"언제 쥘지\"를 감독. 통일 layout: 없는 채널 zero-pad+mask, bimanual EE slice=손마다 6-DoF root pose+scalar 열림. $a^H=\\Phi(\\tilde a^H)$ (손 root 6-DoF 유지 + 손가락 config $q$→scalar 열림 $\\varphi(q)$).\n- **공유/분리**: 두 도메인이 **하나의 공유 world model** 통과, per-domain enc $E_d$/dec $P_d$($d\\in\\{R,H\\}$)만 다름; video·action expert·causal attention은 **공유**: $\\hat a^{(d)}_t=P_d(v^{\\text{act}}(z_{\\le t},E_d(a_{<t}),\\hat z_{t+1}))$. 손실 $\\mathcal{L}_{\\text{co-train}}=\\mathbb{E}_{\\mathcal{D}_R}[\\mathcal{L}_{\\text{vid}}+\\mathcal{L}^R_{\\text{act}}]+\\mathbb{E}_{\\mathcal{D}_H}[\\mathcal{L}_{\\text{vid}}+\\mathcal{L}^H_{\\text{act}}]$. 공유 expert가 사람 데이터서 cross-domain dynamics 학습, 도메인 head는 저수준 action 파라미터화만 격리. **배포 땐 로봇 branch $(E_R,P_R)$만 → 공동학습 추론비용 0.**\n\n> **직관(2.3.5)**: 유튜브 요리영상(사람 손)으로도 로봇을 가르치고 싶다. 근데 손≠집게라 그냥 넣으면 world model이 헷갈림 → **손을 \"가상 집게\"로 번역**(엄지 vs 네 손가락=두 턱, 벌린 거리=열림)해 로봇과 같은 언어로. 뇌(WM)는 공유, 손↔집게 번역기(head)만 각자. 배포 땐 로봇 번역기만 → 공짜.\n\n### 2.3.6 Training Recipe — 순차 커리큘럼 대신 \"항상 다 같이\"\n\n- **왜 from scratch**: 일반 video generator(Wan)는 synthesis용+양방향 attention이 causal 제어와 충돌, 게다가 이 논문 tokenizer의 semantic latent은 off-the-shelf와 다름 → 빌린 backbone 이어학습 대신 **처음부터**.\n- **핵심 결정**: **strictly staged 커리큘럼 금지.** T2I→T2V→video-action 순으로 딱딱 나누면 embodied 데이터로 좁아질 때 **앞서 얻은 넓은 prior를 catastrophic forgetting.** 대신 **모든 목적을 항상 켜두고**(multi-task co-training) 상대 비중만 시간에 따라 조절.\n- **5개 태스크**(전부 공유 latent+같은 causal DiT, 조건/감독만 다름): **T2I**(단일프레임, 시각-의미 grounding+언어정렬) · **T2V**(멀티프레임, 웹스케일 영상서 일반 temporal dynamics) · **TI2VA**(핵심 제어=미래latent예측+inverse-dynamics Eq.5 + MCP) · **ICL**(시범영상 조건 few-shot) · **HCT**(사람-로봇 공동학습, 2.3.5).\n- **혼합** $\\mathcal{L}(\\tau)=\\sum_i \\pi_i(\\tau)\\mathcal{L}_i$ ($\\tau\\in[0,1]$=학습 진행도, $\\pi$=태스크 샘플분포). **coarse-to-fine**: 초기($\\tau{\\to}0$) T2I 집중(appearance+의미정렬) → 중기 T2V(temporal dynamics 굳힘) → 후기($\\tau{\\to}1$) video-action(TI2VA/ICL/HCT) 집중. 파라미터 공유라 앞 목적도 후기에 **작지만 0 아닌 정규화 신호** → 넓은 image/video prior 보존.\n\n> **직관(2.3.6)**: 요리 배우기. \"칼질 마스터→불조절 마스터→실전\"으로 딱딱 끊으면 나중엔 칼질을 까먹음(forgetting). 대신 **처음부터 다 조금씩 같이 하되, 초반엔 기초(그림)에 시간 많이 → 후반엔 실전(제어)에 시간 많이.** 비중만 서서히 이동.\n\n\n---\n\n### 2.3.7 Foresight Reasoning — predict-then-correct (추론 묶음)   ★★★\n\n§1.5에서 직관은 깔았음(비동기 앞서 상상 + 실측 재접지). 여기서 **구현을 정밀화**: 두 스트림 비동기 + **FDM$_\\theta$로 상상** + **KV-cache 덮어쓰기로 재접지** + post-training **$\\mathcal{L}_\\text{FDM}$**로 video expert를 진짜 forward-dynamics 예측기로.\n\n**① 문제 — 직렬은 self-blocking**: 한 스트림이면 (모델 계산 끝나야 로봇 행동 / 로봇 행동 끝나야 새 관측). 동기 실행이면 $a_t$ 실행 후 로봇이 **멈춰서** 다음 chunk denoise를 기다림 → 모델 지연=제어 지연. (Multi-Stream LLMs 관점.)\n\n**② 해결 — 두 스트림 비동기**:\n- **execution stream**: 로봇이 현재 chunk $a_t$를 실제 실행 / **prediction stream**: $a_t$의 **실제 관측이 오기 전에** 다음 chunk $a_{t+1}$을 미리 준비.\n- 절차: (i) 실행 중 $a_t$를 최신 **feedback-grounded 캐시 $C_t$**(=grounded 히스토리 $(z_{\\le t},a_{<t})$를 요약한 **KV-cache 항목**)에 append → $C_\\text{tmp}=C_t\\cup\\{a_t\\}$. (ii) **policy의 video expert가 forward-dynamics pass**(토크나이저의 frozen FDM $f_\\psi$가 아니라 **policy 자신이 온라인으로**) — 현재 chunk의 시각 결과 상상:\n$$ \\hat z_{t+1}=\\text{FDM}_\\theta(C_t\\cup\\{a_t\\})=v^\\text{vid}_\\theta(z_{\\le t},a_{\\le t}) $$\n  (iii) action expert가 $C_\\text{tmp}\\cup\\{\\hat z_{t+1}\\}$에서 $a_{t+1}$ 디코드. → $a_t$ 실행이 끝나는 순간 $a_{t+1}$ 준비 = **지연을 모션 뒤에 숨김.**\n\n**③ 함정 — 표류(drift)**: 앞서 달리는 게 공짜 아님. prediction stream이 자기 $\\hat z_{t+1}$을 계속 context에 되먹이면 rollout이 **open-loop**. video backbone은 **temporal smoothness 선호** → 이 환각 궤적을 부드럽게 이어가며 물리 피드백 무시 → 반응 불가까지 표류.\n\n**④ 핵심 처방 — KV-cache 덮어쓰기 재접지**: 진짜 관측 올 때마다 재접지. $a_t$ 완료 후 돌아온 관측을 참 latent $z_{t+1}$로 인코딩 → **KV cache의 stale 예측 $\\hat z_{t+1}$을 실측 $z_{t+1}$로 덮어씀**(실행한 $a_t$와 함께). 다음 예측 스텝은 검증 안 된 상상이 아니라 **feedback-grounded 캐시 $C_{t+1}$에서 시작**. → 비동기인데도 **closed-loop 유지 = predict-then-correct**(빠른 예측이 앞서 초안, 매 실측이 끌어당김).\n\n**⑤ 학습 — forward-dynamics grounding loss**: post-training에서 video expert가 \"feedback-grounded context + **실행한** action\"으로 다음 visual latent을 예측하게 supervise(flow-matching):\n$$ \\mathcal{L}_\\text{FDM}=\\mathbb{E}_{t,s,\\epsilon}\\big[\\,\\|v^\\text{vid}_\\theta(z^{(s)}_{t+1},s\\mid z_{\\le t},a_{\\le t})-(z_{t+1}-\\epsilon)\\|^2\\,\\big] $$\n- ★ 차이: 일반 video loss $\\mathcal{L}_\\text{vid}$(Eq.6)는 **과거 action $a_{<t}$만** 조건. $\\mathcal{L}_\\text{FDM}$은 **실행한 $a_t$까지($a_{\\le t}$)** 추가로 먹임 → video expert를 \"현재 전이의 진짜 forward-dynamics 예측기\"로 전환.\n\n**⑥ 관련연구 대비**:\n- **Leapfrog Inference(DVA)** vs Foresight: 둘 다 \"현재 모션 안 기다리고 다음 준비\". 차이=비동기 스트림이 나르는 상태. Leapfrog=causal rollout을 미래로 충분히 밀어 다음 action을 현재 완료 후 디코드. **Foresight=예측 미래 latent을 FDM-grounded 캐시 업데이트로 취급** → 매 chunk observation-grounded KV cache서 시작+현재 action 조건+policy FDM으로 다음 latent 예측+캐시 삽입, 실측 오면 덮어써 재접지 → **매 chunk action-conditioned + closed-loop**이면서 지연 숨김.\n- **Multi-Stream LLMs 대비**: 거긴 스트림이 input/output 역할. 여긴 스트림이 **예측된 미래 world state**를 나르니 closed-loop이 재접지에 달림 — 언어엔 없는 단계.\n- **MCP와 독립**: Foresight는 추론시 스킴, MCP(2.3.3)와 별개로 on/off.\n\n> **직관(2.3.7)**: 눈 감고 앞서 걷되(FDM$_\\theta$로 상상해 다음 발 미리) 한 걸음마다 **눈 떠 실제 위치로 발을 다시 딛는다**(KV-cache 덮어쓰기). 상상만 쌓으면 벽에 박음(drift). $\\mathcal{L}_\\text{FDM}$ = \"실행한 발까지 넣어 다음 위치를 제대로 예측하도록\" 연습.\n\n\n---\n\n## 섹션 2.4 Post-training — 똑똑하지만 느린 정책을 실시간으로   ★\n\n§2.3까지가 \"똑똑한데 느린\" 정책. §2.4 = 품질 크게 안 잃고 **실시간(225Hz)** 으로 만드는 두 단계: ① denoising step 줄이기(증류) + ② 시스템 가속.\n\n### 2.4.1 Diffusion Distillation — denoising 스텝 줄이기\n- **배경**: 정책은 각 chunk를 flow-matching velocity를 **PF-ODE 따라 적분**해 샘플. 기본 = **video expert 5 step, action expert 10 step**. 매 chunk마다 여러 forward = 느림.\n- **해결 = few-step consistency model로 증류**:\n  - consistency model $f_\\xi(x^{(s)},s)$: PF-ODE 궤적 위 **아무 점이든 그 궤적의 clean 끝점으로 직접** 매핑. self-consistency($f_\\xi(x^{(s)},s)=f_\\xi(x^{(s')},s')$, 같은 궤적 위 점들은 같은 답) + boundary($f_\\xi(x^{(1)},1)=x^{(1)}$).\n  - 증류: teacher=frozen post-trained $v_\\theta$. $s$를 그리드로 이산화, noisy 점 $x^{(s_n)}$에서 **teacher 1-step Euler**로 data 쪽 한 발 $\\hat x^{(s_{n+1})}$ → student가 인접 두 점에서 **일관 예측**하도록 $\\mathcal{L}_\\text{CD}=\\mathbb{E}[d(f_\\xi(x^{(s_n)},s_n),f_{\\xi^-}(\\hat x^{(s_{n+1})},s_{n+1}))]$ ($\\xi^-$=EMA target·stopgrad, $d$=squared $\\ell_2$).\n  - **결과: 두 expert 다 → video 5→2, action 10→2 step. 배포 정책은 chunk당 2 function evaluation.**\n\n> **직관(2.4.1)**: 원래 모델 = GPS가 한 수 둘 때마다 경로를 5~10번 재계산. 증류 = \"지금 이 흐린 지점이면 최종 답은 저기\"를 **2번 만에 직행**하는 지름길. 궤도(PF-ODE) 위 공을 원래는 한 칸씩 굴리는데, consistency model은 **아무 위치나 보고 \"결국 여기 멈춰\"를 즉답**(같은 궤도=같은 끝점이라 성립). teacher가 한 칸 굴려 보이면 student가 그 끝점 예측과 자기 예측을 맞춰 궤도 전체를 직행으로 압축.\n\n### 2.4.2 Inference Acceleration — 3층 시스템 가속 (순수 엔지니어링)\n- **Model 레벨(저정밀 컴파일)**: DiT를 ONNX→**TensorRT** 빌드(그래프 최적화·하드웨어별 커널·op fusion). KV-cache를 명시적 engine 입출력으로(정적 인터페이스). **FP8 양자화**(NVIDIA Model Optimizer): head/tail은 BF16, transformer 내부 linear는 FP8 → forward 한 번이 싸짐.\n- **Sequence 레벨(long-horizon attention)**: rollout이 길수록 attention 비용↑. **paged/ragged KV-cache**(padding/repack 없이), 버퍼=sliding-window 길이, in-place 갱신. 일반 TensorRT attention을 **FlashInfer 기반 plugin**으로 교체(padded dense tensor 없이 paged cache 위 attention).\n- **System 레벨(런타임 오버헤드)**: 비동기 루프의 반복 host-side 준비(개별론 작지만 누적 큼) 제거 — TensorRT binding/shape 캐시, 텐서 재사용, cross-attention KV 사전계산, metadata 캐시, 불필요한 CPU-GPU sync 제거.\n\n> **직관(2.4.2)**: \"기계를 빠르게\" 3층 — ① 숫자를 싼 형식(FP8)+GPU 최적코드 컴파일 / ② 늘어나는 히스토리 메모리를 똑똑히 관리해 attention 폭주 방지 / ③ 호출마다 반복 잡무 제거. 새 ML 아이디어 아니라 **순수 시스템 최적화** — \"작동\"을 \"225Hz 실시간\"으로 만드는 부분.\n\n> **이것만 기억(2.4)**: §2.3의 똑똑하지만 느린 정책을 → ① **증류로 denoising 2 step** + ② **FP8·TensorRT·paged-KV·오버헤드 제거**로 → 품질 유지하며 실시간.\n\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-22 08:23 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
