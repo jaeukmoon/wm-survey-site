@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Subgoal · Goal Image (서브골 · 목표 이미지) — &quot;목적지 핀&quot;을 찍어주기</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Subgoal · Goal Image (서브골 · 목표 이미지) — \"목적지 핀\"을 찍어주기\n\n> 출처: 단일 발명 논문이 없는 **범-VLA 디자인 패턴**이다. 원형은 action-conditioned video predictor로 목표 이미지에 가장 가까운 행동을 MPC로 고르던 초기 **visual foresight** 계열(`tau-zero_deepdive.md` 인용 — \"초기 visual foresight는 상상된 미래가 목표 이미지와 가장 비슷해지는 action을 MPC로 골랐다\")까지 거슬러 올라간다. 우리 계보에서 정식화된 형태: [π0.7] \"π0.7: a Steerable Generalist Robotic Foundation Model with Emergent Capabilities\" (Physical Intelligence, arXiv 2604.15483) §V-B; [LaWAM] \"LaWAM: Latent World Action Models for Efficient Dynamics-Aware Robot Policies\" (arXiv 2606.15768) §3.2–3.3; [JEPA-WMs] (Meta FAIR, arXiv 2512.24497). ※ IDM으로 목표→행동을 \"역산\"하는 절반은 [Inverse Dynamics Model (IDM)](bg_inverse-dynamics-model.html) 섹션이 이미 다룬다 — 이 섹션은 그 목표 자체(무엇으로 표현하고, 어떻게 만들고, 어떻게 쓰는가)에 집중한다. 우리 계보 등장: π0.7, LaWAM, ImageWAM, BagelVLA, VLA-JEPA(JEPA-WMs/JEPA-Wild), MolmoAct2, ACoT-VLA(대조), `world_model_lineage_easy.md`.\n\n**한 줄 정의**: 정책(또는 planner)에게 \"지금 뭘 해야 하는지\"를 말(언어 지시)만으로 주는 대신, **가까운 미래에 세상이 어떤 상태여야 하는지**를 이미지·압축 벡터로 콕 찍어 주는 목표 신호 — 기호로는 목표 이미지 $g_t$, 목표 latent $u_T$(또는 $\\hat u_T$, $z_{\\text{goal}}$).\n\n> **30초 큰 그림 비유**: **목적지 핀**. 내비게이션 앱에 \"동쪽으로 쭉 가세요\"라는 말만 주는 대신, 지도 위에 도착지 핀을 콕 찍어 준다. 핀이 있으면 내비게이션은 \"여기서 저 핀까지 가는 최단 경로\"라는 훨씬 좁은 문제로 바뀐다(그 경로를 뽑는 계산이 [IDM](bg_inverse-dynamics-model.html)). 핀은 **사진**(랜드마크 스트리트뷰 = pixel goal image), **좌표**(위도·경도 벡터 = latent subgoal), 또는 **주소를 부르는 말**(텍스트 subgoal)로 줄 수 있다 — 이 문서는 그 \"핀 자체\"를 무엇으로 만들고 어떻게 쓰는지를 다룬다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n- 텍스트 지시(\"문을 열어라\")만으로 조건화된 정책은 \"얼마나 열려야 성공인지\", \"손을 어떤 자세로 잡아야 하는지\"까지 스스로 유추해야 한다 — 말(semantic)과 관절 명령(kinematic) 사이의 먼 번역([ACoT-VLA](deepdive_ACoT-VLA.html)가 짚는 semantic-kinematic gap).\n- subgoal/goal image를 주면 \"현재 상태 → 목표 상태의 차이를 메우는 행동\"이라는 훨씬 좁은 문제로 줄어든다 — [LaWAM](deepdive_LaWAM.html)의 표현으로 \"action 예측이 현재→미래 프레임 사이의 **inverse dynamics**로 쉬워진다.\"\n- 문제는 두 가지로 넘어간다: **(1) 목표를 무엇으로 표현할까**(픽셀 사진? 압축 벡터? 문장?) — 각각 정밀도·생성 비용·일반화가 다르다. **(2) 목표를 어떻게 쓸까** — 정책 입력에 얹어 conditioning할지, 아니면 정책 바깥에서 후보 행동을 채점하는 잣대로만 쓸지.\n\n### 비유로 읽는 수식 (쉬운 버전)\n> 무대는 계속 \"목적지 핀\". 핀의 **재질**(무엇으로 표현했나)과 핀의 **쓰임**(정책에 보여주나, 채점에만 쓰나)을 각각 식으로 본다.\n\n- **EQ1 핀의 재질(표현 스펙트럼)** `g_t (pixel) / û_T (latent) / ℓ̂_t (text)` — 같은 \"목적지\"를 사진으로 찍을지, GPS 좌표로 찍을지, 주소를 불러줄지. [π0.7](deepdive_pi0.7.html)은 멀티뷰 **사진**을, [LaWAM](deepdive_LaWAM.html)·[JEPA-WMs]는 frozen encoder 공간의 **벡터**를, StarVLA·π0.5류의 subtask 지시는 **문장**을 쓴다. 셋 다 \"여기 도달해야 함\"을 가리키는 화살일 뿐, 형태가 다를 뿐이다.\n- **EQ2 핀 찍는 법 — 회귀(LaWAM)** `L_wm = ‖û_T − u_T‖²` — \"실제 도착 지점(정답 latent $u_T$)과 내가 찍은 핀(예측 $\\hat u_T$) 사이 거리를 벌점으로\". 핀을 엉뚱하게 찍을수록 제곱으로 더 크게 혼난다.\n- **EQ3 핀 찍는 법 — 생성(π0.7)** `L_CFM(g_t★, g_ψ(o_t, ℓ̂_t, m))` — \"핀 사진을 그리는 화가\"를 훈련. [Flow Matching](bg_flow-matching.html)의 conditional flow matching loss 그대로(노이즈→목표이미지 벡터장 맞추기), 정답 $g_t^\\star$는 그 구간의 마지막 실제 관측.\n- **EQ4 핀의 쓰임 — 조건화(conditioning)** `π(a|o, ℓ, g_t)` 혹은 `p_η(a|o,l,u,û_T)` — 핀을 정책 입력에 얹어 \"이 핀을 보면서 행동을 만들어라\"라고 시킴. π0.7·LaWAM·ImageWAM이 이 방식.\n- **EQ5 핀의 쓰임 — 채점(scoring)** `score = ‖ẑ_T − z_goal‖₂` — 정책 입력이 아니라, **바깥의 탐색기(planner)**가 여러 후보 행동을 상상해 보고 그 상상의 끝점이 핀에 가장 가까운 후보를 고르는 잣대로만 씀. JEPA-WMs/JEPA-Wild가 이 방식(정책 자체가 없음).\n\n#### ⚠️ 초보 함정\n1. **\"subgoal\"이 두 가지 다른 뜻으로 쓰인다 — 헷갈리면 틀림.** ①이 문서가 다루는 **상태 목표**(state subgoal: \"세상이 어떻게 보여야 하는가\", $g_t$/$u_T$)와 ②**작업 목표**(task subgoal: \"다음에 뭘 할지\"를 적은 중간 텍스트, 예: π0.5/π0.7의 subtask instruction $\\hat\\ell_t$=\"open the fridge door\", VoLo의 \"atomic subgoal\")는 이름은 같지만 다른 것이다. 후자는 여전히 언어이고 semantic-kinematic gap이 남아 있다 — ①이 후자보다 \"더 강한 목표 명세\"라고 π0.7이 명시한다.\n2. **\"subgoal = 항상 픽셀 이미지\"라고 외우면 틀림.** EQ1처럼 표현이 최소 세 갈래다. 특히 학습 시 정답 latent($u_T$, 실제 관측을 encoder에 통과시킨 값)와 추론 시 예측 latent($\\hat u_T$, policy가 찍은 값)를 **표기로 구분**하는 게 관례(LaWAM 식 참고) — 이 둘을 같은 기호로 섞어 쓰면 \"정답을 몰래 보고 있다\"는 오해나 loss 정의 실수로 이어진다.\n3. **\"subgoal은 주면 줄수록 좋다\"고 생각하면 틀림.** π0.7은 학습 배치의 **25%에만** subgoal image를 포함시킨다 — 늘 켜 두면 정책이 \"핀만 보고 게을러져서\"(현재→핀의 거의 자명한 inverse dynamics로 지름길 학습) 핀이 없는 상황에서 일반화가 무너진다(over-reliance). 반대로 [ACoT-VLA](deepdive_ACoT-VLA.html)는 goal-image를 **아예 안 쓰고** 추론 자체를 행동 공간에서 하는 것을 선택해 이 간접성 문제를 원천 차단한다 — \"subgoal 없이도 잘 될 수 있다\"의 대조 사례.\n4. **\"subgoal은 항상 정책 입력에 들어간다\"고 생각하면 틀림.** EQ5처럼 `world_model_lineage_easy.md`의 JEPA-WMs/JEPA-Wild는 subgoal(목표 latent $z_{\\text{goal}}$)을 학습된 정책에 **전혀 넣지 않는다** — 정책 head 자체가 없고, subgoal은 오직 바깥 CEM/Nevergrad 탐색기가 후보 행동을 채점하는 잣대로만 쓰인다. \"conditioning\"과 \"planning objective\"는 완전히 다른 소비처다.\n\n### 손계산 미니 예제 (★ 핀의 재질·쓰임을 숫자로)\n\n**(A) 핀의 쓰임 — 채점(JEPA-WM 스타일 CEM)**: 2차원 장난감 latent(단위 없음, \"동쪽 칸수·북쪽 칸수\"라고 생각)로 후보 두 개를 채점한다. 목표 핀 $z_{\\text{goal}}=(4,3)$.\n\n| 단계 | 계산 | 값 |\n|---|---|---|\n| 후보 A가 상상한 도착점 $\\hat z_T^{A}$ | (predictor가 rollout) | $(3,3)$ |\n| 후보 A 거리 $d_A=\\lVert\\hat z_T^A-z_{\\text{goal}}\\rVert_2$ | $\\sqrt{(4-3)^2+(3-3)^2}$ | $\\sqrt{1}=1$ |\n| 후보 B가 상상한 도착점 $\\hat z_T^{B}$ | (predictor가 rollout) | $(5,5)$ |\n| 후보 B 거리 $d_B=\\lVert\\hat z_T^B-z_{\\text{goal}}\\rVert_2$ | $\\sqrt{(4-5)^2+(3-5)^2}$ | $\\sqrt{5}\\approx2.24$ |\n| 선택 | $\\min(d_A,d_B)=d_A$ | **후보 A 채택** (핀에 더 가까이 도착) |\n\n**(B) 핀의 재질(정확도) — 회귀(LaWAM 스타일)**: 실제 도착 latent(정답) $u_T=(3,5)$, policy가 찍은 핀 $\\hat u_T=(2,5)$.\n\n$$\nL_{wm}=\\lVert\\hat u_T-u_T\\rVert^2=\\lVert(2,5)-(3,5)\\rVert^2=(-1)^2+0^2=1\n$$\n\n만약 policy가 더 부정확하게 $\\hat u_T=(0,5)$를 찍었다면 $L_{wm}=(-3)^2+0^2=9$ — 핀을 3배 더 엉뚱한 곳에 찍으면 벌점은 **9배**(제곱이라 선형이 아님)로 커진다. 이게 EQ2가 \"회귀\"이지 \"분류\"가 아닌 이유 — 얼마나 틀렸는지가 그대로 그레이디언트 크기에 반영된다.\n\n### 수식 (정식)\n\n**(1) 표현의 형식화 — 목표는 무엇의 함수인가**\n\n$$\ng_t \\;=\\; \\Phi(o_t,\\ \\hat\\ell_t,\\ m) \\quad\\in\\quad \\{\\,\\text{pixel image},\\ \\ \\mathbb{R}^d\\ (\\text{latent}),\\ \\ \\text{text}\\,\\}\n$$\n\n- **무슨 식?**: 목표 $g_t$는 현재 관측 $o_t$·(선택적) subtask 텍스트 $\\hat\\ell_t$·(선택적) 메타데이터 $m$을 입력받는 어떤 함수 $\\Phi$의 출력이다. $\\Phi$가 무엇이냐가 표현을 결정한다 — **학습된 생성 모델**(π0.7의 $g_\\psi$, BAGEL 초기화)이면 pixel, **frozen encoder + forward decoder**(LaWAM의 $f_\\psi\\circ\\mathrm{LaWM}_\\omega$)면 latent, **정답 라벨을 그대로 텍스트로**(π0.5의 $\\hat\\ell_t$)면 text.\n- **비유**: 지도 앱이 목적지 핀을 \"스트리트뷰 사진 미리보기\"로 보여줄지, \"위도·경도 숫자\"로만 저장할지, \"주소 문자열\"로 부를지 고르는 것과 같다 — 앱마다 정책이 다르듯, 논문마다 $\\Phi$의 형태가 다르다.\n\n**(2) 생성형 핀 — π0.7의 world model 학습 목적** [π0.7 §V-B]:\n\n$$\n\\max_\\psi\\ \\mathbb{E}_{\\mathcal D_g}\\big[\\,\\mathcal L_{\\mathrm{CFM}}\\big(\\mathbf g_t^\\star,\\ g_\\psi(\\mathbf o_t,\\hat\\ell_t,m)\\big)\\,\\big]\n$$\n\n- **무슨 식?**: world model $g_\\psi$(BAGEL 14B에서 미세조정)가 (현재 관측, subtask, 메타데이터)를 보고 멀티뷰 미래 목표 이미지를 생성하도록, 실제 정답 $\\mathbf g_t^\\star$(= 그 구간의 끝 관측 $o_{t_{\\text{end}}}$)에 [conditional flow matching](bg_flow-matching.html) 손실로 맞춘다.\n- **왜 이 loss인가**: 이미지를 \"그리는\" 문제라 [Flow Matching](bg_flow-matching.html) 섹션의 EQ3(CFM)을 그대로 재사용 — 노이즈에서 목표 이미지로 가는 속도장을 배운다. 이 문서에서 새로 볼 것은 그 목표(target) 자체가 **\"그냥 아무 미래 이미지\"가 아니라 \"정책이 conditioning으로 쓸 subgoal\"**이라는 역할 지정뿐이다.\n\n**(3) 채점형 핀 — JEPA-WMs의 CEM 목적** (world_model_lineage_easy.md, JEPA-WMs §):\n\n주어진 목표 이미지를 frozen encoder로 인코딩해 **한 번만** 고정한다: $z_{\\text{goal}}=f_\\psi(o_{\\text{goal}})$. $K$개의 후보 행동열 $a^{(1)}_{1:T},\\dots,a^{(K)}_{1:T}$을 현재 분포 $\\mathcal N(\\mu,\\Sigma)$에서 샘플하고,\n\n$$\n\\hat z_T^{(i)} = \\mathrm{Predictor}\\big(z_{\\text{now}},\\ a^{(i)}_{1:T}\\big), \\qquad\n\\mathrm{score}^{(i)} = \\big\\lVert \\hat z_T^{(i)} - z_{\\text{goal}} \\big\\rVert_2\n$$\n\n$$\n\\text{elite} = \\{\\,i : \\mathrm{score}^{(i)}\\ \\text{하위}\\ m\\text{개}\\,\\}, \\qquad\n(\\mu,\\Sigma) \\leftarrow \\mathrm{fit}\\big(\\{a^{(i)}_{1:T}\\}_{i\\in \\text{elite}}\\big)\n$$\n\n- **무슨 식?**: 첫 줄은 각 후보 행동열을 predictor로 끝까지 굴려(rollout) 상상한 도착 latent를 얻고, 목표 latent와의 L2 거리로 채점. 둘째 줄은 점수가 좋은 상위 $m$개(elite)의 행동 분포로 샘플링 분포 $(\\mu,\\Sigma)$를 다시 맞춰(**CEM**, Cross-Entropy Method) 다음 라운드 샘플이 elite 근처에 몰리게 한다. 이걸 몇 라운드 반복한 뒤 최종 최고 점수 행동열(또는 elite 평균)을 실행한다.\n- **핀은 어디에 있나**: $z_{\\text{goal}}$은 이 루프 어디에도 \"정책 입력\"으로 들어가지 않는다 — 오직 $\\mathrm{score}$ 계산의 상수 기준점으로만 쓰인다. (2)의 π0.7과 정반대 소비 방식.\n- **비유**: 양궁 코치가 과녁(핀=$z_{\\text{goal}}$)을 세워 놓고, 여러 선수(후보 행동열)가 쏜 화살이 과녁에서 얼마나 벗어났는지($\\mathrm{score}$) 재서, 가장 잘 쏜 선수들의 자세(elite)를 평균 내 다음 라운드 자세 분포를 그쪽으로 좁힌다(CEM) — 과녁 자체는 선수의 팔 동작에 관여하지 않는다.\n\n**(4) 과의존 방지 — dropout에 의한 목표 소비 규제** (π0.7 §V-E, 수식이 아니라 학습 규칙):\n\n$$\ng_t \\leftarrow \\begin{cases} g_t & \\text{w.p. } 0.25 \\\\ \\varnothing\\ (\\text{생략}) & \\text{w.p. } 0.75\\end{cases}, \\qquad\ng_t\\neq\\varnothing \\;\\Rightarrow\\; \\hat\\ell_t \\leftarrow \\begin{cases}\\hat\\ell_t & \\text{w.p. } 0.7\\\\ \\varnothing & \\text{w.p. } 0.3\\end{cases}\n$$\n\n- **무슨 식?**: 학습 배치마다 확률적으로 subgoal image를 통째로 지운다(75%는 없이 학습). subgoal이 있을 때는(25%) 그중 30%는 subtask 텍스트까지 추가로 지운다(\"이미지가 더 풍부한 텍스트 대체재\"라서).\n- **왜 이게 필요한가**: (2)의 conditioning이 너무 쉬운 지름길을 주기 때문 — 목표 이미지가 있으면 문제가 (2)~(3)에서 본 것처럼 현재→목표 사이의 거의 자명한 inverse dynamics로 축소돼, 정책이 subgoal 없이는 아무것도 못 하는 상태로 과적합될 수 있다. 무작위로 지우고 학습하면 \"있으면 활용, 없으면 언어만으로도 동작\"하는 견고한 정책이 된다. 부수효과로 학습 때 각 항을 껐다 켰다 했으므로, 추론 때 classifier-free guidance로 특정 항을 더 강조하는 것도 가능해진다.\n\n### 구조/흐름\n\n**(A) 생성 후 conditioning** — π0.7 · LaWAM · ImageWAM · BagelVLA(RFG)가 쓰는 경로. 핀을 만들어 정책에게 \"보여주고\" 행동을 시킨다.\n\n```\n(o_t, 지시문 ℓ̂_t) ──►[경량 world model g_ψ  /  LaWM_ω]──► subgoal 핀\n                          (pixel g_t 또는 latent û_T)\n                                        │\n        (o_t, ℓ̂_t, subgoal 핀) ──►[정책 / action expert]──► action chunk\n```\n\n**(B) 채점 잣대로만 사용** — JEPA-WMs·JEPA-Wild가 쓰는 경로. 정책이 없고, 핀은 탐색기 바깥에 고정된 채 후보를 심판만 한다.\n\n```\n목표 이미지 ──[frozen encoder f_ψ]──► z_goal   (한 번만 인코딩, 이후 고정)\n\n후보 행동열 a^(1..K)_1:T ──►[forward predictor, rollout]──► ẑ_T^(1..K)\n                                        │\n                score^(i) = ‖ẑ_T^(i) − z_goal‖₂  →  elite 선정 → (μ,Σ) 갱신(CEM) → 반복\n                                        │\n                              최고 점수 행동열 실행 (receding horizon)\n```\n\n두 경로의 차이: (A)는 핀이 **매 스텝 정책 forward pass의 입력**이라 학습(supervised: EQ2/EQ3)이 필요하지만, (B)는 핀이 **test-time 최적화의 상수**라 정책 학습 자체가 없다(predictor만 학습됨, IDM도 없음).\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문 | subgoal 표현 | 쓰임(conditioning vs 채점) | 비고 |\n|---|---|---|---|\n| [π0.7](deepdive_pi0.7.html) | pixel 멀티뷰 goal image $g_t$ (BAGEL 기반 생성) | conditioning — 정책 프롬프트에 삽입 | 배치의 25%만 포함(과의존 방지), CFM으로 생성 |\n| [LaWAM](deepdive_LaWAM.html) | latent visual subgoal $\\hat u_T$ (frozen DINOv3 feature) | conditioning — Alternate-DiT expert 입력 | LaWM decoder가 1-pass 결정론적 예측(반복 denoise 없음) |\n| [ImageWAM](deepdive_ImageWAM.html) | pixel decode 없는 image-edit **KV cache**(subgoal의 \"이미지 없는\" 변종) | conditioning — joint attention | FastWAM(미래 표현 없음)·LaWAM(latent subgoal)과 \"future representation\" 3분류의 한 변종 |\n| [BagelVLA](deepdive_BagelVLA.html) (RFG) | single-step denoise로 뽑은 \"예측 시각 feature\" | conditioning — 저지연 foresight guide | full image synthesis(WM+IDM Scheme 1)를 의도적으로 버리고 대체 |\n| VLA-JEPA / `world_model_lineage_easy.md`의 JEPA-WMs·JEPA-Wild | latent 목표 $z_{\\text{goal}}=f_\\psi(o_{\\text{goal}})$ | **채점만** — CEM/Nevergrad planner의 상수 기준점, 정책 입력 아님 | 학습된 policy head 자체가 없음 |\n| [MolmoAct2](deepdive_MolmoAct2.html) | goal-image 예측(명시적 reasoning 모드 중 하나) | conditioning(reasoning trace) | 논문이 지적하는 latency 비용(프레임 통째 생성)의 예로도 인용 |\n| [ACoT-VLA](deepdive_ACoT-VLA.html) — **대조 사례** | 없음 | — | goal-image 대신 **행동 공간 자체**에서 reasoning(reference trajectory)해 간접성 문제를 원천 회피 |\n\n- 참고(약한 결합, 표에서 제외): StarVLA(arXiv 2604.05014)는 config에 따라 \"subgoal 텍스트\"를 보조 목적으로 켤 수 있으나 항상 켜진 게 아니고 이미지가 아닌 텍스트다. VoLo(arXiv 2606.07723)의 \"atomic subgoal\"은 위 초보 함정 1의 **작업 목표**(instruction 분해) 쪽이라 이 개념(상태 목표)과는 다른 뜻으로 같은 단어를 쓴다.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-25 04:02 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
