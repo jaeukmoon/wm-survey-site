@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Knowledge Distillation · DMD (지식 증류 · 분포매칭 증류)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Knowledge Distillation · DMD (지식 증류 · 분포매칭 증류)\n\n> 출처: 원류 [KD] Hinton, Vinyals, Dean, \"Distilling the Knowledge in a Neural Network\" (NeurIPS 2014 Deep Learning Workshop, arXiv:1503.02531). [DMD] Yin et al., \"One-step Diffusion with Distribution Matching Distillation\" (CVPR 2024, arXiv:2311.18828). 우리 계보 등장: [LaWAM](deepdive_LaWAM.html) · [LingBot-VLA](deepdive_LingBot-VLA.html) · [LingBot-VLA 2.0](deepdive_LingBot-VLA_2.0.html) · [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) · [π0.7](deepdive_pi0.7.html) · `world_model_lineage_easy.md`의 DreamDojo(arXiv 2602.06949) · 카드 Causal-rCM(arXiv 2606.25473) · GigaWorld-1(arXiv 2607.02642) · MIRA(arXiv 2607.05352) 등 13개 문서.\n\n**한 줄 정의**: \"정답을 알거나(또는 느리지만 정확하게 계산하는) 선생 모델\"의 출력·표현·확률분포를 \"빠르거나 배포 가능한 학생 모델\"이 흉내 내도록 학습시키는 기법군 — 흉내 낼 대상이 **레이블/특징**이면 (좁은 의미) knowledge distillation(KD), **확률분포 자체**(score 차이)이면 distribution matching distillation(DMD).\n\n> **30초 큰 그림 비유 — \"족집게 과외: 답만 베끼지 말고 채점 감각을 베껴라\"**: 학원 강사(teacher)는 정확하지만 문제 하나에 40분씩 걸리거나(=diffusion teacher의 수십 step), 답안지(미래 정보·depth 센서 값)를 미리 훔쳐보고 답을 낸다. 시험장의 학생(student)은 몇 초 안에 풀어야 하고(=few-step/실시간 배포) 답안지도 없다(=미래·depth 센서 없이 추론). 그래서 학생은 강사의 \"정답 하나\"만 베끼는 게 아니라 강사가 **얼마나 확신하는지**(온도 소프트맥스), **어떤 감각으로 풀었는지**(중간 표현), 또는 **그림 전체가 얼마나 그럴듯한지**(분포·score)까지 베낀다. 이 토픽의 모든 식은 \"학생이 강사의 무엇을(EQ1~3), 왜(정답이 아니라 소프트 신호를 베끼는 이유), 어떻게(손실식) 베끼나\"로 읽으면 된다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n1. **선생님이 느리다**: diffusion/flow 기반 world model·정책은 수십 step(NFE, Number of Function Evaluations)을 반복 적분해야 한 번 생성이 끝난다 — 실시간 로봇 제어·스트리밍엔 못 쓴다. (예: DreamDojo teacher는 35-step bidirectional이라 2.72 FPS, LingBot-VA 2.0의 PF-ODE teacher는 927ms/step.)\n2. **선생님이 배포 시엔 없는 정보를 갖고 있다(privileged information)**: [LaWAM](deepdive_LaWAM.html)의 IDM encoder는 **미래 $u_T$를 보고** latent action $z$를 역추론하는 \"치터\"다. 배포 로봇은 미래를 못 보므로, 미래 없이 $z$를 점치는 별도 학생을 훈련해야 한다. [LingBot-VLA](deepdive_LingBot-VLA.html)의 LingBot-Depth도 마찬가지 — 배포 로봇엔 depth 센서가 없다.\n3. **여러 전문가를 하나로 합치고 싶다**: [π0.7](deepdive_pi0.7.html)은 서로 다른 로봇/태스크에 특화된 여러 RL 전문가 정책의 능력을 하나의 generalist 모델로 흡수하려 한다 — 처음부터 다시 학습시키면 전문가들의 미묘한 판단 차이가 뭉개진다.\n4. **From-scratch 재학습은 \"정답\"만 남기고 선생님의 미묘한 감각을 버린다**: 정답 레이블(hard label, 1/0)만으로 학생을 학습시키면 \"1등이 누구인지\"만 배우고, \"2등·3등이 얼마나 근소했는지\"(dark knowledge) 같은 정보는 사라진다. 소프트 신호까지 베끼면 더 적은 데이터·더 빠르게 선생님 수준에 도달한다.\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> \"족집게 과외\" 비유로 세 식을 번역한다 — 정식 유도는 아래 `### 수식` 참조.\n\n- **EQ1 온도 소프트맥스** `q_i = exp(z_i/T) / Σ_j exp(z_j/T)` — \"채점 감각을 부드럽게 펴서 보여주기\". 강사(또는 학생)의 원점수(logit) $z_i$를 온도 $T$로 나눈 뒤 소프트맥스. $T=1$이면 1등에게만 점수가 몰려(확신에 찬 O/X 채점) 2등·3등의 상대적 우열이 안 보인다. $T$를 키우면 분포가 평평해져 \"B가 C보다 얼마나 더 그럴듯한지\"(dark knowledge)가 드러난다.\n- **EQ2 KD 결합 손실** `L_KD = (1-λ)·CE(y, q_s^{T=1}) + λ·T²·CE(q_t^T, q_s^T)` — 학생은 **진짜 정답**($y$, hard label)도 배우고 **강사의 확신 패턴**($q_t^T$, soft label, 같은 온도로 누그러뜨린 강사 분포)도 동시에 베낀다. $\\lambda$는 둘의 비중, $T^2$은 온도를 올릴수록 소프트 항의 기울기가 작아지는 걸 보정하는 계수.\n- **EQ3 표현(feature) 증류** `L_feat = ‖Proj(f_student) − f_teacher‖_p` — \"정답이 아니라 손끝 감각을 베끼기\". 최종 출력이 아니라 **중간 표현**(예: depth·video feature)을 직접 맞힌다. 우리 계보에서 가장 흔한 형태(LingBot 계열, LaWAM). $p{=}1$(L1)·$p{=}2$(L2/Frobenius) 등 문맥마다 다르고, $\\mathrm{Proj}$는 두 표현의 차원이 다를 때 정렬하는 학습 가능한 층.\n- **EQ4 DMD 분포매칭 gradient** `∇θ D_KL ≈ E[(s_fake − s_real)·dG/dθ]` — \"그림 전체를 통째로 베끼기\". 정답 레이블도 중간 표현도 아니라, \"이 생성 결과가 실제 데이터 분포에서 얼마나 그럴듯한가\"(score, 로그밀도의 기울기)를 **두 심사위원**(진짜 분포를 보는 $s_{\\text{real}}$, 학생 분포를 보는 $s_{\\text{fake}}$)의 의견 차이로 통째로 맞춘다. 개별 정답이 없어도 학습된다는 게 핵심.\n\n#### ⚠️ 초보 함정 (헷갈리는 지점 콕 집기)\n\n1. **\"distillation = 강사 출력(hard label)으로 재학습\"이라고 외우면 틀림.** 핵심은 0/1 라벨보다 정보가 많은 **소프트 신호**(온도 완화 확률·중간 표현·score)를 베끼는 것. 논문마다 이 소프트 신호의 형태가 EQ1~EQ4처럼 전혀 다르다.\n2. **\"학생이 항상 선생님보다 못하다\"고 생각하면 오해.** 학생이 선생님은 못 보는 실시간 정보(현재 관측)에 접근할 수 있으면 오히려 나을 수 있다 — [LaWAM](deepdive_LaWAM.html)의 IDM teacher $z$는 미래를 \"보고\" 만든 답이라 학생이 배포 시 그대로 재현할 **수조차 없다**. 그래서 학생은 teacher를 흉내 내는 게 아니라, 미래 없이 같은 결론에 도달하는 **별도의 방법**을 배운다.\n3. **\"DMD는 GT 라벨이 있어야 한다\"고 생각하면 틀림.** DMD의 핵심 손실(EQ4)은 라벨 없이 real/fake 두 score network의 **차이**만으로 학습한다(GAN처럼 fake score network도 계속 같이 학습). 다만 이것만 쓰면 mode collapse(학생이 한 가지 결과로 붕괴)가 나기 쉬워, 실전에서는 \"teacher를 한 번 따라 그리는\" 회귀 항을 같이 쓴다(DreamDojo의 $L_{\\text{warmup}}$, Causal-rCM의 teacher-forcing CM 결합 — 아래 수식 (5) 참고).\n4. **\"distillation loss는 늘 L2다\"라고 생각하면 틀림.** L1([LingBot-VLA](deepdive_LingBot-VLA.html) depth), Frobenius L2([LingBot-VLA 2.0](deepdive_LingBot-VLA_2.0.html) DINO-Video), score 차이(DMD), 온도 softmax 교차엔트로피(원조 KD) 등 문맥마다 형태가 다르다.\n5. **\"π0.7의 distillation\"은 형식적 손실식이 없는 비유적 용법이다.** π0.7은 teacher/student 두 네트워크나 EQ1~4 같은 손실식 없이, 준최적 데이터에 품질 메타데이터를 태깅해 하나의 모델이 \"여러 RL 전문가의 능력을 흡수\"한다고 서술할 뿐이다(아래 used_by 표 참고). 용어는 같아도 메커니즘은 다르다.\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n**Part A — 온도 소프트맥스 KD (3-class 장난감)**: 강사(teacher) logits $z=[4,\\ 1,\\ -1]$ (클래스 A/B/C).\n\n| $T$ | 소프트맥스 계산 | 결과 $[p_A,p_B,p_C]$ | B:C 비율 |\n|---|---|---|---|\n| $T{=}1$ | $e^4{=}54.60,\\ e^1{=}2.72,\\ e^{-1}{=}0.37$, 합 $57.68$ | $[0.946,\\ 0.047,\\ 0.006]$ | $0.047/0.006\\approx 7.39$ |\n| $T{=}2$ | $z/2{=}[2,\\,0.5,\\,{-}0.5]$: $e^2{=}7.39,\\ e^{0.5}{=}1.65,\\ e^{-0.5}{=}0.61$, 합 $9.64$ | $[0.766,\\ 0.171,\\ 0.063]$ | $0.171/0.063\\approx 2.72$ |\n\n- 검산: B:C 비율은 정확히 $e^{(z_B-z_C)/T}=e^{2/T}$로 손검산된다 — $T{=}1$이면 $e^2{=}7.39$, $T{=}2$이면 $e^1{=}2.72$. 두 계산이 표와 일치한다.\n- **읽기**: $T{=}1$에선 B(0.047)·C(0.006) 둘 다 0에 가까워 \"그 밖엔 다 오답\"으로 보인다. $T{=}2$로 펴면 B(0.171)가 C(0.063)보다 **뚜렷이(약 2.7배)** 낫다는 dark knowledge가 드러난다 — 학생이 배울 \"소프트 타깃\"은 $T{=}2$ 줄이다.\n- **학생이 실제로 배우는 과정(EQ2)**: 학생 logit이 처음엔 $[1,1,1]$(아무 확신 없음)이라 $T$에 무관하게 $q_s=[1/3,1/3,1/3]$. 교차엔트로피 $L=-\\Sigma p_i\\ln q_i=-\\ln(1/3)\\times 1=\\ln 3\\approx 1.099$. 학습이 진행돼 학생 logit이 $[2,\\,0.4,\\,{-}0.4]$(teacher의 $T{=}2$ 패턴에 근접)로 바뀌면 $q_s\\approx[0.774,\\,0.156,\\,0.070]$이 되고 $L\\approx 0.681$로 **38% 감소** — 학생이 \"1등이 A\"뿐 아니라 \"B가 C보다 낫다\"는 순서까지 베꼈다는 뜻이다.\n\n**Part B — DMD 1-step 예제 (1D 가우시안 장난감)**: 실제 데이터 분포 $p_{\\text{real}}=\\mathcal N(\\mu_{\\text{real}}{=}5,\\,1)$, 지금 학생(fake score network가 근사하는 학생의 출력 분포) $p_{\\text{fake}}=\\mathcal N(\\mu_{\\text{fake}}{=}3,\\,1)$. 가우시안의 score는 $s(x)=-(x-\\mu)/\\sigma^2$. 학생이 지금 뱉은 샘플 $x{=}4$에서:\n\n| 항목 | 계산 | 값 |\n|---|---|---|\n| $s_{\\text{real}}(4)$ | $-(4-5)/1$ | $+1$ |\n| $s_{\\text{fake}}(4)$ | $-(4-3)/1$ | $-1$ |\n| EQ4 안의 방향 $(s_{\\text{fake}}-s_{\\text{real}})$ | $-1-1$ | $-2$ |\n| 실제 파라미터 업데이트 방향 $(s_{\\text{real}}-s_{\\text{fake}})$(경사하강 = $-$gradient) | $1-(-1)$ | $+2$ |\n\n- **읽기**: 학생 샘플($x{=}4$)은 real 분포 중심(5)보다 왼쪽에 있다. $s_{\\text{real}}(4){=}{+}1$은 \"여기서 오른쪽으로 가면 real 분포에서 더 그럴듯해진다\"는 뜻, $s_{\\text{fake}}(4){=}{-}1$은 \"오른쪽으로 갈수록 학생 자기 분포에서는 덜 그럴듯해진다\"는 뜻 — 두 심사위원이 같은 방향(오른쪽, $+$)을 가리키므로 업데이트는 $x$를 real 평균(5) 쪽으로 밀어 두 분포 차이를 줄인다. **정답 레이블 $y{=}5$를 준 적이 없는데도** 두 score의 차이만으로 방향이 나온다는 게 DMD의 핵심이다. (실전에선 $x$가 이미지/비디오 latent 전체이고 $s_{\\text{real}},s_{\\text{fake}}$는 diffusion teacher의 노이즈 예측을 score로 변환해 얻는다.)\n\n### 수식 (정식)\n\n**(1) 온도 소프트맥스** [KD 식 1]:\n\n$$\nq_i = \\frac{\\exp(z_i/T)}{\\sum_j \\exp(z_j/T)}\n$$\n\n- **무슨 식?**: logit $z_i$를 온도 $T$로 나눈 뒤 표준 소프트맥스. $T{=}1$이면 원래 softmax. $T\\to\\infty$이면 모든 클래스가 균등분포에 가까워진다(모든 logit 차이가 무시됨). $T$는 \"출력을 얼마나 펴서 보여줄지\" 다이얼 하나뿐이다.\n- **비유**: 시험 채점을 \"정답만 O/X\"가 아니라 \"이 답이 몇 % 확신인지\"로 펴서 보여주는 것.\n\n**(2) KD 결합 손실** (KD §2의 서술을 정리 — 원 논문은 단일 수식 번호를 안 붙이고 산문으로 서술):\n\n$$\n\\mathcal{L}_{\\mathrm{KD}} = (1-\\lambda)\\,\\mathcal{L}_{\\mathrm{CE}}\\big(y,\\ q_s^{T=1}\\big) \\;+\\; \\lambda\\, T^2\\, \\mathcal{L}_{\\mathrm{CE}}\\big(q_t^{T},\\ q_s^{T}\\big)\n$$\n\n- **무슨 식?**: 두 교차엔트로피의 가중합. 앞 항은 표준 hard-label 학습(학생 logit을 $T{=}1$로, 정답 $y$와 비교). 뒤 항은 강사·학생 둘 다 **같은 온도 $T$**로 누그러뜨린 뒤 강사 분포 $q_t^T$를 타깃으로 학생 $q_s^T$를 맞춘다(soft target loss).\n- **$T^2$이 왜 붙는가(원 논문 원문)**: \"소프트 타깃이 만드는 gradient의 크기는 $1/T^2$로 줄어들기 때문에, hard·soft 두 타깃을 함께 쓸 때는 소프트 항에 $T^2$을 곱해줘야 한다 — 그래야 실험 중 온도를 바꿔도 두 항의 상대적 기여가 그대로 유지된다.\" 온도를 올려 dark knowledge를 더 드러낼수록 그 신호의 gradient 크기가 저절로 작아지는 부작용을 이 계수로 상쇄하는 것.\n\n**(3) 일반화된 표현(feature) 증류**:\n\n$$\n\\mathcal{L}_{\\mathrm{feat}} = \\big\\lVert \\mathrm{Proj}(f_{\\mathrm{student}}) - f_{\\mathrm{teacher}} \\big\\rVert_p\n$$\n\n- **무슨 식?**: 최종 출력 대신 **중간 표현** $f$를 직접 맞춘다. $p{=}1$이면 절댓값 합(L1), $p{=}2$이면 제곱합 제곱근(L2/Frobenius). $\\mathrm{Proj}(\\cdot)$는 학생·강사 표현의 차원이 다를 때 정렬하는 학습 가능한 사영(선형 또는 cross-attention).\n- **EQ1~2와의 관계**: EQ1~2는 \"출력층 분류 확률\"을 증류 대상으로 삼는 원조 KD, 이 식은 그 대상을 **임의의 중간 표현**으로 일반화한 것 — 분류기가 아닌 VLA·world model에서 실제로 훨씬 자주 쓰이는 형태다([LaWAM](deepdive_LaWAM.html) 식 (5) $\\mathcal L_{\\text{distill}}=\\mathbb E\\lVert\\hat z-z\\rVert_2^2$, [LingBot-VLA](deepdive_LingBot-VLA.html) 식 $\\mathcal L_{\\text{distill}}=\\mathbb E\\lvert\\mathrm{Proj}(Q_t)-D_t\\rvert$가 그대로 이 형태).\n\n**(4) DMD 분포매칭 gradient** [DMD 식 7]:\n\n$$\n\\nabla_\\theta D_{\\mathrm{KL}} \\;\\simeq\\; \\mathbb{E}_{z,\\,t,\\,x,\\,x_t}\\Big[\\,w_t\\,\\alpha_t\\,\\big(s_{\\mathrm{fake}}(x_t,t)-s_{\\mathrm{real}}(x_t,t)\\big)\\,\\frac{dG_\\theta}{d\\theta}\\,\\Big]\n$$\n\n- **무슨 식?**: $D_{\\mathrm{KL}}$은 학생(1-step 또는 few-step generator $G_\\theta$)이 만드는 분포 $p_{\\text{fake}}$와 강사(원 다단계 diffusion model)가 정의하는 분포 $p_{\\text{real}}$ 사이의 KL divergence. $D_{\\mathrm{KL}}$ 자체는 두 분포의 밀도함수를 몰라 직접 계산 불가능하지만, **그 gradient**는 두 분포의 score(로그밀도의 기울기) 차이로 정확히 표현된다는 것이 DMD의 핵심 정리다. $s_{\\text{real}}$은 고정된(frozen) 강사 diffusion model에서, $s_{\\text{fake}}$는 학생의 현재 출력 분포를 계속 다시 근사하도록 **같이 학습되는** 별도의 \"가짜\" diffusion model에서 얻는다(둘 다 노이즈 예측 네트워크를 score로 변환해 사용). $z\\sim\\mathcal N(0,I)$는 학생 입력 노이즈, $x=G_\\theta(z)$는 학생 출력, $x_t$는 그걸 diffusion 순방향으로 한 번 더 흐린 것(강사·학생 score를 같은 노이즈 레벨에서 비교하기 위함), $w_t,\\alpha_t$는 타임스텝별 가중치·노이즈 스케줄 보정.\n- **왜 이렇게 되는가(논문이 요약만 하는 유도 스케치)**: $D_{\\mathrm{KL}}(p_{\\text{fake}}\\Vert p_{\\text{real}})=\\mathbb E_{p_{\\text{fake}}}[\\log p_{\\text{fake}}-\\log p_{\\text{real}}]$를 $\\theta$로 미분하면, 두 로그밀도차를 $x_t$에 대해 미분한 항 $\\nabla_{x_t}(\\log p_{\\text{fake}}-\\log p_{\\text{real}})=s_{\\text{fake}}-s_{\\text{real}}$이 자연히 나오고(score의 정의 그 자체), 여기에 연쇄법칙으로 $x_t$의 $\\theta$ 의존성($x_t$가 $x=G_\\theta(z)$를 흐린 것이므로) $dG_\\theta/d\\theta$를 곱하면 위 식이 된다. 이 유도가 성립하는 건 score function이 확률밀도를 몰라도 diffusion model의 노이즈 예측만으로 근사 가능하기 때문 — DMD가 diffusion model **자체**를 두 심사위원(real·fake score)으로 재활용하는 이유다.\n- **비유**: \"그림 전체가 얼마나 그럴듯한가\"를 개별 정답 없이 판정하는 두 심사위원(real 심사위원=고정된 강사, fake 심사위원=학생을 따라다니며 매번 다시 학습)이 있고, \"더 오른쪽으로/왼쪽으로\" 하는 두 심사위원의 **의견 차이**가 곧 학생 출력을 고치는 방향이다.\n\n**(5) DMD 회귀 보조항 + 최종 결합 손실** [DMD 식 9 + 결합]:\n\n$$\n\\mathcal{L}_{\\mathrm{reg}} = \\mathbb{E}_{(z,y)\\sim\\mathcal{D}}\\ \\ell\\big(G_\\theta(z),\\,y\\big), \\qquad \\mathcal{L}_{G} = \\mathcal{L}_{\\mathrm{KL}} + \\lambda_{\\mathrm{reg}}\\,\\mathcal{L}_{\\mathrm{reg}}\n$$\n\n- **무슨 식?**: $y$는 강사를 몇 step 미리 굴려 미리 만들어 둔 \"정답\" 출력(강사 ODE 궤적의 종점), $\\ell$은 지각 거리(원 논문은 LPIPS). (4)의 $D_{\\mathrm{KL}}$ 항만 쓰면 학생이 다양성을 잃고 한두 점으로 붕괴(mode collapse)하기 쉬워, \"강사를 한 번 그대로 따라 그리는\" 회귀 항을 섞어 안정화한다. 원 논문 기본값 $\\lambda_{\\mathrm{reg}}{=}0.25$.\n- **우리 계보 대응**: DreamDojo의 4단계 증류가 이 결합의 실사례 — 4a 워밍업 $L_{\\text{warmup}}=\\mathbb E\\lVert G_{\\text{student}}(x_t,t)-x_0\\rVert^2$(=이 식의 $\\mathcal L_{\\text{reg}}$, teacher ODE 궤적 회귀)로 먼저 학생을 안정된 근처로 옮긴 뒤, 4b에서 3k step만 DMD류 분포매칭($\\nabla L_{\\text{distill}}=-\\mathbb E[(s_{\\text{real}}-s_{\\text{fake}})\\cdot dG/d\\theta]$, 부호는 (4)와 동일 내용의 다른 표기)을 적용한다. Causal-rCM은 이 둘(teacher-forcing consistency model ≈ $\\mathcal L_{\\text{reg}}$ 계열, self-forcing DMD ≈ $\\mathcal L_{\\text{KL}}$ 계열)을 \"forward/reverse divergence의 상보성\"이라는 이름으로 정식 결합해 discrete-time CM 대비 10배 빠른 수렴을 보고한다.\n\n### 구조/흐름\n\n```\n[일반 knowledge distillation / 표현 증류 — EQ1~3]\n   teacher (느림 · 특권정보 보유, 보통 frozen)  ──forward──>  soft target\n      예: LingBot-Depth, DINO-Video, IDM encoder(미래를 봄)     (온도 softmax 확률 / 중간 feature)\n                                                                       │\n   student (빠름 · 배포용, 배포 시엔 teacher 입력 없음)  ──forward──>  student 출력  ──┤  L_KD / L_feat (EQ2/EQ3)\n                                                                                      │\n                                              student 파라미터만 이 손실로 업데이트 ◄──┘\n\n[DMD — few-step diffusion/flow 증류, EQ4~5]\n   teacher (다단계 diffusion, frozen) ───────────────────────► s_real(x_t, t)  ┐\n                                                                                ├─ (s_fake − s_real)  (EQ4)\n   fake score network(학생 출력 분포를 매 step 다시 근사, 학생과 함께 계속 학습) ─► s_fake(x_t, t)  ┘\n                                                                                │\n   student 1-step/few-step generator G_θ(z) ──생성──► x = G_θ(z) ──순방향 diffuse──► x_t\n                                                                                │\n                        θ 업데이트 방향 = (s_real − s_fake) 쪽  (+ EQ5의 L_reg로 mode collapse 방지)\n```\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문/카드 | 증류 대상 (teacher → student) | 손실 형태 | 왜 |\n|---|---|---|---|\n| [LaWAM](deepdive_LaWAM.html) | IDM encoder $q_\\phi$(미래 $u_T$를 보고 $z$ 추론, teacher) → policy prior $p_\\theta$(미래 없이 $\\hat z$ 예측, student) | L2, $\\mathcal L_{\\text{distill}}=\\mathbb E\\lVert\\hat z-z\\rVert_2^2$ — 위 EQ3 형태 | 배포 시엔 미래가 없으니, \"미래를 본 답\"을 미래 없이 점칠 수 있는 학생을 따로 훈련 |\n| [LingBot-VLA](deepdive_LingBot-VLA.html) | LingBot-Depth의 depth token $D_t$(teacher) → VLM learnable query $\\mathrm{Proj}(Q_t)$(student) | L1, $\\mathcal L_{\\text{distill}}=\\mathbb E\\lvert \\mathrm{Proj}(Q_t)-D_t\\rvert$ — 위 EQ3 형태 | 배포 시 depth 센서 없이도 기하 감각을 VLM에 심음(현재 장면 grounding, 미래 예측 아님) |\n| [LingBot-VLA 2.0](deepdive_LingBot-VLA_2.0.html) | depth 모델(L1) + DINO-Video(Frobenius L2) 두 teacher → 학습 가능 query 2개(student) | L1 + L2, Dual-Query Distillation | \"무엇+어디\"(semantic+geometric) 미래 예측을 proxy task로 학생에 주입 |\n| [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) | 다단계(video 5-step·action 10-step) PF-ODE teacher → 2-step consistency student | consistency distillation | 927ms→142ms급 가속으로 peak 225Hz 실시간 배포 |\n| [π0.7](deepdive_pi0.7.html) | 여러 RL 특화 전문가(teacher, 각기 다른 로봇/태스크에 강함) → generalist 하나(student) | 형식적 손실식 없음 — 품질 메타데이터 태깅 + imitation. **초보 함정 5 참고, 비유적 의미의 distillation** | 준최적/실패 데이터를 \"품질 딱지\"로 구분해 먹여 여러 전문가 능력을 한 모델로 흡수 |\n| `world_model_lineage_easy.md`의 DreamDojo(arXiv 2602.06949) | 35-step bidirectional teacher → 4-step autoregressive student | $L_{\\text{warmup}}$(EQ5의 $\\mathcal L_{\\text{reg}}$) + DMD류 분포매칭(EQ4) | 2.72→10.81 FPS near-real-time 스트리밍 |\n| 카드 Causal-rCM(arXiv 2606.25473) | teacher-forcing Consistency Model + self-forcing DMD **결합** | CM consistency loss + DMD gradient(EQ4) | forward/reverse divergence 상보성, discrete-time CM 대비 10× 수렴 가속, Cosmos 3 interactive WM에 적용 |\n| GigaWorld-1(arXiv 2607.02642) | 다단계 teacher → DMD2(DMD 후속, 유사 gradient) few-step student | DMD2 | 정책 평가용 action-conditioned video WM의 추론 가속 |\n| MIRA(arXiv 2607.05352) | 다단계 flow-matching teacher → few-step self-distillation(PSD) student | self-distillation | 5B latent-diffusion 멀티플레이어 WM을 B200 1장에서 20fps 실시간 렌더링 |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-26 04:24 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
