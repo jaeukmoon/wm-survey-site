@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">Chain-of-Thought · Reasoning (CoT)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# Chain-of-Thought · Reasoning (CoT)\n\n> 출처: 원류 [CoT] Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le, Zhou, \"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\" (NeurIPS 2022, arXiv:2201.11903). 관련(각주 언급) [SC] Wang et al., \"Self-Consistency Improves Chain of Thought Reasoning in Language Models\" (arXiv:2203.11171). 우리 계보 등장: [ACoT-VLA](deepdive_ACoT-VLA.html) · [BagelVLA](deepdive_BagelVLA.html) · [InternVLA-M1](deepdive_InternVLA-M1.html) · [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) · [MolmoAct2](deepdive_MolmoAct2.html) · [VLA-JEPA](deepdive_VLA-JEPA.html) · [π0.5](deepdive_pi0.5.html) · [π0.7](deepdive_pi0.7.html) · `world_model_lineage_easy.md` · 카드 Qwen-AgentWorld(arXiv 2606.24597) 등 13개 문서.\n\n**한 줄 정의**: 최종 답 $y$를 관측/질문 $x$에서 바로 뱉지 않고, 답에 이르는 **중간 추론 단계 $z$**(\"생각의 사슬\")를 먼저 명시적으로 만들고 그 $z$에 조건부로 $y$를 내는 기법 — $z$가 문장이면 Language-CoT, 이미지면 Visual-CoT, action이면 Action-CoT.\n\n> **30초 큰 그림 비유 — \"시험지에 풀이과정 쓰기\"**: 수학 시험에서 최종 답만 딱 쓰는 학생(A)과, \"먼저 이걸 구하고 → 그다음 이걸 구해서 → 최종 답은 이거다\"처럼 풀이과정을 한 줄씩 쓰고 답을 내는 학생(B)이 있다. 같은 실력이라도 B가 어려운 문제에서 훨씬 덜 틀린다 — 풀이과정을 쓰는 동안 **실제로 계산에 더 많은 \"생각 시간\"(연산량)을 쓰기 때문**이고, 중간에 스스로 이상한 점을 알아챌 기회가 생기기 때문이다. 로봇 정책도 똑같다 — \"무엇을 할지\" 곧장 행동으로 뱉는 대신, 먼저 풀이과정 $z$를 쓰고(말로, 그림으로, 혹은 대충 그은 동작 밑그림으로) 그걸 보며 최종 행동 $y$를 낸다. 이 토픽의 모든 식은 \"$z$를 무엇으로 쓰나(언어/이미지/행동), $z$를 왜 거치나, $z$ 없이 바로 답하면 뭐가 문제인가\"로 읽으면 된다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n1. **연산량이 문제 난이도와 무관하게 고정된다**: 표준 프롬프팅(또는 표준 end-to-end 정책)은 입력 $x$를 받아 forward pass 한 번으로 $y$를 낸다 — 문제가 한 자리 덧셈이든 10단계짜리 응용문제든 **같은 양의 계산**만 쓴다. CoT는 문제마다 **가변 개수의 중간 단계**를 만들어 어려운 문제엔 더 많은 \"생각 시간\"(test-time compute)을 자연스럽게 배정한다[CoT].\n2. **중간 산출물이 사람이 읽을 수 있는 설명이 된다**: 모델이 왜 그 답을 냈는지 중간 단계를 보고 디버깅·검증할 수 있다[CoT].\n3. **로봇 행동은 저수준 연속 신호라 \"무엇을 할지\"에 대한 상위 계획이 없으면 long-horizon multi-stage task에서 표류(drift)한다.** 예를 들어 \"장애물을 피해가라\"는 지시만으로 바로 행동을 회귀(regression)하면, 학습 데이터에 왼쪽으로 피한 경우와 오른쪽으로 피한 경우가 반반 섞여 있을 때 MSE 손실은 **둘의 평균**(직진 = 장애물 정면충돌)을 최적해로 내놓는다(\"mode averaging\" 문제, 아래 손계산 참고). 중간에 \"어느 쪽으로 피할지\"를 먼저 정하는 단계($z$)를 두면 이 붕괴를 피한다 — [ACoT-VLA](deepdive_ACoT-VLA.html)의 EAR(explicit reference trajectory)·IAR(implicit action prior)가 이 역할.\n4. **그러나 명시적 CoT엔 대가가 있다**: 답 하나를 내기 전에 수백 토큰이나 프레임 전체를 생성해야 해 **지연(latency)을 지배**한다 — 실시간 폐루프 로봇 제어엔 치명적. [MolmoAct2](deepdive_MolmoAct2.html)의 adaptive-depth reasoning, [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html)의 비동기 Foresight Reasoning, [π0.5](deepdive_pi0.5.html)의 저주기 고수준 추론은 모두 \"추론은 하되 매 행동 스텝마다 다시 하지 않는\" 절충이고, [VLA-JEPA](deepdive_VLA-JEPA.html)는 아예 명시적 $z$ 없이 우회한다.\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> \"시험지에 풀이과정 쓰기\" 비유로 네 식을 번역한다 — 정식 유도는 아래 `### 수식` 참조.\n\n- **EQ1 CoT의 정의(원문)** `\"a series of intermediate natural language reasoning steps that lead to the final output\"` — 원 논문은 별도 수식 없이 이렇게 **정의 문장**으로 CoT를 도입한다[CoT §2]. 비유: \"몇 줄짜리 풀이과정\"이라는 말 자체가 정의다 — 최종 답 이전에 등장하는, 사람이 읽을 수 있는 중간 단계들의 나열.\n- **EQ2 CoT의 확률적 분해** `p(y|x) = Σ_z p(y|x,z)·p(z|x)` — \"**먼저 풀이과정 $z$를 쓰고(둘째 항), 그 풀이과정을 보며 답 $y$를 낸다(첫째 항)**\"를 확률식으로 옮긴 것(원 논문은 few-shot 예시로 이걸 암묵적으로 유도할 뿐 이 형태로 명시하지 않음 — 우리 계보의 [ACoT-VLA](deepdive_ACoT-VLA.html)가 로봇 action 버전으로 명시적으로 씀, EQ5 참고). $x$=질문/관측, $z$=중간 사고 사슬 하나, $y$=최종 답/행동, $\\Sigma_z$=가능한 모든 사고 사슬에 대한 평균(marginalize).\n- **EQ3 emergent 임계값** `acc(N) ≈ acc(N)_standard` (N이 작을 때) `, acc(N) ≫ acc(N)_standard` (N ≳ 100B일 때) — \"**풀이과정을 써도 실력 자체가 안 되면 소용없다**\". 작은 학생(모델)은 애초에 앞뒤가 맞는 풀이과정 자체를 못 쓰기 때문에 CoT를 줘도 이득이 없다가, 모델 크기 $N$이 어느 문턱(원 논문 실험에선 ~100B 파라미터)을 넘으면 갑자기 큰 이득이 나타난다[CoT §3.2] — emergent ability.\n- **EQ4 self-consistency 다수결** `y* = majority{y⁽¹⁾,...,y⁽ᵏ⁾}, where z⁽ᵏ⁾~p(z|x), y⁽ᵏ⁾~p(y|x,z⁽ᵏ⁾)` — \"**같은 문제를 풀이과정을 바꿔가며 $k$번 풀고 가장 많이 나온 답을 채택**\". 한 번의 풀이과정 $z$가 틀릴 수 있으니, 서로 다른 $z^{(1)},...,z^{(k)}$를 독립적으로 샘플해 각각의 답 $y^{(k)}$를 내고 다수결로 최종 답을 정한다[SC, CoT 각주 언급]. 학습을 바꾸는 게 아니라 **추론(inference) 시점**의 샘플링 전략일 뿐이다.\n- **EQ5 우리 계보의 action-space 인스턴스** `π_θ(a,g|o,l) = π_θ(a|o,l,g)·π_θ(g|o,l)` — EQ2를 로봇 정책에 그대로 대입한 것. [ACoT-VLA](deepdive_ACoT-VLA.html)가 이 형태를 명시적으로 쓴다 — 가이드 $g$(=EQ2의 $z$)를 action 공간의 \"대충 그은 밑그림\"(explicit reference trajectory + implicit latent prior)으로 둔다. $o$=시각 관측, $l$=언어 지시, $a$=최종 action chunk.\n\n#### ⚠️ 초보 함정 (헷갈리는 지점 콕 집기)\n\n1. **\"CoT = 언어(텍스트)\"라고 외우면 틀림.** EQ2의 $z$는 modality가 자유다 — 문장이면 Language-CoT([π0.5](deepdive_pi0.5.html)의 고수준 서브태스크 텍스트, [BagelVLA](deepdive_BagelVLA.html)의 interleaved subtask), 이미지면 Visual-CoT([π0.7](deepdive_pi0.7.html)의 subgoal 이미지, [BagelVLA](deepdive_BagelVLA.html)의 keyframe), action이면 Action-CoT([ACoT-VLA](deepdive_ACoT-VLA.html)의 reference trajectory/latent prior). 우리 계보엔 세 갈래가 다 있다.\n2. **\"CoT는 크면 무조건 좋다\"가 아니다.** 명시적 CoT는 latency 대가를 낸다(위 \"왜 필요한가\" 4). [MolmoAct2](deepdive_MolmoAct2.html)는 이 대가를 줄이려 \"바뀐 부분만 다시 추론\"하는 adaptive-depth reasoning을 쓰고, [VLA-JEPA](deepdive_VLA-JEPA.html)는 명시적 $z$ 자체를 없애고 latent predictive alignment로 우회한다.\n3. **\"CoT는 정답을 보장한다\"고 생각하면 오해.** 원 논문 스스로 한계로 못박는다 — 추론 경로가 맞다는 보장이 없고(no guarantee of correct reasoning path), 환각(factual hallucination)이 생길 수 있으며, emergent라 대형 모델에서만 작동해 실배포 제약이 크다[CoT §6]. self-consistency(EQ4)도 오답 경로가 우연히 다수를 차지하면 그대로 다수결에 진다.\n4. **\"고수준 추론과 저수준 실행이 같은 주기로 돈다\"고 생각하면 틀림.** [π0.5](deepdive_pi0.5.html)는 EQ5의 $\\pi_\\theta(g\\mid o,l)$(고수준 서브태스크 추론)을 $\\pi_\\theta(a\\mid o,l,g)$(저수준 action 추론)보다 **낮은 주기**로 돌린다 — 매 action chunk마다 새로 \"풀이과정\"을 쓰지 않는다. [InternVLA-M1](deepdive_InternVLA-M1.html)의 System2(느린 planner)/System1(빠른 actor) 분리도 같은 이유.\n5. **\"reasoning은 항상 EQ2 형태의 명시적 $z$ 생성\"이 아니다.** [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html)의 Foresight Reasoning은 사람이 읽을 수 있는 $z$를 만드는 게 아니라, 정책 스스로 미래 latent를 상상(forward-dynamics)해 실행과 겹쳐 돌리고 실관측이 오면 재정합하는 **다른 종류의 \"추론\"**이다 — 용어는 같아도 EQ2~5의 CoT 메커니즘과는 결이 다르다(구조/흐름 참고).\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n**Part A — CoT 유무 비교 (산수 응용문제 장난감)**: 문제 \"사과가 3개 있었다. 사과 수가 두 배로 늘었다. 그중 4개를 먹었다. 지금 사과는 몇 개?\"\n\n| 방식 | 계산 | 답 |\n|---|---|---|\n| 표준(직접 답, EQ2에서 $z$ 생략) | 중간 단계 없이 등장한 숫자(3, 4)를 바로 조합 — 예: $3+4$ | $7$개 (오답) |\n| CoT(EQ2, $z$를 명시) | $z_1$: \"두 배로 늘었다\" → $3\\times2=6$. $z_2$: \"4개를 먹었다\" → $6-4=2$ | $y=2$개 (정답) |\n\n- **검산**: $3\\times2=6$, $6-4=2$ — 표의 계산이 맞다. 표준 방식은 \"두 배\"라는 **연산 자체를 건너뛰고** 눈에 보이는 숫자만 조합해 오답을 내지만, CoT는 문제가 요구하는 연산 횟수(이 예제는 2번)만큼 실제로 계산 단계를 밟아 정답에 도달한다 — \"왜 필요한가 1\"의 \"연산량이 난이도에 비례\" 그 자체를 손으로 확인한 것.\n- **원 논문의 실제 숫자**[CoT §3, GSM8K]: PaLM 540B는 표준 프롬프팅 **17.9%** → CoT 프롬프팅 **56.9%**(같은 모델, 프롬프트만 다름 — fine-tuned GPT-3 175B + verifier 기준선 약 55%를 8-shot CoT만으로 추월). 반면 GPT-3 350M~6.7B·LaMDA 422M~2B 같은 소형 모델은 CoT를 줘도 표준과 별 차이가 없었다[CoT §3.2] — EQ3의 emergent 임계값(~100B) 그림이다.\n\n**Part B — Action-CoT가 mode averaging을 막는 이유(EQ5, 숫자 예제)**: 로봇이 장애물 앞에 있고, 학습 데이터의 절반은 왼쪽으로 피함($a=+5$), 절반은 오른쪽으로 피함($a=-5$)(둘 다 정답, 조향각 단위는 임의). \"피해가라\"는 지시 $l$만 보고 $g$ 없이 바로 $a$를 MSE로 회귀하면:\n\n| 항목 | 계산 | 값 |\n|---|---|---|\n| $g$ 없이 직접 회귀($\\pi_\\theta(a\\mid o,l)$, EQ2에서 $z$ 생략) 최적해 = 두 정답의 평균 | $(+5+(-5))/2$ | $0$ (직진 → **장애물과 정면충돌**) |\n| 이때의 MSE | 절반은 $(5-0)^2=25$, 절반은 $(-5-0)^2=25$, 평균 | $25$ |\n| $g\\in\\{\\text{left},\\text{right}\\}$를 먼저 정한 뒤 조건부 회귀($\\pi_\\theta(a\\mid o,l,g)$, EQ5) — $g=$left일 때 $a=+5$, $g=$right일 때 $a=-5$ | 각 조건에서 정답이 하나뿐(단봉) | 정확히 일치 |\n| 이때의 MSE | $g$가 맞게 예측됐다면 항상 $(5-5)^2=0$ 또는 $(-5-(-5))^2=0$ | $0$ |\n\n- **읽기**: $g$ 없이 두 서로 다른 정답을 한 회귀 목표로 묶으면 MSE 최적해는 **둘 다 아닌 평균**(여기선 정면충돌)이 되어버린다(\"mode averaging\"). 먼저 $g$(어느 쪽으로 피할지)를 정하고 그 안에서만 회귀하면 각 조건은 정답이 하나뿐(단봉)이라 평균이 아니라 **정확한 정답**을 낸다. 이게 [ACoT-VLA](deepdive_ACoT-VLA.html)가 EAR로 \"대충 그은 밑그림\"을 먼저 만들고 그 위에 정밀하게 덧그리는(AGP) 이유의 숫자판이다.\n\n### 수식 (정식)\n\n**(1) Chain-of-thought의 정의** [CoT §2, 원문]:\n\n> \"A chain of thought is a series of intermediate natural language reasoning steps that lead to the final output.\"\n\n- **무슨 식?**: 수식이 아니라 정의 문장이지만, 이후 모든 형식화의 출발점이므로 원문 그대로 싣는다. 최종 출력 $y$ 이전에 등장하는, 사람이 읽을 수 있는 중간 추론 단계들의 나열이 chain of thought다.\n- **원 논문의 실현 형태**: few-shot prompting에서 각 예시를 $\\langle \\text{input},\\ \\text{chain of thought},\\ \\text{output}\\rangle$ 삼중항으로 구성 — \"표준 프롬프팅\"이 $\\langle \\text{input}, \\text{output}\\rangle$ 쌍만 보여주는 것과 대비된다. 모델은 이 소수의 시연만 보고 테스트 문제에서도 같은 형식(먼저 풀이과정, 그다음 답)으로 답한다.\n\n**(2) 확률적 분해 (CoT를 생성모델 관점에서 다시 쓰기)**:\n\n$$\np(y\\mid x) = \\sum_{z} p(y\\mid x, z)\\, p(z\\mid x)\n$$\n\n- **무슨 식?**: 표준 방식은 $p(y\\mid x)$를 직접 모델링한다. CoT는 이를 \"먼저 사고 사슬 $z$를 생성($p(z\\mid x)$)하고, 그 $z$까지 조건으로 최종 답을 생성($p(y\\mid x,z)$)\"으로 인수분해한 뒤 $z$에 대해 marginalize한 것과 같다.\n- **왜 이게 도움이 되는가(Part B 숫자로 확인한 직관의 일반화)**: $x$가 주어졌을 때 정답 $y$의 분포가 **다봉(multimodal)**이면(예: 왼쪽으로 피하기 vs 오른쪽으로 피하기), $z$ 없이 $p(y\\mid x)$를 직접 회귀하면 여러 정답 봉우리의 \"평균\"을 내는 방향으로 학습이 끌린다. 먼저 $z$(어느 봉우리인지)를 정하고 그 조건에서만 $y$를 내면, $p(y\\mid x,z)$ 각각은 단봉에 가까워져 평균 문제가 사라진다. 원 논문은 이 마진화를 수식으로 명시하진 않고 few-shot 시연으로 암묵적으로 유도할 뿐이며, 이 명시적 형태는 우리 계보의 [ACoT-VLA](deepdive_ACoT-VLA.html) 식(2)를 일반화한 표기(식 (5) 참고).\n\n**(3) Emergent ability — 모델 규모에 따른 이득 곡선** [CoT §3.2, Fig. 4 서술]:\n\n- **무슨 식?**: 정식 수식은 없으나 원 논문이 실험으로 못박는 경험적 threshold를 옮기면 — GPT-3(350M–175B), LaMDA(422M–137B), PaLM(8B–540B) 세 계열 모두에서, 모델 규모 $N$이 작을 때는 (CoT 정확도 $-$ 표준 정확도)가 0에 가깝거나 오히려 음수이고, $N$이 **~100B 파라미터**를 넘는 지점부터 이 차이가 급격히 커진다.\n- **왜 이렇게 되는가**: CoT의 이득은 \"이미 문제를 풀 수 있는 능력이 있는 모델이, 그 능력을 순서대로 펼쳐 보이는\" 데서 나온다. 작은 모델은 애초에 각 단계 $z_i$를 정확히 계산하는 능력 자체가 없어(Part A의 소형 모델처럼 \"두 배\" 연산을 놓침), 풀이과정을 쓰게 해도 그 풀이과정 자체가 틀린다 — 그래서 이득이 없다.\n- **한계(원문 §6)**: no guarantee of correct reasoning path · annotation cost prohibitive for fine-tuning · factual hallucination · large-scale에서만 emergent라 실배포 제약.\n\n**(4) Self-consistency** [SC, CoT 각주 언급]:\n\n$$\ny^{*} = \\operatorname*{majority}_{k=1,\\dots,K}\\ y^{(k)}, \\qquad z^{(k)}\\sim p(z\\mid x),\\ \\ y^{(k)}\\sim p(y\\mid x, z^{(k)})\n$$\n\n- **무슨 식?**: (2)의 $p(y\\mid x)$ 계산에서 $z$ 하나만 뽑아 답하는 대신, 서로 다른 사고 사슬 $z^{(1)},\\dots,z^{(K)}$를 독립적으로 $K$번 샘플링해 각각의 답 $y^{(k)}$를 얻고, 가장 많이 나온 답을 최종 답 $y^*$로 채택한다.\n- **왜 도움되는가**: 개별 $z^{(k)}$가 틀릴 확률이 있어도, 서로 다른 경로가 **같은 정답에 우연이 아니라 구조적으로 수렴**하는 경향이 있으면(정답으로 가는 길은 여러 개, 오답으로 가는 길은 각양각색) 다수결이 개별 샘플보다 정확해진다. 학습 파라미터 $\\theta$는 전혀 바뀌지 않는 **순수 추론 시점 기법**.\n\n**(5) [ACoT-VLA](deepdive_ACoT-VLA.html) — action 공간 인스턴스** (원 논문 식(2)–(3), 표기 정합):\n\n$$\n\\pi_\\theta\\big(a_{t:t+H-1}, g \\mid o_t, l\\big) = \\pi_\\theta\\big(a_{t:t+H-1} \\mid o_t, l, g\\big)\\,\\pi_\\theta\\big(g \\mid o_t, l\\big)\n$$\n\n- **무슨 식?**: (2)의 $y\\to a_{t:t+H-1}$(길이 $H$ action chunk), $z\\to g$(가이드)로 바꿔 쓴 것. $g$를 explicit reference trajectory($g^{ex}_{\\text{action}}$, EAR 모듈이 flow matching으로 생성) + implicit latent prior($g^{im}_{\\text{action}}$, IAR 모듈이 VLM의 layer별 cross-attention으로 추출) 두 갈래로 disentangle한다.\n- **학습 시 vs 추론 시**: 학습 땐 $g^{ex}$를 ground-truth reference에서 뽑아 teacher forcing, 추론 땐 정책이 스스로 $g^{ex}$를 생성(self-conditioned) — Knowledge Distillation 토픽의 teacher-forcing 개념과 같은 안정화 트릭이 여기서도 등장.\n\n### 구조/흐름\n\n```\n공통 골격 (EQ2/EQ5):  o,l --[π(g|o,l): 먼저 생각]--> g(중간사고, z) --[π(a|o,l,g): 그다음 답]--> a(최종 출력, y)\n\nLanguage-CoT   g = 자연어 sub-task 텍스트\n               → π0.5(고수준 서브태스크 추론, action보다 저주기로 회전) · BagelVLA(subtask 언어→keyframe→action interleave)\n\nVisual-CoT     g = 미래 goal/keyframe 이미지\n               → π0.7(subgoal 이미지로 diverse context conditioning) · BagelVLA(keyframe 이미지 생성)\n\nAction-CoT     g = 대충 그은 reference 궤적(EAR) + latent action prior(IAR)  [\"명시적 CoT를 action 공간 그 자체로\"]\n               → ACoT-VLA (EQ5)\n\nDual-system    g = System2(느린 planner)의 산출물, System1(빠른 actor)이 소비\n               → InternVLA-M1(VLM planner가 task decomposition·numerical reasoning → actor 실행)\n\nLook-ahead류   g라는 \"읽을 수 있는 산출물\" 없이, 정책이 미래 latent를 스스로 예측(forward-dynamics)해 실행과 겹쳐 돌리고\n               실관측 도착 시 재정합 — EQ2 형태의 명시적 CoT와는 다른 \"추론\"\n               → LingBot-VA 2.0 Foresight Reasoning · MolmoAct2-Think(바뀐 영역만 재추론, latency 절충)\n\nCoT 자체를 우회 g, z 모두 생략, latent predictive alignment로 action-관련 표현만 정렬해 명시적 추론 단계 없이 학습\n               → VLA-JEPA\n```\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문/카드 | CoT 갈래 · $z$/$g$의 형태 | 핵심 메커니즘 | 왜 |\n|---|---|---|---|\n| [ACoT-VLA](deepdive_ACoT-VLA.html) | Action-CoT — $g^{ex}$(reference 궤적, EAR) + $g^{im}$(latent action prior, IAR) | 위 EQ5, flow-matching으로 EAR 생성 후 AGP가 dual cross-attn으로 융합 | Language/Visual-CoT는 정책이 실제 낼 action과 \"다른 언어\"라 변환 손실(semantic-kinematic gap) 발생 → 추론 산출물 자체를 action 공간에 둠 |\n| [BagelVLA](deepdive_BagelVLA.html) | Language-CoT + Visual-CoT 결합 — subtask 언어 → keyframe 이미지 → action을 한 transformer에서 interleave | 통합 이해·생성 MoT(BAGEL) 위에 action expert 접목 | 언어계획·시각예측·행동생성을 분리된 모듈이 아니라 하나의 명시적 multimodal CoT로 묶어 long-horizon 일관성 확보 |\n| [InternVLA-M1](deepdive_InternVLA-M1.html) | Dual-system — System2(VLM planner, task decomposition·numerical reasoning) → System1(actor) | 사전학습 시 spatial reasoning(box/trajectory/affordance/CoT QA)로 VLM 강화, 실사용은 System2가 느린 주기로 System1을 지도 | Long-horizon·reasoning task(Table 5)에서 별도 GPT-5 planner보다 post-trained 자체 planner가 더 강함 — reasoning을 체화 지식에 맞게 특화 |\n| [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) | Look-ahead류 \"추론\"(EQ2 CoT와는 결이 다름) — Foresight Reasoning, $\\hat z_{t+1}=\\mathrm{FDM}_\\theta$로 미래 latent 상상 후 실관측으로 재정합 | 비동기 predict/execute 두 스트림 오버랩 + KV 캐시 재정합 | 직렬 실행의 self-blocking(모델 지연=제어 지연) 제거, peak 225Hz 실시간 배포 |\n| [MolmoAct2](deepdive_MolmoAct2.html) | Action-CoT 전작 계승(depth→trace→action, MolmoAct) + 이번 논문은 그 **latency 문제**를 해결 | MolmoAct2-Think — timestep 간 \"변한 영역\"의 depth token만 재추론(adaptive-depth) | 명시적 reasoning(CoT류)이 행동 하나마다 수백 토큰/한 프레임을 요구해 closed-loop에 너무 느린 문제를 정면 해결 |\n| [VLA-JEPA](deepdive_VLA-JEPA.html) | CoT 자체를 우회 — 명시적 $z$/$g$ 없이 latent predictive alignment | action 중심 표현을 latent space에서 직접 정렬, future 재구성 없음 | 기존 멀티모달 CoT(계층적 planning·subgoal/rollout 예측 등)도 결국 action-label 데이터 의존 → CoT 없이 감독 필요성 자체를 줄임 |\n| [π0.5](deepdive_pi0.5.html) | Language-CoT, **단일 모델**이 두 역할 겸임 | 2단계 추론(고수준 서브태스크 추론 → action 예측)을 별도 모델이 아니라 같은 모델로, 고수준은 저수준보다 **낮은 주기**로 회전 | \"새 모델이 아니라 한 모델로 머리와 손을 다 쓰는 레시피\" — VLM과 low-level 정책을 분리하지 않아도 CoT 효과를 얻음 |\n| [π0.7](deepdive_pi0.7.html) | Visual-CoT류 — subgoal 이미지 + strategy metadata로 diverse context conditioning | LLM의 compositional generalization(새 포맷 적용, CoT 추론)을 로봇에 이식하되 텍스트 캡션만으론 부족해 이미지·메타데이터까지 확장 | 텍스트만으론 표현 못하는 episode quality·숙련도까지 조건화해 준최적/실패 데이터도 유용하게 흡수 |\n| 카드 Qwen-AgentWorld(arXiv 2606.24597) | Long CoT를 environment state transition 예측에 직접 사용 | 언어모델 기반 world model이 환경 전이를 long chain-of-thought로 예측(agentic RL 지원 + downstream 사전학습) | CoT가 로봇 action뿐 아니라 \"환경이 어떻게 바뀔지\"를 예측하는 world-model 관점에서도 그대로 재사용됨을 보여주는 사례 |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-27 04:37 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
