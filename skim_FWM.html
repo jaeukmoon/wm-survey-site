@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">FWM skim — Feedback World Model Enables Precise Guidance of Diffusion Policy</a></h1>
+    <p>📖 스키밍 (쉬운 버전) · <a href="deepdives.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: FWM_skim.md)</p></article>
+  <script>
+  const MD = "# FWM skim — Feedback World Model Enables Precise Guidance of Diffusion Policy\n\n**논문 한 줄 정체**: 배포 중 매 스텝 들어오는 실제 관측으로 world model의 latent 예측 오차를 **inference-time에만** (학습·데이터 추가 없이) 선형 observer로 보정하고, 그 보정된 예측으로 diffusion policy를 유도해 OOD 성공률을 끌어올린 논문 — arXiv 2605.15705v1 (MARS Lab, NTU · 2026-05-15).\n\n- 소스 덤프: `FWM_source.md` (수식 LaTeX verbatim, 그림 arXiv 원본 URL)\n- 프로젝트 사이트: https://lorenzo-0-0.github.io/Feedback_World_Model/\n\n**목차**\n1. [Introduction](#섹션-1-introduction--예측은-공짜-피드백을-버리고-있었다)\n2. [Related work](#섹션-2-related-work--두-동네-사이의-빈-자리)\n3. [Preliminaries](#섹션-3-preliminaries--latent-wm과-diffusion-policy-복습)\n4. [Methodology ★★](#섹션-4-methodology--닫힌-루프-예측--조종-가능한-차원만-유도-)\n5. [Experiments](#섹션-5-experiments--예측-오차--764-성공률-30)\n6. [Conclusion](#섹션-6-conclusion--한계-포함)\n- [부록 A ★★ 수렴 증명](#부록-a-수렴-보장-증명--바람-부는-날의-드론-호버링-)\n- [부록 B–D OOD 세팅·rollout 베이스라인](#부록-bd-ood-세팅과-rollout-베이스라인--시험-문제를-어떻게-바꿨나)\n- [부록 E 전체 inference 파이프라인](#부록-e-전체-inference-파이프라인-algorithm-1-)\n- [부록 F 구현 세부](#부록-f-구현-세부--wm은-작고-task-특화)\n- [한눈에 정리](#한눈에-정리)\n- [⚠️ 확인 필요/TODO](#️-확인-필요todo)\n\n---\n\n## 섹션 1. Introduction — \"예측은 공짜 피드백을 버리고 있었다\"\n매일 아침 실제 날씨를 보고도 자기 예보 편향을 안 고치는 예보관 — 기존 world model이 배포 시점에 하는 짓이 딱 이것이라는 문제 제기.\n\n### 1.1 문제 설정\n로봇 world model(행동의 결과를 예측하는 모델)은 훈련 분포를 벗어난 상태(OOD, Out-Of-Distribution)에서 예측이 무너지고, 그 잘못된 예측이 policy 유도까지 오염시킨다. 통상 해법은 데이터/모델 스케일업(대형 video model 사전학습, 추가 rollout finetuning)인데 비용이 크고 데이터 빈곤한 로봇 세팅에서 비현실적.\n\n### 1.2 핵심 관찰과 제안\n실행 자체가 신호다: 행동을 하면 **진짜 다음 상태가 관측**되고, 예측과의 mismatch가 그대로 드러난다. 이를 버리지 않고, (i) **feedback world model** — 경량 feedback state를 온라인 갱신해 이후 예측을 반복 보정 (파라미터 업데이트·추가 데이터 0), latent-space observer로 해석 가능 + 수렴 보장, (ii) **action-aware guidance** — 행동이 실제로 움직일 수 있는 latent 성분을 강조해 유도 신호를 정제.\n\n> **이것만 기억**: \"WM을 고치지 말고, WM의 *상태 추정*을 실관측으로 매 스텝 고쳐라\" — inference-time 폐루프.\n> **참고 숫자**: 예측 오차 최대 −76.4%, OOD 평균 성공률 +30% (상대), 벤치=LIBERO-Plus·Robomimic·실로봇 2태스크.\n\n→ **우리한테**: 우리 wam-loop의 출발점(imagination-error $e_t$는 공짜 신호)과 문제 인식이 동일 — FWM은 이를 training-free 선형 보정으로, 우리는 학습된 비선형 corrector(D2 MLP)로 소비한다는 갈림길.\n\n---\n\n## 섹션 2. Related work — 두 동네 사이의 빈 자리\n\"더 좋은 지도 만들기\"(WM 개선) 동네와 \"운전 중 실시간 개입\"(inference-time steering) 동네가 있는데, \"운전하면서 지도를 실시간 보정\"하는 집은 없었다는 자리매김.\n\n### 2.1 Efficient and accurate world models\n표현 개선(latent predictive pretraining: VLA-JEPA, DIDO-WM), 정확도 개선(rollout 데이터로 closed-loop 재적응: World-VLA-Loop, FOWM), 효율 개선(Fast-WAM, DreamZero, DDP-WM) 세 갈래 — 전부 **오프라인** 학습·데이터·설계 개선이고 배포된 WM은 frozen이라 온라인 적응성이 없다는 것이 이 논문의 공격 포인트.\n> **이것만 기억**: 기존 개선축 3개(표현/정확도/효율)는 모두 offline — \"배포 중 drift\"는 미개척.\n\n### 2.2 Inference-Time Policy Steering\ndiffusion policy는 반복 denoising 중 외부 목적함수를 주입하기 쉬움: value-guided denoising, DynaGuide(외부 latent dynamics 유도), Latent Policy Barrier(expert manifold 대비 미래 latent), 계층적 contact 유도, ProgressVLA(task 진행도 유도). FWM의 차별점 = 유도 신호 자체를 **feedback-보정된 예측**으로 만들고 + latent 차원을 **action controllability로 재가중**.\n> **이것만 기억**: 유도(guidance) 프레임은 빌려오되(특히 Latent Policy Barrier), 유도의 \"재료\"(예측)와 \"저울\"(가중치)을 갈아끼운 논문.\n\n→ **우리한테**: FWM은 WM과 policy가 **분리**된 구조에서만 성립하는 guidance 계보 — unified WAM(FastWAM)에서 action을 직접 고치는 우리 방식과 개입 지점이 다르다 (연결점 ②).\n\n---\n\n## 섹션 3. Preliminaries — latent WM과 diffusion policy 복습\n새 기계를 소개하기 전에 부품 두 개(예측기, 생성기)의 명세서를 읽는 섹션.\n\n### 3.1 Action-conditioned world model\n관측 컨텍스트 $O_{t}$를 인코더 $\\psi$로 latent에 넣고($z_{t}=\\psi(O_{t})$, 식 1), latent WM $f_{\\theta}$가 행동 시퀀스 $A_{t}$ 조건부로 다음 latent를 예측:\n\n$$\n\\hat{z}_{t+1}=f_{\\theta}(z_{t},A_{t}).\n$$\n\n(식 2) — 픽셀이 아니라 latent 공간에서 1-step 예측. PlaNet/Dreamer 계열 표준 세팅.\n\n### 3.2 Diffusion policy\npolicy $\\pi_{\\phi}$는 score function(로그확률의 기울기) $s_{\\phi}({A}_{t}^{(\\tau)},O_{t},\\ell,\\tau)\\approx\\nabla_{{A}_{t}^{(\\tau)}}\\log p_{\\tau}({A}_{t}^{(\\tau)}\\mid O_{t},\\ell)$ (식 3)를 학습 — $\\tau$는 diffusion step, $\\ell$은 언어 지시. score를 명시적으로 갖고 있으니 inference에 외부 항을 더하는 guided denoising이 자연스러움:\n\n$$\n\\tilde{s}({A}_{t}^{(\\tau)},O_{t},\\ell,\\tau)=s_{\\phi}({A}_{t}^{(\\tau)},O_{t},\\ell,\\tau)+\\lambda\\,g({A}_{t}^{(\\tau)},O_{t}),\n$$\n\n(식 4) — $\\lambda$는 유도 강도, $g$는 임의의 task-oriented 유도항. 이 논문 전체가 \"좋은 $g$를 만드는 법\" 이야기.\n\n> **이것만 기억**: 표기 3개만 챙기면 됨 — $z_t$(관측 latent), $\\hat{z}_{t+1}=f_\\theta(z_t,A_t)$(예측), $\\tilde{s}=s_\\phi+\\lambda g$(유도된 score).\n\n![Figure 1](https://arxiv.org/html/2605.15705v1/x1.png)\n> Figure 1: Feedback-Guided Policy 개요 — denoising 안쪽 루프(유도)와 실행-관측 바깥 루프(feedback state 갱신)의 이중 루프.\n\n---\n\n## 섹션 4. Methodology — 닫힌 루프 예측 + 조종 가능한 차원만 유도 ★★\n자동차 내비(WM)가 GPS(실관측)와 어긋나기 시작하면, 지도를 다시 그리는 게 아니라 \"현재 위치 재보정\"을 매 교차로마다 하는 것 — 그리고 경로 안내는 운전대로 바꿀 수 있는 것(차선)만 말하고 바꿀 수 없는 것(날씨)은 입 다무는 것.\n\n### 4.1 Framework overview — expert 답안지 대조로 만드는 유도 에너지\n모범 답안지 더미에서 내 예측과 가장 비슷한 페이지를 찾아, 그 페이지와의 거리를 벌점으로 쓰는 구조 (Latent Policy Barrier 방식 계승). 예측 latent를 expert latent 메모리 $\\mathcal{Z}^{E}=\\{z_{i}^{E}\\}_{i=1}^{N}$의 최근접 이웃에 매칭:\n\n$$\ni^{\\star}=\\arg\\min_{i}\\left\\|\\hat{z}_{t+1}(A_{t}^{(\\tau)})-z_{i}^{E}\\right\\|_{2}^{2}.\n$$\n\n(식 5) 유도 에너지 = 그 최근접 expert latent까지의 제곱 거리:\n\n$$\nE(A_{t}^{(\\tau)})=\\left\\|\\hat{z}_{t+1}(A_{t}^{(\\tau)})-z_{i^{\\star}}^{E}\\right\\|_{2}^{2},\n$$\n\n(식 6) 그리고 score에 에너지 하강 방향을 주입:\n\n$$\n\\tilde{s}=s_{\\phi}-\\lambda\\nabla_{A_{t}^{(\\tau)}}E(A_{t}^{(\\tau)}).\n$$\n\n(식 7) — $s_\\phi$: 원래 policy score / $\\lambda$: 유도 강도 / $\\nabla_{A}E$: \"예측 결과가 expert 같아지는 쪽\"으로 행동을 미는 기울기.\n이 표준형의 두 약점 = ① 예측 $\\hat{z}_{t+1}$ 자체가 OOD에서 drift ② 균일한 latent 매칭이 action과 무관한 성분(배경·조명)까지 벌점에 포함 → 각각 4.2와 4.3이 해결.\n\n> **이것만 기억**: 유도 = \"예측된 미래를 expert 최근접 이웃 쪽으로 당기는 에너지 기울기\"이며, 이 논문은 그 에너지의 입력(예측)과 metric(가중치)을 고친다.\n\n### 4.2 Feedback world model — deep ★★\n**직관**: 위치가 아니라 속도로 생각한다. WM의 1-step 예측을 \"latent 속도\"로 읽고, 예측이 밀린 만큼($e_t$)을 속도에 비례 보정항($Le_t$)으로 얹는다 — 제어공학의 Luenberger observer(관측기: 실측과 내부 추정의 차이를 gain 곱해 추정에 되먹이는 장치)를 latent 공간에 그대로 이식.\n\n**(1) 속도 형태 재해석** — 학습된 transition을 차분/시간으로:\n\n$$\nv_{t}(A_{t}^{(\\tau)})\\;\\triangleq\\;\\frac{f_{\\theta}(z_{t},A_{t}^{(\\tau)})-z_{t}}{\\delta t}=\\frac{\\hat{z}_{t+1}-z_{t}}{\\delta t},\n$$\n\n(식 8) — $\\delta t$: 환경 업데이트 간격. WM은 그대로 두고 \"해석\"만 속도로 바꾸는 게 포인트 (jia2024feedback 계승).\n\n**(2) feedback state와 잔차** — 보조 상태 $\\bar{z}_{t}$($\\bar{z}_0=z_0$로 초기화)는 \"지금까지 실행한 행동 뒤에 시스템이 있어야 할 곳\"에 대한 모델의 내부 믿음. 잔차는\n\n$$\ne_{t}=z_{t}-\\bar{z}_{t}\n$$\n\n(식 9) — 현재까지 **누적된** 예측 불일치. 관측(진실) − 내부 믿음.\n\n**(3) 핵심 보정식** — denoising 중에는 $e_t$를 고정한 채 모든 noisy 후보 $A_{t}^{(\\tau)}$에 대해:\n\n$$\n\\left\\{\\begin{aligned} &\\hat{v}_{t}(A_{t}^{(\\tau)})=v_{t}(A_{t}^{(\\tau)})+Le_{t},\\\\\n&z^{\\mathrm{fb}}_{t+1}(A_{t}^{(\\tau)})=z_{t}+\\delta t\\cdot\\hat{v}_{t}(A_{t}^{(\\tau)}),\\end{aligned}\\right.\n$$\n\n(식 10) — 항별:\n- $v_{t}(A_{t}^{(\\tau)})$: 후보 행동에 대한 WM의 원래 속도 예측 (행동 의존).\n- $Le_{t}$: 보정항. $L$은 positive-definite feedback gain — 잔차를 얼마나 세게 되먹일지. **행동과 무관**하게 이번 스텝 동안 상수.\n- $z^{\\mathrm{fb}}_{t+1}$: 보정된 1-step 예측. 식 (6)의 $\\hat{z}_{t+1}$ 자리를 이것이 대체.\n\n**(4) feedback state 전파** — 유도가 끝나 clean action $A_{t}^{(0)}$가 실행되면, **같은 보정된 속도**로 내부 믿음을 전진:\n\n$$\n\\bar{z}_{t+1}=\\bar{z}_{t}+\\delta t\\cdot\\hat{v}_{t}(A_{t}^{(0)}).\n$$\n\n(식 11) — 주의: $z_t$가 아니라 $\\bar{z}_t$에서 출발. 믿음은 믿음대로 굴러간다.\n\n**(5) 잔차 갱신** — 환경이 $o_{t+1}$을 돌려주면 $z_{t+1}=\\psi(o_{t+1})$로 인코딩해:\n\n$$\ne_{t+1}=z_{t+1}-\\bar{z}_{t+1},\n$$\n\n(식 12) — 다음 스텝의 보정 재료. 실행한 $A_{t}^{(0)}$와 관측 $z_{t+1}$이 한 transition에서 정렬됨.\n\n**(6) 수렴 보장 (요약)** — 참 latent 속도와 학습된 속도의 잔차가 $\\gamma$로 유계이면:\n\n$$\n\\lim_{t\\to\\infty}\\left\\|z_{t}-\\bar{z}_{t}\\right\\|\\leq\\frac{\\gamma}{\\lambda_{\\min}(L)}.\n$$\n\n(식 13) — 스칼라 gain $L=lI$면 $\\gamma/l$. 해석: WM 품질($\\gamma$)이 외란 수준을 정하고, gain($L$)이 그 외란을 얼마나 눌러 담을지를 정한다. gain을 키우면 잔류 오차 상한이 줄어든다 (단, 이산 안정성 한계 — 부록 A).\n\n> **이것만 기억**: $e_t$ 하나(벡터)만 온라인 상태로 유지 — 예측은 $+\\,\\delta t\\,Le_t$, 믿음은 실행 행동으로 전진, 잔차는 관측으로 리셋. 파라미터 갱신 0, 연산은 analytic.\n> **참고 숫자**: 유지하는 온라인 상태 = feedback state $\\bar{z}_t$ (latent 1개 분량). 추가 학습 데이터 0.\n\n→ **우리한테**: 우리 재구현(`wam-loop/baselines/fwm_observer.py`)은 이 식 (9)–(12)를 \"EMA feedback state + closed-form ridge 선형 gain, 동일 feature·동일 actuation\"으로 이식한 것 — 원 논문의 $L$은 **고정** positive-definite gain(데이터로 fit하지 않음)이고 $e_t$는 denoising 동안 상수라는 두 디테일이 fidelity 체크포인트. 이 training-free 선형 보정이 우리 학습된 비선형 MLP corrector(D2)의 직접 대조군 (연결점 ①).\n\n### 4.3 Action-aware guidance — deep ★★\n**직관**: 계기판의 수많은 바늘 중 운전대에 실제로 반응하는 바늘만 보고 운전한다. latent 차원마다 \"행동을 흔들었을 때 얼마나 흔들리는가\"(counterfactual variance)를 재서, 잘 흔들리는 차원에 유도 벌점을 몰아준다.\n\n**(1) controllability 추정** — $j$번째 latent 차원의 가중치:\n\n$$\nw_{j}=\\frac{1}{M}\\sum_{i=1}^{M}\\mathrm{Var}_{a\\sim\\mathcal{A}_{\\mathrm{demo}}}\\!\\left([f_{\\theta}(z_{i},\\,a)]_{j}\\right),\\quad j\\in\\{1,\\dots,D\\},\n$$\n\n(식 14) — 항별:\n- $\\{z_{i}\\}_{i=1}^{M}$: demo 궤적에서 균일 간격으로 뽑은 상태들 ($M{=}200$).\n- $\\mathrm{Var}_{a\\sim\\mathcal{A}_{\\mathrm{demo}}}$: demo 행동 풀에서 행동을 샘플해(상태당 32개) WM 예측의 $j$차원이 얼마나 출렁이는지 — 행동만 바꾼 반사실(counterfactual) 분산.\n- 큰 $w_j$ = 행동에 민감한 차원 = 유도에 유용. **전부 오프라인, WM만으로 계산**.\n\n**(2) 정규화 + soft interpolation** — 에너지 스케일 보존:\n\n$$\n\\bar{w}_{j}=\\frac{w_{j}}{\\frac{1}{D}\\sum_{k=1}^{D}w_{k}+\\epsilon},\\qquad w_{j}^{(\\beta)}=1+\\beta\\,(\\bar{w}_{j}-1),\n$$\n\n(식 15) — 평균으로 나눠 평균 1로 맞추고($\\epsilon=10^{-8}$은 0-나눗셈 방지), $\\beta\\in[0,1]$로 \"균일(β=0) ↔ 완전 가중(β=1)\" 사이를 보간.\n\n**(3) 가중 에너지** — 식 (6)의 균일 MSE를 대체:\n\n$$\nE_{\\mathrm{ctrl}}(A^{(\\tau)}_{t})=\\sum_{j=1}^{D}w_{j}^{(\\beta)}\\,(z^{\\mathrm{fb}}_{t+1,j}(A_{t}^{(\\tau)})-\\hat{z}_{i^{*},j}^{E})^{2}.\n$$\n\n(식 16) — feedback-보정 예측($z^{\\mathrm{fb}}_{t+1,j}$)과 최근접 expert latent의 차원별 오차를 controllability로 가중. $\\nabla_{A}E_{\\mathrm{ctrl}}$이 식 (7)의 유도항으로 들어감.\n\n> **이것만 기억**: 유도 신호의 SNR 개선 — \"정확한 예측\"만으론 부족하고, 예측 중 **행동이 책임질 수 있는 부분**만 벌점화해야 policy가 배울 게 생긴다.\n> **참고 숫자**: $M{=}200$ 상태 × 32 행동 샘플, $\\beta\\in[0,1]$, 상위 5% 차원이 전체 가중치의 20–25% (long-tail, Fig. 6).\n\n→ **우리한테**: 우리 D1 마스크 설계와 정신이 같음 — imagination-error $e_t$에서 \"action이 설명 가능한 성분\"만 걸러 residual 보정에 쓰겠다는 아이디어의 training-free 판. counterfactual variance는 우리도 공짜로 계산 가능한 후보 feature.\n\n---\n\n## 섹션 5. Experiments — 예측 오차 −76.4%, 성공률 +30%\n같은 시험지(동일 policy·동일 WM)를 주고 채점 방식만 바꿔서, \"온라인 보정\"이 \"데이터 더 붓기\"(rollout 재학습)를 이기는지 겨루는 장.\n\n### 5.1 Experimental setup\n- **시뮬 7태스크**: Robomimic 3개(Square, Tool-Hang, Transport — demo의 20%만 사용하는 low-data 세팅) + LIBERO-Plus 4개(LIBERO-10의 Kitchen-S3/S6/S8, LR-S6 — 공식 Robot Initial States 교란 카테고리, demo는 원본 LIBERO-10 50개만).\n- **실로봇 2태스크**: R1 Lite(오른팔만) — Peach-P&P(demo 50개), Drawer-Open(고무 손잡이 contact-rich, demo 65개). policy·WM 모두 스크래치 학습.\n- **OOD 정의**: 로봇 초기 상태(관절 각) 교란만 — task·scene·카메라는 그대로.\n\n![Figure 2](https://arxiv.org/html/2605.15705v1/x2.png)\n> Figure 2: 시뮬 태스크 구성 (LIBERO-Plus 4 + Robomimic 3).\n\n### 5.2.1 Feedback WM이 온라인 예측을 개선\nBase WM(expert demo만 학습)은 OOD 초기 상태에서 오차 폭발, Rollout-Enhanced WM(rollout 데이터 추가 학습)은 이득이 제한적·비일관 — 반면 Feedback WM은 추가 데이터 없이 일관되게 감소.\n> **참고 숫자**: latent 예측 MSE 감소 — Robomimic Square **73.3%**, 실로봇 Peach-P&P **65.4%** / Drawer-Open **76.4%**.\n\n![Figure 3](https://arxiv.org/html/2605.15705v1/x3.png)\n> Figure 3: 시뮬·실환경 OOD latent 예측 MSE 비교.\n\n![Figure 5](https://arxiv.org/html/2605.15705v1/x5.png)\n> Figure 5: PCA 평면에서 rollout 궤적 — Base WM은 GT manifold에서 이탈(drift), Feedback WM은 초기 과도구간 후 밀착 유지.\n\n→ **우리한테**: \"예측-관측 mismatch가 OOD를 드러낸다\"는 우리 D0 결과(imagination-error AUROC 0.92 vs raw-obs 0.35)와 같은 신호를 다른 각도(MSE 감소)로 입증 + 메인 벤치도 우리와 동일한 LIBERO-Plus perturbed (연결점 ③).\n\n### 5.2.2 Action-aware guidance가 유도를 개선\nlatent controllability는 강한 long-tail(상위 5% 차원이 가중치 20–25%)이고, 고가중 차원은 관측이 바뀌어도 일관되게 action-responsive (Fig. 6) → 오프라인 고정 $W$ 사용을 정당화. Ablation(Table 2): Feedback WM만으로도 오르고, action-aware를 얹으면 더 오름.\n> **참고 숫자** (Table 2, 성공률): Base 0.36/0.34/0.27 → +Feedback WM 0.40/0.54/0.32 → +Action-aware **0.46/0.60/0.36** (Square/Transport/Tool-Hang).\n\n![Figure 6](https://arxiv.org/html/2605.15705v1/x6.png)\n> Figure 6: (a) 정렬된 controllability 가중치 $w_j$ (log scale), (b) Transport의 차원별 counterfactual 분산 맵 — 세로 밴드 = 관측 불변으로 action-responsive한 차원.\n\n### 5.2.3 결합 효과 — 벤치마크 전반의 OOD 성능\n> **참고 숫자** (Table 1, 시뮬 OOD 성공률): 평균 Base 0.40 / Mixed BC 0.32 / Filtered BC 0.36 / Std. Guid. 0.43 / Rollout Guid. 0.45 / **Ours 0.52** (상대 +30%). 태스크별 Ours: Square 0.46, Tool-Hang 0.36, Transport 0.60, Kitchen-S3 0.68(Filtered BC 0.70에 유일하게 밀림), Kitchen-S6 0.55, Kitchen-S8 0.65, LR-S6 0.36.\n> **참고 숫자** (실로봇): ID에선 90→95%(Peach-P&P)·70→75%(Drawer-Open) 소폭, OOD에선 **40→80% / 20→70%** 대폭.\n\nrollout 데이터 붓기(Mixed/Filtered BC)는 오히려 성능을 깎기도 함 — rollout에 실패 사례·편향 분포가 섞이고 최종 테스트 교란을 커버 못 하기 때문이라는 게 저자 해석.\n\n![Figure 4](https://arxiv.org/html/2605.15705v1/x4.png)\n> Figure 4: 실로봇 태스크(Peach-P&P, Drawer-Open)와 ID/OOD 성공률 (세팅당 20 에피소드).\n\n→ **우리한테**: Table 1의 Robomimic 행(Base/Std./Rollout/Ours = Square 0.36/0.40/0.44/0.46, Tool-Hang 0.27/0.22/0.31/0.36, Transport 0.34/0.46/0.52/0.60)이 우리 FWM 재구현 sanity-check의 기준 수치 (연결점 ④). 또 \"rollout 데이터 스케일업 < inference-time 보정\" 결과는 우리 논문의 motivation 문단에 그대로 인용 가능.\n\n---\n\n## 섹션 6. Conclusion — 한계 포함\n좋은 마무리의 절반은 자백: 무엇이 빠르고 무엇이 느린지.\n\n핵심 주장 재확인 — frozen WM의 latent 예측 상태를 실관측으로 온라인 보정(feedback WM) + controllability 가중 유도(action-aware)로 OOD 조작 성능을 올렸다.\n**저자가 인정한 한계**: guided-diffusion 계열 공통으로 **inference latency가 unguided base policy보다 높다** (denoising 중 guidance gradient 계산 때문). 단, feedback 갱신은 analytic이고 가중치는 오프라인이라 오버헤드의 주범은 제안 요소가 아니라 guided-diffusion 패러다임 자체라고 선을 그음. 향후 과제 = 더 효율적인 guidance 프레임·지연 민감 태스크 적용.\n> **이것만 기억**: 기여는 \"예측 신뢰성(feedback)\"과 \"유도 품질(action-aware)\"의 분리 — 한계는 guidance 자체의 지연 비용.\n\n→ **우리한테**: 우리 D2(action residual 직접 보정)는 denoising-loop guidance가 없어 이 latency 한계를 구조적으로 회피 — 비교 실험에서 부각할 지점.\n\n---\n\n## 부록 A. 수렴 보장 증명 — 바람 부는 날의 드론 호버링 ★★\n일정한 바람($\\Delta_\\infty$) 속의 드론: 제어 gain이 있으면 밀리는 정도가 $\\gamma/l$로 상한이 잡히고, 바람이 일정해지면 기체를 기울여 **완전히 상쇄**한다 — 그래서 \"다음 위치 예측\"은 점근적으로 무편향.\n\n**세팅**: 참 transition을 속도 형태로 $z_{t+1}=z_{t}+\\delta t\\,v_{t}^{\\star}(A_{t}^{(0)})$ (식 17), 학습 모델 $v_{t}(A_{t}^{(0)})=\\frac{f_{\\theta}(z_{t},A_{t}^{(0)})-z_{t}}{\\delta t}$ (식 18). **가정** (식 19):\n\n$$\nv_{t}^{\\star}(A_{t}^{(0)})=v_{t}(A_{t}^{(0)})+\\Delta_{t},\\qquad\\|\\Delta_{t}\\|\\leq\\gamma,\\qquad\\Delta_{t}\\to\\Delta_{\\infty},\n$$\n\n— 모델 잔차는 유계이고($\\gamma$), 배포 궤적을 따라 일정한 극한 외란 $\\Delta_\\infty$로 수렴한다 (이게 \"mild condition\"의 실체 — 강한 가정임에 주의).\n\n**오차 동역학** — 식 (17)+(19)+(20)+(21)을 결합하면 잔차가 안정 선형계를 따름:\n\n$$\ne_{t+1}=(I-\\delta tL)e_{t}+\\delta t\\,\\Delta_{t}.\n$$\n\n(식 23) — $I-\\delta tL$: 수축 행렬(gain이 클수록 세게 수축) / $\\delta t\\,\\Delta_{t}$: 모델 오차가 주입하는 구동항.\n\n**연속시간 대응** $\\dot{e}(t)=-Le(t)+\\Delta(t)$ (식 24)의 해에서 $\\lim_{t\\to\\infty}e(t)=L^{-1}\\Delta_{\\infty}$ (식 27), 따라서\n\n$$\n\\lim_{t\\to\\infty}\\|e(t)\\|=\\|L^{-1}\\Delta_{\\infty}\\|\\leq\\|L^{-1}\\|_{2}\\|\\Delta_{\\infty}\\|\\leq\\frac{\\gamma}{\\lambda_{\\min}(L)}.\n$$\n\n(식 28) **이산시간**은 $e_{t+1}=Ae_{t}+\\delta t\\,\\Delta_{t},\\ A=I-\\delta tL$ (식 31)에서 스펙트럴 반경 조건\n\n$$\n\\rho(A)=\\rho(I-\\delta tL)<1\n$$\n\n(식 32)이면 지수 안정 → 같은 상한 (식 36–37). 스칼라 gain $L=lI$는 $0<\\delta t\\,l<2$면 안정, $0<\\delta t\\,l\\leq 1$이면 $\\|e_{t+1}\\|\\leq(1-\\delta t\\,l)\\|e_{t}\\|+\\delta t\\,\\|\\Delta_{t}\\|$ (식 38)로 단조 수축, 극한은 $\\gamma/l$ (식 40).\n\n**보정 예측의 무편향성** — 실행 행동에 대해 (식 42):\n\n$$\nz^{\\mathrm{fb}}_{t+1}(A_{t}^{(0)})-z_{t+1}=\\delta t\\big(Le_{t}-\\Delta_{t}\\big),\n$$\n\n그런데 $e_{t}\\to L^{-1}\\Delta_{\\infty}$이므로 $Le_{t}-\\Delta_{t}\\to LL^{-1}\\Delta_{\\infty}-\\Delta_{\\infty}=0$ (식 43), 즉\n\n$$\n\\lim_{t\\to\\infty}\\left\\|z^{\\mathrm{fb}}_{t+1}(A_{t}^{(0)})-z_{t+1}\\right\\|=0.\n$$\n\n(식 44) — feedback state는 $\\gamma/\\lambda_{\\min}(L)$ 반경 안에 갇히고, **보정된 1-step 예측은 점근적으로 정확**해진다.\n\n> **이것만 기억**: 보장의 구조 = (관측기 오차는 유계) + (극한 외란은 gain이 정확히 상쇄) — 단, 보장은 **실행된 행동** $A_{t}^{(0)}$의 예측에만 적용되고, denoising 중 다른 후보 행동의 예측 오차는 다루지 않는다.\n> **참고 숫자**: 안정 조건 $0<\\delta t\\,l<2$, 잔류 상한 $\\gamma/\\lambda_{\\min}(L)$.\n\n→ **우리한테**: FWM의 이론 우위(수렴 보장) vs 우리 우위(학습된 corrector는 $\\Delta_t$가 상태·행동 의존일 때도 잡을 수 있음 — 이 증명은 $\\Delta_t\\to\\Delta_\\infty$ 즉 \"결국 일정한 편향\"만 상쇄). 논문 discussion에서 이 가정의 강도를 짚으면 우리 접근의 자리가 생긴다 (연결점 ①).\n\n---\n\n## 부록 B–D. OOD 세팅과 rollout 베이스라인 — 시험 문제를 어떻게 바꿨나\n\n### B. Robomimic OOD 교란\ndemo 초기 상태에서 7개 관절각에 가우시안 노이즈를 더하고 관절 한계로 clip:\n\n$$\n\\tilde{\\mathbf{q}}^{(i)}=\\mathrm{clip}\\left(\\mathbf{q}^{(i)}+\\boldsymbol{\\epsilon}^{(i)},\\mathbf{q}_{\\min},\\mathbf{q}_{\\max}\\right),\\qquad\\boldsymbol{\\epsilon}^{(i)}\\sim\\mathcal{N}(\\mathbf{0},\\sigma^{2}I_{7}),\n$$\n\n(식 45) — $\\sigma=0.1\\,\\mathrm{rad}$, Transport(양팔)는 팔별 독립 교란, 나머지 시뮬 상태는 불변. 모든 방법이 같은 교란 초기 상태 사용.\n\n![Figure 7](https://arxiv.org/html/2605.15705v1/x7.png)\n> Figure 7: Square OOD 초기 상태 (좌측 1열 = ID demo 시작).\n\n### C. LIBERO-Plus 태스크\nLIBERO-10 4태스크, 공식 Robot Initial States 프로토콜, 원본 demo 50개만 학습. variants: Kitchen-S3 44 / Kitchen-S6 42 / Kitchen-S8 34 / LR-S6 42.\n\n### D. Rollout 데이터 수집 (베이스라인 공정성)\nrollout은 전부 **원본 ID 환경**에서 수집(정보 누출 방지 — 최종 OOD 세팅 궤적 0개). Robomimic: Square 270 / Transport·Tool-Hang 각 150 에피소드, 중간 체크포인트 혼합(성공+실패). LIBERO: 150/150/100/100. Mixed BC = expert+전체 rollout, Filtered BC = expert+성공 rollout만, Rollout-Enhanced WM = 전체 데이터로 WM 재학습.\n> **이것만 기억**: \"데이터 더 붓기\" 대조군을 정직하게 만들었고(누출 차단), 그런데도 온라인 보정에 졌다는 게 이 부록의 존재 이유.\n\n---\n\n## 부록 E. 전체 inference 파이프라인 (Algorithm 1) ★\n레시피 카드 한 장: 오프라인에서 답안지·저울 준비, 온라인에서 이중 루프.\n\n- **오프라인**: expert latent 메모리 $\\mathcal{Z}^{E}\\leftarrow\\{\\psi(O)\\mid O\\in\\mathcal{D}_{\\text{expert}}\\}$ + 가중치 $\\{w_{j}^{(\\beta)}\\}_{j=1}^{D}$ (식 14–15). 배포 내내 고정.\n- **온라인 (매 timestep $t$)**:\n  1. $A_{t}^{(T)}\\sim\\mathcal{N}(0,\\mathbf{I})$ 샘플, $\\tau=T\\ldots1$ denoising.\n  2. **guidance는 마지막 $\\tau_{g}$개 저노이즈 스텝에만** — 고노이즈 구간은 원래 score $s_\\phi$만 사용 (행동에 task 구조가 생긴 뒤에야 WM 예측이 유의미).\n  3. 유도 스텝: $z^{\\mathrm{fb}}_{t+1}(A_{t}^{(\\tau)})$ (식 10) → 최근접 expert (식 5) → $E_{\\mathrm{ctrl}}$ (식 16) → $\\tilde{s}\\leftarrow s_{\\phi}-\\lambda\\nabla E_{\\mathrm{ctrl}}$ (식 7).\n  4. clean action의 앞 $T_{a}$개 실행 → $\\bar{z}_{t+1}\\leftarrow\\bar{z}_{t}+\\delta t\\cdot\\hat{v}_{t}(A_{t}^{(0)})$ (식 11) → $o_{t+1}$ 관측·인코딩 → $e_{t+1}=z_{t+1}-\\bar{z}_{t+1}$ (식 12).\n\n> **이것만 기억**: 이중 루프 — 안쪽(denoising 유도, $e_t$ 고정) × 바깥(실행-관측, $e_t$ 갱신). 그리고 $\\tau_g$ 저노이즈 한정 유도가 실전 디테일.\n\n→ **우리한테**: 재구현 시 실수하기 쉬운 3곳 — ① $e_t$는 denoising 내내 상수 ② $\\bar{z}$ 전파는 $z_t$가 아닌 $\\bar{z}_t$ 기준 ③ 유도는 저노이즈 $\\tau_g$ 스텝 한정. 우리 fwm_observer 이식이 action-chunk 단위 actuation과 정렬돼 있는지 여기에 대조.\n\n---\n\n## 부록 F. 구현 세부 — WM은 작고 task-특화\n- **WM 아키텍처**: 대형 video/VLA-scale이 아니라 **경량 task-specific latent dynamics 모델** — policy와 같은 visual encoder + 소형 proprioception/action encoder → Transformer predictor → 1-step latent 예측. 픽셀 재구성·비디오 생성 없음. task별 demo만으로 학습, 배포 시 frozen.\n- **Robomimic**: UNet diffusion policy, 공식 demo의 20%, AdamW+cosine+EMA+DDPM, dual-view RGB+proprio. Square는 짧은 action horizon, Transport/Tool-Hang은 긴 horizon.\n- **LIBERO**: task별 전용 policy, agent-view+eye-in-hand RGB+proprio+언어 임베딩.\n- **실로봇**: R1 Lite 오른팔만. Peach-P&P는 agent+wrist 2뷰, Drawer-Open은 wrist 단일 뷰(국소 접촉 기하가 지배적이라는 이유).\n> **이것만 기억**: 이 논문의 WM은 FastWAM 같은 unified/pretrained 계열이 아니라 \"policy 옆에 붙는 작은 예측기\" — feedback 메커니즘 자체는 WM 크기와 무관하게 이식 가능.\n\n→ **우리한테**: FWM의 WM은 분리형·경량·task별 — unified FastWAM 위에서 돌리는 우리 세팅으로 가져올 때 \"동일 feature·동일 actuation\" 통제(우리 재구현의 설계 선택)가 공정 비교의 핵심이라는 근거.\n\n---\n\n## 한눈에 정리\n1. **한 문장**: frozen WM의 예측을 고치는 대신, \"내부 믿음 $\\bar{z}_t$ vs 실관측 $z_t$\"의 잔차 $e_t$를 gain $L$로 속도에 되먹이는 latent Luenberger observer를 inference-time에 돌리고(식 8–12), 그 보정 예측으로 controllability-가중 에너지(식 14–16)를 만들어 diffusion policy를 유도한다.\n2. **이론**: 잔차 유계+수렴 가정 하에 $\\|e_t\\|\\to\\leq\\gamma/\\lambda_{\\min}(L)$, 실행 행동의 보정 예측은 점근 무편향 (식 44). 안정 조건 $0<\\delta t\\,l<2$.\n3. **성능**: 예측 MSE 최대 −76.4%(실로봇 Drawer-Open), 시뮬 OOD 평균 성공률 0.40→0.52(+30% 상대), 실로봇 OOD 40→80%/20→70% — rollout 데이터 재학습 베이스라인 전부 제압.\n4. **비용**: 추가 학습 0·analytic 갱신, 단 guided-diffusion 자체의 inference latency는 그대로 (저자 인정 한계).\n5. **우리 대비**: training-free 선형(그들) vs 학습 비선형 MLP(우리 D2), latent 보정→별도 policy 유도(그들) vs unified WAM action 직접 보정(우리), 벤치는 LIBERO-Plus perturbed로 정면 겹침 — 최강 baseline 확정.\n\n## ⚠️ 확인 필요/TODO\n- **References 목록 미확보**: arXiv HTML에서 서지 목록이 별도 렌더라 본문 인용 키만 저장됨 (`FWM_source.md` 말미) — 필요 시 bib은 arXiv abs 페이지/프로젝트 사이트에서 보충. ⚠️ fetch 실패 (references만).\n- **수치 하이퍼파라미터 부재**: 본문·부록 어디에도 $L$(또는 $l$)·$\\lambda$·$\\tau_g$·$\\beta$·$T_a$·$\\delta t$의 **실제 사용 값**이 없음 — 재구현 fidelity를 위해 프로젝트 사이트/코드 공개분에서 확인 필요.\n- **재구현 sanity-check 수치** (우리 fwm_observer가 근접해야 할 기준): Robomimic OOD 성공률 Ours = Square 0.46 / Tool-Hang 0.36 / Transport 0.60 (Std. Guid. 0.40/0.22/0.46, Rollout Guid. 0.44/0.31/0.52), ablation +Feedback WM = 0.40/0.54/0.32. 예측 MSE 감소율 Square 73.3%.\n- **검증 포인트 (구현 디테일)**: ① $e_t$ denoising 중 고정 ② $\\bar{z}$ 전파 기준점($\\bar{z}_t$) ③ 저노이즈 $\\tau_g$ 한정 guidance ④ $L$은 fit 없는 고정 gain — 우리 ridge closed-form gain은 이 점에서 원 논문과 다른 변형임을 논문에 명시할 것.\n- **가정의 강도**: 수렴 보장은 $\\Delta_t\\to\\Delta_\\infty$(상수 극한 외란) 가정 의존 — 상태 의존 오차가 큰 비정상(non-stationary) 구간에선 보장 밖. 우리 discussion 소재.\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-07-29 03:52 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
