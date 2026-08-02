@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">JEPA (Joint-Embedding Predictive Architecture)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# JEPA (Joint-Embedding Predictive Architecture)\n\n> 출처: 개념 원류 [LeCun] \"A Path Towards Autonomous Machine Intelligence\" (LeCun, arXiv 2306.02572, 포지션 논문·수식 없음). 구체 학습법: [I-JEPA] \"Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture\" (Assran et al., arXiv 2301.08243), [V-JEPA] \"Revisiting Feature Prediction for Learning Visual Representations from Video\" (Bardes et al., arXiv 2404.08471), [V-JEPA2] \"V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning\" (Assran et al., arXiv 2506.09985). 우리 계보 등장: [VLA-JEPA](deepdive_VLA-JEPA.html)·JEPA-WMs·JEPA-Wild(`world_model_lineage_easy.md`)·[DreamZero](deepdive_DreamZero.html)(대조 인용).\n\n**한 줄 정의**: 가려진(또는 아직 안 온) 부분의 **원본을 그대로 복원하지 않고**, 그 부분이 어떤 **추상 표현(embedding) $s_y$**이었을지를 맞히도록 배우는 자기지도 학습 설계 — \"픽셀을 그리지 말고, 무엇이었는지만 요약해서 맞혀라.\"\n\n> **30초 큰 그림 비유 — \"몽타주 화가 쌍둥이\"**: 사진 한 장을 절반 가리고 현장 화가(**context encoder**)에게 \"가려진 자리엔 뭐가 있을 것 같아?\"라고 묻는다. 화가는 픽셀을 직접 그리지 않고 \"대략 이런 느낌의 것\"이라는 몽타주 요약(embedding)만 낸다. 정답은 사진 전체를 이미 본 원본 감정사(**target encoder**)가 같은 방식으로 요약해 둔 메모다. 감정사는 현장 화가의 아주 느리게 따라가는 **쌍둥이** — 매 순간 화가가 배운 것을 아주 조금씩(모멘텀) 베껴가되, 스스로는 절대 이 문제를 풀지 않는다(멈춰 있는 정답지, **stop-gradient**). 화가의 몽타주와 감정사의 메모 사이 거리를 줄이는 것이 유일한 훈련 목표다. 이 문서의 모든 식은 \"누가 보고(context/target), 무엇을 요약하고(embedding), 얼마나 느리게 정답이 움직이나(EMA)\"로 읽으면 된다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n1. **픽셀 복원(MAE류)은 예측 불가능한 디테일에 용량을 낭비한다.** 가려진 영역을 픽셀 그대로 재구성하도록 시키면, 모델은 그 자리의 정확한 질감·그림자·카메라 노이즈까지 맞혀야 한다 — 그런데 이런 저수준 디테일은 애초에 \"무작위\"에 가까워 원리적으로 못 맞힌다. 학습 신호 상당수가 못 맞히는 것을 억지로 맞히려는 데 낭비된다.\n2. **대조학습(contrastive, SimCLR·CLIP류)은 \"같다/다르다\"만 배운다.** 두 view가 같은 이미지에서 나왔는지만 구별하게 훈련하면 augmentation 설계에 성능이 크게 좌우되고, \"이 부분이 저 부분과 공간적으로 어떻게 관련되는가\" 같은 구조적 관계는 명시적으로 못 배운다.\n3. **해법 — 예측을 embedding 공간에서 한다.** context encoder와 target encoder 모두 입력을 \"의미 있는 것만 남긴 압축 벡터\"로 바꾸고, predictor는 그 압축 벡터 공간 안에서만 예측한다. 픽셀 노이즈는 인코더 단계에서 이미 버려지므로, predictor는 \"이 영역이 대략 무엇인가 / 장면이 다음에 어떻게 바뀌는가\"라는 의미적 관계만 배우면 된다.\n4. **붕괴(collapse) 문제와 그 해법.** 인코더가 \"모든 입력을 같은 상수 벡터로 매핑\"해버리면 예측이 항상 완벽히 맞아(손실 0) 트리비얼 해로 무너진다(representation collapse) — 오토인코더처럼 픽셀을 복원할 필요가 없으니 이 지름길이 항상 열려 있다. JEPA는 target encoder를 context encoder의 **아주 느린 사본(EMA)**으로 두고 **역전파를 아예 안 흘려서(stop-gradient)** 이 지름길을 구조적으로 막는다(아래 EQ4·손계산 참고).\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> 정식 유도는 아래 `### 수식` 참조. 무대는 계속 \"몽타주 화가 쌍둥이\".\n\n- **EQ1 두 인코딩** `s_x=E_θ(x), s_y=sg(Ē_θ(y))` — 화가는 가려지지 않은 부분(context $x$)을 보고 요약 $s_x$를 낸다. 감정사는 (가려지기 전) 원본의 그 자리($y$)를 보고 같은 방식으로 요약 $s_y$를 낸다. $s_y$엔 `sg`(stop-gradient) 딱지가 붙어 — \"이 값 쪽으로는 절대 역전파 안 함\", 즉 감정사는 이 손실로는 배우지 않는다.\n- **EQ2 predictor** `ŝ_y=g_φ(s_x, Δy)` — 화가의 요약 $s_x$만으론 \"정확히 어디를, 얼마나 큰 자리를\" 묘사해야 하는지 모른다. 그래서 위치·크기표 $\\Delta y$(mask token + 위치 임베딩)를 함께 번역사(predictor $g_\\phi$)에게 준다. 번역사가 $s_x$와 $\\Delta y$를 조합해 \"그 자리엔 이런 느낌일 것\"이라는 예측 $\\hat s_y$를 낸다.\n- **EQ3 손실(I-JEPA)** `L = (1/M)Σ_i Σ_{j∈B_i} ‖ŝ_{y_j}-s_{y_j}‖²` — $M$개의 서로 다른 가려진 영역마다, 예측 몽타주와 감정사 메모 사이 거리(제곱합)를 재고 평균 낸다. \"몽타주가 감정사 메모와 얼마나 가까운가\"만 줄이면 학습 끝.\n- **EQ4 EMA 갱신** `θ̄ ← m θ̄ + (1-m) θ` — 감정사($\\bar\\theta$)는 화가($\\theta$)를 그대로 베끼지 않고, 아주 큰 비율 $m$(≈0.996~1.0)만큼 \"어제의 나\"를 유지하고 아주 조금($1-m$)만 오늘 화가 쪽으로 움직인다 — 거의 안 변하는 느린 쌍둥이.\n\n#### ⚠️ 초보 함정 (헷갈리는 지점 콕 집기)\n\n1. **\"JEPA는 오토인코더/VAE의 일종\"이라고 생각하면 틀림.** [VAE](bg_vae-latent-space.html)는 latent에서 **픽셀을 복원**하는 디코더 $p_\\theta(x\\mid z)$가 있어야 하지만, JEPA엔 디코더 자체가 없다. 목표가 처음부터 \"픽셀\"이 아니라 \"다른 인코더가 낸 embedding\"이라, 애초에 픽셀 공간으로 돌아올 필요가 없다 — \"reconstruction(복원)\"과 \"prediction in embedding space(임베딩 공간 예측)\"는 다른 패러다임.\n2. **\"target encoder는 그냥 고정된 pretrained 모델\"이라고 생각하면 틀림 (원 논문 안에서는).** I-JEPA/V-JEPA 자체를 처음부터 학습할 때 target encoder는 **매 스텝 갱신되는 이동 타깃**(EMA)이다. 완전히 고정($m=1$)하면 학습 초반 무작위 초기화 상태를 영원히 베끼게 되어 학습 신호가 무의미해진다. 그래서 $m$을 0.996→1.0로 서서히 올려 \"처음엔 조금 따라가고, 갈수록 거의 안 움직이게\" 만든다. (단 아래 함정 3 — 우리 계보에서는 이 EMA 학습이 이미 끝난 **완성품**을 재활용한다.)\n3. **\"예측 대상(target)은 항상 '같은 이미지의 가려진 패치'\"라고 외우면 틀림.** I-JEPA·V-JEPA에선 그렇지만(마스킹 축 = **공간**, 또는 시공간), 우리 계보의 [VLA-JEPA](deepdive_VLA-JEPA.html)는 \"가려진 것\"을 **미래 시간**으로 바꿔치기한다(마스킹 축 = **시간**: context=현재 관측, target=미래 프레임). $\\Delta y$(위치 질의) 자리는 latent action(어떤 행동을 했을 때의 미래인가)이 대신한다. 이 일반화가 아래 `used_by` 절의 핵심.\n4. **\"VLA-JEPA·JEPA-WMs도 target encoder를 EMA로 학습시키는 중\"이라고 생각하면 틀림.** 이 논문들은 자기 훈련 루프 안에서 EMA를 새로 돌리지 않는다 — V-JEPA2라는 **이미 완성된, 완전히 frozen된** pretrained 인코더를 그대로 target으로 가져다 쓴다(EMA는 V-JEPA2 자신을 만들 때 이미 끝났다). \"JEPA를 쓴다\"는 말이 곧 \"EMA를 여기서도 돌린다\"는 뜻은 아니다.\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n1차원 toy embedding으로 I-JEPA 한 스텝을 손으로 굴려본다. 설명을 위해 인코더를 항등함수로 단순화한다: $E(x)=x$ (실제론 ViT지만, 여기선 \"패치의 밝기값을 그대로 그 패치의 embedding으로 본다\"고 치자).\n\n이미지가 가로 4패치로 이뤄져 있고, 각 패치의 밝기값이 $[y_1,y_2,y_3,y_4]=[2,4,6,8]$이라 하자. context block = {패치1,2,4}(패치3만 가려짐), target block = {패치3} 하나.\n\n**① target 인코딩(EQ1, 정답 메모)**: $s_y=\\mathrm{sg}(\\bar E_\\theta(y_3)) = y_3 = 6$.\n\n**② predictor 예측(EQ2)**: toy predictor 규칙 = \"가려진 패치 좌우 이웃의 평균을 낸다\" — $\\hat s_y = g_\\phi(s_x,\\Delta y) = (y_2+y_4)/2 = (4+8)/2 = 6$.\n\n**③ 손실(EQ3)**: $L=(\\hat s_y-s_y)^2=(6-6)^2=0$ — 이미 잘 맞는 경우다. predictor가 아직 서툴러서 $\\hat s_y=5$를 냈다면 $L=(5-6)^2=1$이고, 이 오차의 gradient는 predictor($\\phi$)와 context encoder($\\theta$)만 갱신한다 — target encoder는 `sg` 때문에 이 손실로는 전혀 안 움직인다.\n\n**④ EMA(EQ4)로 \"느린 쌍둥이\" 확인**: 위 학습 스텝에서 context encoder 파라미터가 $\\theta:\\,0.9\\to1.0$으로 갱신됐다고 하자(경사하강 한 스텝). target encoder는 원래 $\\bar\\theta=0.9$, 모멘텀 $m=0.99$였다면:\n\n| 스텝 | 식 | 계산 | 결과 |\n|---|---|---|---|\n| $\\theta$ 갱신(SGD, 화가가 배움) | $\\theta \\leftarrow \\theta - \\eta\\nabla L$ | $0.9 \\to 1.0$ (예: 한 스텝 후) | $\\theta_{\\text{new}}=1.0$ |\n| $\\bar\\theta$ 갱신(EQ4, 감정사가 느리게 따라감) | $\\bar\\theta \\leftarrow m\\bar\\theta+(1-m)\\theta$ | $0.99\\times0.9+0.01\\times1.0=0.891+0.010$ | $\\bar\\theta_{\\text{new}}=0.901$ |\n\n한 스텝에 $\\theta$는 $0.1$만큼 움직였는데 $\\bar\\theta$는 $0.001$만큼만 움직였다 — **100배 느리다.** 만약 $\\theta$가 계속 \"모든 입력→상수\"로 붕괴하려 해도, $\\bar\\theta$는 한참 뒤처져서 붕괴 이전의(아직 다양한) 타깃을 계속 만들어낸다 → 손실이 쉽게 0이 되지 않는다. 이게 \"느린 쌍둥이\"가 붕괴를 막는 실제 산수다.\n\n### 수식 (정식)\n\n**(1) Context/target 인코딩과 predictor** [I-JEPA §3]:\n\n$$\ns_x = E_\\theta(x), \\qquad s_y = \\mathrm{sg}\\big(\\bar E_\\theta(y)\\big), \\qquad \\hat s_y = g_\\phi(s_x,\\ \\Delta y)\n$$\n\n- **무슨 식?**: context encoder $E_\\theta$(학습됨)가 보이는 부분 $x$를 인코딩해 $s_x$를 만든다. target encoder $\\bar E_\\theta$(momentum 사본)가 가려진 부분 $y$를 인코딩해 $s_y$를 만들되 `sg`로 역전파를 차단한다. predictor $g_\\phi$는 $s_x$와, \"어느 위치·어느 크기의 target을 맞혀야 하는가\"를 알려주는 mask token + 위치 임베딩 $\\Delta y$를 조건으로 받아 예측 $\\hat s_y$를 낸다.\n- **왜 $\\Delta y$가 따로 필요한가(논문이 짧게 넘기는 디테일)**: $s_x$엔 오직 context 패치들의 정보만 담겨 있어, predictor가 \"지금 어느 좌표를 채워야 하는지\"를 알 방법이 없다. $\\Delta y$가 그 질의(query)를 명시적으로 준다 — 같은 $s_x$에서 여러 $\\Delta y$를 바꿔가며 여러 target block을 각각 예측할 수 있는 것도 이 덕분이다.\n- **마스킹 구체 수치** [I-JEPA §3]: context block은 스케일 $(0.85,1.0)$(거의 전체), 정사각 비율 1개. target block은 **서로 다른 4개**를, 스케일 $(0.15,0.2)$·종횡비 $(0.75,1.5)$ 범위에서 뽑는다(context와 겹치면 그 부분은 context에서 제거해 문제가 트리비얼해지지 않게 한다).\n\n**(2) I-JEPA 손실 — 여러 target block의 평균 L2** [I-JEPA §3]:\n\n$$\nL = \\frac{1}{M}\\sum_{i=1}^{M}\\sum_{j\\in B_i} \\big\\lVert \\hat s_{y_j} - s_{y_j} \\big\\rVert_2^2\n$$\n\n- **무슨 식?**: $M$개(=4개)의 서로 다른 target block 각각에 대해, 그 블록에 속한 패치 $j\\in B_i$마다 예측-정답 embedding의 L2 오차 제곱을 합산하고, 전체를 평균한다.\n- **왜 4개나 되는 여러 target block을 동시에 쓰는가**: target block 하나만 쓰면 우연히 너무 쉬운(예측 자명한) 자리이거나 너무 어려운 자리가 걸려 학습 신호가 들쭉날쭉해진다. 서로 다른 위치·크기의 블록 여러 개를 동시에 맞히게 하면, 국소적 텍스처가 아니라 여러 스케일에서 일관된 **의미 구조**를 배우도록 강제된다.\n\n**(3) EMA target encoder 갱신** [I-JEPA §3]:\n\n$$\n\\bar\\theta \\leftarrow m\\,\\bar\\theta + (1-m)\\,\\theta, \\qquad m:\\ 0.996 \\to 1.0\\ (\\text{학습 동안 선형 증가})\n$$\n\n- **무슨 식?**: target encoder 파라미터 $\\bar\\theta$가 매 스텝 context encoder $\\theta$ 쪽으로 비율 $(1-m)$만큼만 끌려간다. $\\theta$는 (2)의 손실로 SGD 갱신되지만, $\\bar\\theta$는 오직 이 EMA 식으로만 갱신된다(자기 자신의 gradient 없음).\n- **왜 이래야 붕괴를 막는가(유도)**: 만약 $\\bar\\theta=\\theta$로 매 스텝 동기화한다면, 두 인코더가 \"모든 입력 → 같은 상수 벡터\"로 무너져도 $\\hat s_y=s_y=$상수가 되어 손실이 항상 0 — 아무것도 안 배우고도 손실을 최소화하는 **트리비얼 해**로 붕괴한다(representation collapse). $\\bar\\theta$가 $\\theta$와 분리되고 아주 느리게만 따라가면, $\\theta$가 붕괴하려는 순간에도 $\\bar\\theta$는 \"아직 붕괴하지 않았던 과거의 $\\theta$\"를 반영해 계속 다양한 타깃을 만들어낸다 — 손실이 좀처럼 0이 되지 않아 붕괴로 가는 지름길이 막힌다. \"정답이 나를 따라오지만 나보다 한참 뒤처져 있다\"는 비대칭이 핵심.\n\n**(4) 비디오로 일반화 — V-JEPA 손실과 시공간 마스킹** [V-JEPA Eq.1]:\n\n$$\n\\min_{\\theta,\\phi}\\ \\big\\lVert P_\\phi\\big(E_\\theta(x),\\,\\Delta y\\big) - \\mathrm{sg}\\big(\\bar E_\\theta(y)\\big) \\big\\rVert_1\n$$\n\n- **무슨 식?**: (1)과 형태는 동일하되 두 가지가 바뀐다 — 거리 함수가 L2에서 **L1**로, 그리고 $x,y$가 이미지 패치가 아니라 **시공간 튜블릿**(공간 패치를 전체 클립 길이로 확장한 블록)이 된다.\n- **마스킹이 훨씬 공격적인 이유**: short-range 마스크(프레임당 15% 커버, 8블록) + long-range 마스크(70% 커버, 2블록)를 섞어 평균 **~90%**를 가린다. 비디오는 인접 프레임끼리 정보 중복이 커서, I-JEPA 수준(패치 몇 개만 가림)으로 가리면 \"이웃 프레임을 그대로 복사\"하는 트리비얼 해가 통해버린다 — 훨씬 많이 가려야 진짜 의미적 예측이 강제된다.\n- **비유**: (1)의 화가 비유 그대로, 다만 이제 화가가 보는 게 정지 사진이 아니라 **영상 클립**이고, 가려진 영역도 화면의 한 조각이 아니라 \"시간 전체에 걸친 기둥\"(튜블릿)이다.\n\n### 구조/흐름\n\n**(A) I-JEPA/V-JEPA 원형 — 마스킹 축 = 공간(또는 시공간)**\n\n```\n전체 입력 (image patch grid / video tubelet grid)\n      │\n      ├── context block x (보임) ──►[Context Encoder E_θ, 학습] ──► s_x ──┐\n      │                                                                  │\n      └── target block y (가려짐) ──►[Target Encoder Ē_θ, EMA+sg] ──► s_y ─┤(=정답, stop-grad)\n                                                                          │\n      s_x + Δy(위치·크기 mask token) ──►[Predictor g_φ] ──► ŝ_y ── L2/L1 손실 ──┘\n\nEMA:  θ̄ ← m·θ̄ + (1−m)·θ     (θ만 손실의 gradient를 받음, m: 0.996→1.0)\n```\n\n**(B) VLA-JEPA의 일반화 — 마스킹 축 = 시간 (공간 대신 \"아직 안 온 미래\"를 가림)**\n\n```\n현재 관측 o_t (=context, \"안 가려짐\") ──►[VLM backbone, 학습] ──► latent action z_t (Δy 자리 대체)\n                                                                       │\nhistory latent s_{t0:i} + z_t ──►[predictor(latent world model), 학습] ──► ŝ_{t+1} (예측 미래 latent)\n                                                                       │\n미래 프레임 (=target y) ──►[V-JEPA2, 완전 frozen(자체 EMA 없음)] ──► s_{t+1} (=정답, stop-grad) ── loss ──┘\n```\n\n두 그림을 나란히 보면: **누가 context/target인지, 무엇으로 \"어디를 예측할지\" 질의하는지(위치 vs 행동)**만 바뀌었을 뿐, \"임베딩 공간에서 예측 + stop-gradient된 정답\"이라는 골격은 그대로다.\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문 | JEPA 요소가 정확히 하는 일 | JEPA 원형과 다른 점 |\n|---|---|---|\n| [VLA-JEPA](deepdive_VLA-JEPA.html) | V-JEPA2 = 완전 frozen target encoder(미래 클립을 인코딩해 latent target $s_{t_k}$를 만듦). predictor = latent world model(history latent + latent action → future latent). \"JEPA alignment loss\"로 학습되며, ELBO에서 $F(\\cdot)$가 결정론적이라 KL 항이 사라져 순수 embedding 회귀로 환원(§ VLA-JEPA_deepdive.md Eq.4–5). | 마스킹 축이 **공간→시간**(가려진 패치 대신 미래 시점). target encoder가 자체 EMA로 학습되는 게 아니라 **이미 완성된 V-JEPA2를 그대로 재사용**(위 함정 4). |\n| JEPA-WMs (`world_model_lineage_easy.md` §③) | frozen DINOv2/DINOv3/V-JEPA2 encoder + AdaLN predictor(현재 latent+**행동**→다음 latent), multi-step rollout MSE로 학습. 예측된 latent를 [Subgoal·Goal Image](bg_subgoal-goal-image.html) EQ3의 CEM planner가 채점 잣대로 소비. | \"무엇을 예측할지\" 질의 신호가 위치($\\Delta y$) 대신 **행동**($a_t$, AdaLN으로 주입). 단일 target block 예측이 아니라 **multi-step rollout**(여러 스텝 앞까지). encoder는 완전 frozen(EMA 없음), predictor만 학습. |\n| JEPA-Wild (`world_model_lineage_easy.md` §③, \"Learning Latent Action World Models In The Wild\") | V-JEPA2 encoder(frozen) + [IDM](bg_inverse-dynamics-model.html)(과거·미래 프레임에서 연속 latent action $a_t$를 역산) + forward predictor(현재 latent+$a_t$→다음 latent), IDM과 predictor는 **함께** 학습. | JEPA predictor 혼자로는 \"무엇을 조건으로 예측할지\"(행동)가 없는데, action 라벨이 없는 인터넷 영상이라 IDM이 그 행동 자체를 스스로 만들어 공급 — JEPA와 IDM의 결합. |\n| [DreamZero](deepdive_DreamZero.html) Appendix A (대조 인용) | 순수 비교 대상 — \"Latent-Space WM(JEPA/Dreamer)\"을 DreamZero의 video-diffusion 기반 WAM과 대조하며 \"forward dynamics $p(s_{t+1}\\mid s_t,a_t)$만 배워 trajectory 생성엔 별도 test-time planning/search가 필요\"하다고 지적(V-JEPA2 로봇 post-train 62시간 수치 인용). | DreamZero 자신은 JEPA를 쓰지 않는다 — \"왜 우리는 latent-space WM 대신 video-diffusion WAM을 택했나\"의 대조군으로만 인용됨. |\n\n- 분류 참고(`world_model_lineage_easy.md`): VLA-JEPA는 **② WAM**(미래 latent 예측이 보조 목적, 행동은 별도 flow-matching head가 생성), JEPA-WMs/JEPA-Wild는 **③ WM+IDM**(순수 forward world model + 탐색/IDM으로 행동 복원, 언어 입력·정책 head 없음)로 분류된다 — 같은 \"JEPA\"라는 이름 아래에도 계보 카드 상 위치가 다르다.\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-08-02 04:19 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
