@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">RoPE (Rotary Position Embedding, 회전 위치 인코딩)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# RoPE (Rotary Position Embedding, 회전 위치 인코딩)\n\n> 출처: [RoFormer] Su, Lu, Pan, Wen, Liu, \"RoFormer: Enhanced Transformer with Rotary Position Embedding\" (arXiv:2104.09864). 우리 계보 등장: `DreamZero_deepdive.md` · `LingBot-VLA_2.0_deepdive.md` · `Next_Forcing_deepdive.md` · `tau-zero_deepdive.md` · `world_model_lineage_easy.md`(JEPA-WMs 카드) + 카드 EgoGenesis(arXiv 2607.28243) · Faster-WAM(arXiv 2608.02365) 등 10개 문서, 50회 언급. ※ Qwen2-VL의 M-RoPE(위치를 시간·높이·너비로 분해)는 이미 [Qwen2-VL](bg_qwen2-vl.html) 섹션이 다룬다 — 이 토픽은 그 M-RoPE가 딛고 서 있는 **1D RoPE 원리 자체**를 바닥부터 다진다.\n\n**한 줄 정의**: 위치 정보를 벡터에 **더하지 않고**, query·key 벡터를 위치 $m$에 비례한 각도만큼 **회전**시켜서, 두 벡터의 내적이 각자의 절대 위치가 아니라 **오직 상대 거리 $m-n$에만** 의존하게 만드는 위치 인코딩.\n\n> **30초 큰 그림 비유 — \"여러 개의 다이얼(시계바늘) 세트\"**: 벡터 하나를 여러 개의 작은 다이얼(시계바늘) 묶음이라고 생각하자. 토큰이 몇 번째 위치($m$)에 있는지에 따라 이 다이얼들을 정해진 속도로 돌려놓는다 — 어떤 다이얼은 초침처럼 빨리 돌고, 어떤 다이얼은 시침처럼 느리게 돈다. 두 토큰의 벡터를 내적(비교)하면 신기하게도 **각 다이얼이 정확히 몇 시를 가리키는지는 계산 결과에서 사라지고, 두 바늘 사이의 각도차 — 즉 \"몇 칸 떨어져 있는가\"만 남는다.** 이 비유가 이 토픽 전체를 관통한다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n1. **원조 Transformer(Attention Is All You Need, [KV cache](bg_kv-cache.html) 섹션의 [AT] 참조)의 위치 인코딩은 \"더하기\"였다**: 위치마다 고정된(또는 학습된) 벡터를 토큰 임베딩에 **한 번 덧셈**하고 끝. 문제는 이 덧셈이 attention 내적 $q\\cdot k$ 안에서 콘텐츠 정보와 위치 정보를 뒤섞어버려, \"이 두 토큰이 정확히 3칸 떨어져 있다\"는 **깨끗한 상대 위치 신호**가 내적 결과에 수학적으로 보장되지 않는다.\n2. **학습된 절대 위치 임베딩은 길이를 못 늘린다**: 위치 0..511만 학습했다면 512번째 위치의 벡터는 아예 존재하지 않는다 — 학습 때 본 최대 길이 밖으로 못 나간다(길이 외삽 불가). 영상 프레임이 길어지거나(long-horizon rollout) action chunk가 길어지면 이 한계가 그대로 발목을 잡는다.\n3. **RoPE의 해법**: 위치를 더하는 대신 **회전(곱셈)**으로 주입한다. 회전은 언제나 닫힌 형태 공식(각도 $=$ 위치 $\\times$ 상수)으로 계산되므로 학습 안 해본 위치라도 그냥 그 위치의 각도로 돌리면 된다(학습 테이블 불필요) — 그리고 뒤에서 증명하듯 **두 벡터의 내적이 상대 거리만의 함수가 되는 것이 수학적으로 보장**된다(바라기만 하는 게 아니라 증명됨).\n4. **로봇·영상 계보가 RoPE를 좋아하는 이유**: 우리 계보의 \"위치\"는 텍스트 토큰 인덱스만이 아니다 — 영상 프레임 번호(시간), 픽셀 격자(세로·가로), action chunk의 스텝 번호, 카메라의 3D 좌표까지 전부 \"위치\"로 다뤄야 한다. RoPE는 \"정수 위치 하나 $\\to$ 회전 각도 하나\"라는 단순한 규칙이라 이 축들을 채널 그룹으로 나눠 각각에 적용하면 그대로 다차원(2D/3D)으로 확장된다 — Qwen2-VL의 M-RoPE(t,h,w), EgoGenesis의 Action-3D RoPE가 그 사례.\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> 정식 유도는 바로 아래 `### 수식` 참조. 여기선 \"다이얼\" 비유로 직관만 잡는다.\n\n- **EQ1 설계 목표** `⟨f_q(x_m,m), f_k(x_n,n)⟩ = g(x_m,x_n, m-n)` — 위치를 주입하는 함수 $f_q,f_k$를 찾되, 그 결과물의 내적이 절대 위치 $m,n$ 자체가 아니라 **오직 차이 $m-n$의 함수** $g$가 되도록 설계한다는 요구조건. \"두 다이얼을 비교하면 몇 시인지는 사라지고 몇 시간 차이인지만 남아야 한다\"는 주문.\n- **EQ2 한 쌍(2D)의 해 — 복소수로 본 회전** `f(x_m,m) = (Wx_m)\\,e^{im\\theta}` — 2차원 벡터 하나를 복소평면의 점 하나로 보고, 위치 $m$에 비례한 각도 $m\\theta$만큼 **회전**시킨다($e^{im\\theta}$가 회전 연산자). 다이얼을 $m\\theta$만큼 돌린 것.\n- **EQ3 다이얼마다 다른 속도 — 주파수** `θ_i = 10000^{-2(i-1)/d}` — 벡터를 $d/2$개의 다이얼(쌍)로 쪼개면 다이얼마다 회전 속도(각속도)가 다르다. $i{=}1$(첫 다이얼)은 가장 빨리 돌고, $i{=}d/2$(마지막 다이얼)는 가장 느리게 돈다. 빠른 다이얼은 \"바로 옆 위치\"를 구분하는 데 민감하고, 느린 다이얼은 \"멀리 떨어진 위치\"까지 안 헷갈리고 구분한다.\n- **EQ4 전체 회전행렬** `R^d_{Θ,m}` — 위 다이얼 $d/2$개를 대각선으로 모아 쌓은 하나의 큰 회전행렬. 벡터 전체($d$차원)에 한 번에 적용.\n- **EQ5 상대성 증명** `q_m^\\top k_n = x_m^\\top W_q^\\top R_{Θ,n-m} W_k x_n` — EQ1에서 **바라기만 했던 성질이 실제로 성립함**을 보여주는 식. 회전행렬의 성질($m$만큼 돌린 것의 전치 $\\times$ $n$만큼 돌린 것 $=$ $n-m$만큼 돌린 것, 즉 $R_m^\\top R_n = R_{n-m}$) 덕분에 절대 위치 $m,n$이 식 안에서 **차이 $n-m$ 하나로 합쳐진다**.\n- **EQ6 효율적 구현** — 실제 코드는 $d\\times d$ 회전행렬을 통째로 곱하지 않고, **원소별 곱셈(element-wise)** + 절반 부호 바꿔 자리 바꾸기(\"rotate-half\")로 같은 결과를 훨씬 빠르게 계산한다.\n\n#### ⚠️ 초보 함정 (헷갈리는 지점 콕 집기)\n\n1. **\"위치 인코딩이니까 어딘가에 더해지겠지\"라고 생각하면 틀림.** 원조 Transformer/BERT류의 sinusoidal·learnable PE는 **덧셈(additive)**이지만, RoPE는 벡터를 **회전(곱셈, multiplicative)**시킨다 — 더하는 게 아니라 \"돌린다\".\n2. **\"밑(base)이 10000이니까 모든 다이얼이 다 빨리 돈다\"고 생각하면 틀림.** EQ3에서 $i{=}1$을 넣으면 지수가 $-2(1-1)/d=0$이 되어 $\\theta_1 = 10000^0 = 1\\,\\text{rad}$ — **밑이 얼마든 첫 다이얼의 각속도는 항상 정확히 1 rad/위치**다. base 10000은 오직 $i$가 커질수록(느린 다이얼일수록) 얼마나 더 느려지는지를 조절할 뿐, 가장 빠른 다이얼 자체는 base 선택과 무관하다.\n3. **\"실제 코드도 논문처럼 바로 옆 두 원소 $(x_1,x_2),(x_3,x_4),\\dots$를 짝지어 돌린다\"고 생각하면 틀림.** 논문 원식(EQ4/EQ6)은 인접 쌍을 돌리지만, LLaMA·GPT-NeoX 계열을 포함한 실무 구현 다수는 벡터를 **반으로 나눠** $(x_i, x_{i+d/2})$ 쌍을 돌리는 \"half-split\" 방식을 쓴다. 두 방식은 채널 순서만 다를 뿐 수학적으로 동치이지만, **한쪽 방식으로 학습된 가중치를 다른 쪽 구현에 그대로 넣으면 값이 어긋난다** — 코드를 옮길 때 반드시 어느 방식인지 확인.\n4. **\"RoPE는 1차원 순서(텍스트/시간)에만 쓴다\"고 생각하면 틀림.** $d$차원 벡터의 채널을 그룹으로 나눠, 그룹마다 다른 위치 축(시간 $t$, 세로 $h$, 가로 $w$, action step 등)의 정수 인덱스로 회전시키면 그대로 다차원 RoPE가 된다. 자세한 분해는 [Qwen2-VL의 M-RoPE](bg_qwen2-vl.html) 참조 — 여기서는 \"1D 전용이 아니다\"라는 사실만 짚는다.\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n**설정**: 가장 작은 RoPE인 $d{=}2$(다이얼 1개)를 손으로 돌려본다. EQ3대로면 $i{=}1$의 각속도는 **정확히 $\\theta_1=1\\,\\text{rad}$**(위 함정 2)이지만, $\\sin(1\\,\\text{rad})\\approx0.841$처럼 손으로 계산하기 지저분한 값이라, 아래 표에서는 **같은 공식의 형태를 유지한 채** 각속도를 손으로 계산하기 깔끔한 $\\theta=90°$로 바꿔치기한 **toy 버전**을 쓴다(실제 학습에 쓰이는 값이 아니라 손계산용 대체 상수임에 주의).\n\n같은 토큰 내용 $x=(1,0)$이 위치 $m$에 놓일 때마다 $m\\theta=m\\times90°$만큼 회전한다:\n\n| 위치 $m$ | 회전각 $m\\theta$ | 회전 후 벡터 $R(m\\theta)\\,x$ |\n|---|---|---|\n| 0 | $0°$ | $(1,\\ 0)$ |\n| 1 | $90°$ | $(0,\\ 1)$ |\n| 2 | $180°$ | $(-1,\\ 0)$ |\n| 3 | $270°$ | $(0,\\ -1)$ |\n\n**계산 예시** ($m=1$): $R(90°)x = (\\cos90°\\cdot1-\\sin90°\\cdot0,\\ \\sin90°\\cdot1+\\cos90°\\cdot0) = (0,\\ 1)$.\n\n**Step — EQ5(상대성)를 내적으로 직접 확인한다.** 절대 위치가 서로 다른 두 쌍을 골라 내적을 비교한다:\n\n| 토큰 쌍 $(m,n)$ | 상대거리 $n-m$ | 내적 $R(m\\theta)x \\cdot R(n\\theta)x$ |\n|---|---|---|\n| $(0,1)$ | $1$ | $(1,0)\\cdot(0,1) = 0$ |\n| $(1,2)$ | $1$ | $(0,1)\\cdot(-1,0) = 0$ |\n| $(0,2)$ | $2$ | $(1,0)\\cdot(-1,0) = -1$ |\n| $(1,3)$ | $2$ | $(0,1)\\cdot(0,-1) = -1$ |\n\n**확인할 것**: $(0,1)$과 $(1,2)$는 절대 위치가 완전히 다르지만 **상대거리가 같으니(1칸) 내적도 똑같이 0**이다. $(0,2)$와 $(1,3)$도 절대 위치는 다르지만 **상대거리가 같으니(2칸) 내적이 똑같이 $-1$**이다. 반면 상대거리가 다르면(1 대 2) 내적값도 다르다(0 대 $-1$). 이것이 EQ5 \"$q_m^\\top k_n$은 오직 $n-m$의 함수\"라는 주장을 숫자로 직접 확인한 것 — 절대 위치를 통째로 2칸 밀어도(0,1→1,2로) 결과가 안 변하는 **평행이동 불변성**의 실체다.\n\n### 수식 (정식)\n\n**(1) 설계 목표 — 상대 위치만 남기기**:\n\n$$\n\\big\\langle f_q(x_m,m),\\ f_k(x_n,n)\\big\\rangle = g(x_m, x_n,\\ m-n)\n$$\n\n- **무슨 식?**: 위치 $m,n$을 각각 query·key에 주입하는 함수 $f_q,f_k$를 만들되, 그 결과물의 내적이 **절대 위치가 아니라 오직 차이 $m-n$의 함수 $g$**가 되도록 하자는 요구조건. 원조 Transformer의 덧셈식 위치 인코딩은 이 성질을 보장하지 않는다 — RoPE는 이 요구조건을 만족하는 구체적인 $f_q,f_k$를 **회전**으로 구성해낸다.\n- **비유**: \"두 다이얼을 비교했을 때 몇 시인지는 지워지고 몇 시간 차이인지만 남아야 한다\"는 설계 주문서.\n\n**(2) $d{=}2$ 해 — 복소수 회전** [RoFormer 식 12]:\n\n$$\nf_q(x_m,m) = (W_q x_m)\\,e^{im\\theta}, \\qquad f_k(x_n,n) = (W_k x_n)\\,e^{in\\theta}\n$$\n\n- **무슨 식?**: 2차원 실벡터 $(a,b)$를 복소수 $a+bi$ 하나로 취급하면, $e^{im\\theta}$를 곱하는 것이 **원점 중심으로 각도 $m\\theta$만큼 회전**시키는 것과 정확히 같다(복소수 곱셈 = 회전+스케일, 여기선 크기 1이라 순수 회전). $\\theta$는 고정된 각속도, $m$은 토큰 위치(0부터 시작).\n- **확인**: $f_q(x_m,m)\\,\\overline{f_k(x_n,n)} = (W_qx_m)\\overline{(W_kx_n)}\\,e^{i(m-n)\\theta}$ — 곱한 결과의 위상(각도)이 $m,n$ 각각이 아니라 **차이 $(m-n)\\theta$ 하나**로 뭉쳐진다. 실수부를 취하면 이것이 바로 (1)의 $g$ — 설계 목표가 실제로 달성된다.\n\n**(3) 행렬로 쓰면** [RoFormer 식 13]:\n\n$$\nf_{\\{q,k\\}}(x_m,m) = \\begin{pmatrix}\\cos m\\theta & -\\sin m\\theta\\\\ \\sin m\\theta & \\cos m\\theta\\end{pmatrix}\\begin{pmatrix}W^{(11)}_{\\{q,k\\}} & W^{(12)}_{\\{q,k\\}}\\\\ W^{(21)}_{\\{q,k\\}} & W^{(22)}_{\\{q,k\\}}\\end{pmatrix}\\begin{pmatrix}x_m^{(1)}\\\\ x_m^{(2)}\\end{pmatrix}\n$$\n\n- **무슨 식?**: (2)의 복소수 회전을 **2$\\times$2 회전행렬**로 다시 쓴 것 — 먼저 $W_{\\{q,k\\}}$로 사영한 뒤, 그 결과 2차원 벡터를 각도 $m\\theta$만큼 도는 회전행렬로 회전시킨다. 이 형태가 바로 뒤 EQ4/(4)의 \"다이얼\"을 여러 개로 늘리는 청사진.\n\n**(4) $d$차원 일반화 — 여러 다이얼로 쪼개기** [RoFormer 식 14–15]:\n\n벡터 전체 차원 $d$(짝수)를 $d/2$개의 2차원 쌍(다이얼)으로 나누고, 다이얼마다 서로 다른 각속도를 준다:\n\n$$\n\\Theta = \\{\\theta_i = 10000^{-2(i-1)/d} \\mid i=1,2,\\dots,d/2\\}\n$$\n\n$$\nf_{\\{q,k\\}}(x_m,m) = R^d_{\\Theta,m}\\,W_{\\{q,k\\}}\\,x_m\n$$\n\n여기서 $R^d_{\\Theta,m}$은 $i$번째 대각 블록이 $\\begin{pmatrix}\\cos m\\theta_i & -\\sin m\\theta_i\\\\ \\sin m\\theta_i & \\cos m\\theta_i\\end{pmatrix}$이고 나머지는 0인 **block-diagonal** $d\\times d$ 행렬이다.\n\n- **무슨 식?**: (3)의 2차원 회전을 다이얼 $d/2$개로 늘려 대각선에 나란히 쌓은 것. $\\theta_i$가 다이얼마다 다르므로(위 함정 2) 첫 다이얼($i{=}1$, 항상 1 rad/위치)은 국소적(가까운 위치) 구분에, 마지막 다이얼($i{=}d/2$, 가장 느림)은 장거리 패턴 구분에 쓰인다 — 마치 초침·분침·시침이 각자 다른 시간 단위를 담당하는 것과 같다.\n\n**(5) 상대 위치만 남는다는 증명** [RoFormer 식 16]:\n\n$$\nq_m^\\top k_n = \\big(R^d_{\\Theta,m}W_q x_m\\big)^\\top\\big(R^d_{\\Theta,n}W_k x_n\\big) = x_m^\\top W_q^\\top R^d_{\\Theta,n-m} W_k\\, x_n\n$$\n\n- **무슨 식?**: 회전행렬은 **직교행렬**이라 $\\left(R^d_{\\Theta,m}\\right)^\\top R^d_{\\Theta,n} = R^d_{\\Theta,n-m}$이 성립한다(\"$m$만큼 돌린 것을 되돌리고(전치) $n$만큼 돌리면, 순수하게 $n-m$만큼 돌린 것과 같다\" — 다이얼을 반대로 돌렸다 다시 돌리면 차이만 남는 것과 같은 원리). 그 결과 최종 내적식에 $m,n$은 **차이 $n{-}m$ 하나로만** 등장 — 이게 (1)에서 요구했던 성질이 정확히 성립한다는 증명.\n- **왜 좋은가**: 학습 때 본 적 없는 절대 위치(더 긴 시퀀스)라도, 회전각을 그 위치만큼 계산해 넣기만 하면 상대성이 그대로 유지된다 — 학습된 위치 테이블이 필요 없다(길이 외삽에 유리).\n\n**(6) 효율적 구현 — 실제 코드가 계산하는 형태** [RoFormer 식 34]:\n\n$$\nR^d_{\\Theta,m}x = \\begin{pmatrix}x_1\\\\x_2\\\\x_3\\\\x_4\\\\\\vdots\\\\x_{d-1}\\\\x_d\\end{pmatrix}\\odot\\begin{pmatrix}\\cos m\\theta_1\\\\\\cos m\\theta_1\\\\\\cos m\\theta_2\\\\\\cos m\\theta_2\\\\\\vdots\\\\\\cos m\\theta_{d/2}\\\\\\cos m\\theta_{d/2}\\end{pmatrix} + \\begin{pmatrix}-x_2\\\\x_1\\\\-x_4\\\\x_3\\\\\\vdots\\\\-x_d\\\\x_{d-1}\\end{pmatrix}\\odot\\begin{pmatrix}\\sin m\\theta_1\\\\\\sin m\\theta_1\\\\\\sin m\\theta_2\\\\\\sin m\\theta_2\\\\\\vdots\\\\\\sin m\\theta_{d/2}\\\\\\sin m\\theta_{d/2}\\end{pmatrix}\n$$\n\n- **무슨 식?**: (4)의 $d\\times d$ 행렬곱을 그대로 하면 $O(d^2)$ 연산이 낭비된다. 대신 원소별 곱셈($\\odot$) 두 번과 덧셈 한 번, 그리고 원소를 절반씩 부호 바꿔 자리 바꾸는 연산(\"rotate-half\")만으로 **완전히 같은 결과**를 $O(d)$에 계산한다 — GPU에서 실제로 도는 코드는 이 형태다.\n- **장기 감쇠(long-term decay) 성질**: [RoFormer]는 이 구조에서 $\\theta_i$가 $i$가 커질수록 작아지므로(느린 다이얼) \"상대 위치가 멀어질수록 내적의 상한이 감쇠한다\"고 보인다 — 논문 표현으로 \"a pair of tokens with a long relative distance should have less connection\", 즉 **멀리 떨어진 토큰끼리는 자연히 덜 강하게 연결되는 성질**이 회전 구조 자체에서 공짜로 따라온다.\n\n### 구조/흐름 — attention 안에서 RoPE가 도는 위치, 그리고 다차원 확장\n\n```\n[표준 1D RoPE — 텍스트/action 시퀀스]\n  x_m --(W_Q)--> q_m --[회전 R(mΘ)]--> q̃_m ─┐\n  x_n --(W_K)--> k_n --[회전 R(nΘ)]--> k̃_n ─┴─ score = q̃_m · k̃_n  (EQ5: n-m에만 의존)\n  (V에는 회전을 적용하지 않는다 — 위치는 Q·K의 \"어디를 볼지\" 점수에만 관여, 실려 오는 내용물 V는 그대로)\n\n[다차원 확장 — 채널을 축마다 그룹으로 쪼갠다 (M-RoPE / 3D-RoPE / Action-3D RoPE)]\n  d차원 벡터를 채널로 분할:\n    [ 채널 그룹 1 (d/3) ] <- 회전각 = 시간 t × θ   (temporal)\n    [ 채널 그룹 2 (d/3) ] <- 회전각 = 세로 h × θ   (height)\n    [ 채널 그룹 3 (d/3) ] <- 회전각 = 가로 w × θ   (width)\n  각 그룹은 (4)의 1D RoPE를 독립적으로 돌리고, 이어붙여 하나의 벡터로 합친다.\n  (Qwen2-VL M-RoPE의 정확한 (t,h,w) 분해·좌표 규칙은 bg_qwen2-vl.html §④)\n```\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문/카드 | RoPE의 변형·쓰임 |\n|---|---|\n| [DreamZero](deepdive_DreamZero.html) | 추론 가속 PTQ(D.2)에서 weight·activation은 NVFP4/FP8로 낮추면서도 **RoPE 연산은 FP16 accumulation을 유지** — 회전 각도 계산은 정밀도 손실에 특히 민감하다는 판단. |\n| [LingBot-VLA 2.0](deepdive_LingBot-VLA_2.0.html) | teacher DINO-Video(D)가 DINOv3 이미지 backbone에 **block-wise causal temporal attention + 3D-RoPE**를 결합해 비디오로 확장 — motion-aware feature를 만드는 데 시간·공간 위치를 함께 회전으로 인코딩. |\n| [Next Forcing](deepdive_Next_Forcing.html) | MCP position encoding(식6) — 보조 예측 청크(MCP)에 실제 시간 인덱스 $i$가 아니라 **미래 offset $i+k$의 RoPE**를 줘서, \"너는 $k$스텝 뒤를 맞혀라\"는 정보를 위치 하나로 전달($\\mathrm{RoPE}(x_0^{[k]}[i])=\\mathrm{RoPE}(i+k)$). |\n| τ0-WM ([tau-zero](deepdive_tau-zero.html)) | 부록 -B3: action token은 1차원 시간 시퀀스이므로 **1D RoPE를 배포 시작 시 1회 precompute**해 전체 배포 동안 재사용(매 스텝 주파수 재계산 생략) — KV cache(-B1)·Fused QKV(-B2)·torch.compile(-B4)과 결합해 배포 지연 약 180ms→140ms. |\n| Qwen2-VL (`world_model_lineage_easy.md` 등에서 인용) | **M-RoPE** — 위치를 (시간,세로,가로) 3성분으로 분해해 텍스트·이미지·비디오를 한 좌표계에서 인코딩. 상세 분해·그림은 [Qwen2-VL](bg_qwen2-vl.html) §④ 참조(중복 작성 안 함). |\n| 카드 EgoGenesis(arXiv 2607.28243) | **Action-3D RoPE(A3D-RoPE)** — 카메라 인식 3D 회전좌표로 카메라·엔드이펙터 궤적의 기하 정보를 비디오 생성기에 직접 주입, 첫 프레임 3D 앵커(OAPM)와 결합해 장기 롤아웃에서도 기하 일관성 유지. |\n| 카드 Faster-WAM(arXiv 2608.02365) | **video-action RoPE alignment** — 사전학습 video-DiT는 3D RoPE, action expert는 1D RoPE를 쓰기 때문에 좌표계가 어긋난다(3D vs 1D). Dock of Transformer의 도킹 인터페이스가 KV-Fusion과 함께 이 RoPE 좌표계 불일치를 정렬해, 깊은 action expert 없이 단일 레이어 헤드만으로 video 표현을 재사용. |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-08-09 02:50 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
