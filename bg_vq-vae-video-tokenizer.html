@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WM / VLA Survey</title>
+<style>
+:root{--panel:#fff;--ink:#1a1f2e;--mut:#6b7280;--line:#e6e8ee;--accent:#3b5bdb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:var(--ink);background:#f4f6fb}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:26px 20px}
+header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+header h1 a{color:#fff;text-decoration:none}
+header p{margin:0;color:#aab3c5;font-size:13px}
+header p a{color:#9db4ff}
+.nav{display:flex;gap:10px}
+.btn{display:inline-block;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer;border:0}
+.btn.primary{background:#3b5bdb;color:#fff}
+.btn.primary:hover{background:#4c6ef5}
+.btn.ghost{background:rgba(255,255,255,.12);color:#e7ecf5;border:1px solid rgba(255,255,255,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.2)}
+#upd-status{font-size:12px;color:#ffdeb0;margin-top:6px;min-height:14px}
+main{max-width:1100px;margin:0 auto;padding:24px 20px 64px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 6px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--mut);font-size:13px;font-weight:700;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .n{opacity:.65;font-weight:600;margin-left:4px;font-size:11.5px}
+h2.date{font-size:15px;color:var(--mut);font-weight:600;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.card{display:grid;grid-template-columns:340px 1fr;gap:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.card.big{border-left:4px solid #e03131}
+.card.pending{border-left:4px solid #f59f00;background:#fffdf5}
+.card .L{min-width:0}
+.card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+.card h3 a{color:var(--ink);text-decoration:none}
+.card h3 a:hover{color:var(--accent);text-decoration:underline}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:#eef1f7;color:#374151}
+.badge.org{background:#ffe3e3;color:#c92a2a}
+.badge.conf{background:#e7f5ff;color:#1971c2}
+.badge.arxiv{background:#f1f3f5;color:#495057}
+.badge.up{background:#fff4e6;color:#e8590c}
+.badge.bw{background:#fff3bf;color:#9a6700}
+.badge.pri{font-weight:800;letter-spacing:.2px;cursor:help;border:1px solid transparent}
+.badge.pri.gA{background:#12b886;color:#fff}
+.badge.pri.gB{background:#40c057;color:#fff}
+.badge.pri.gC{background:#fab005;color:#3d2c00}
+.badge.pri.gD{background:#fd7e14;color:#fff}
+.badge.pri.gE{background:#e9ecef;color:#868e96}
+.badge.rig{background:#eef2ff;color:#3b4a8a;font-weight:700;cursor:help;border:1px solid #dbe1f5}
+.badge.rig.dd{background:#e6fcf5;color:#0b7285;border-color:#63e6be}
+.R{min-width:0}
+.sum{margin:0 0 10px;font-size:14px;color:#374151;line-height:1.6}
+.muted{color:#9aa3b2;font-style:italic}
+.f{font-size:13px;color:#4b5563;display:flex;gap:8px;align-items:baseline;margin:6px 0}
+.lbl{flex:0 0 56px;color:#94a3b8;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pm{margin:0;padding-left:18px;line-height:1.55}
+.pm.plus li::marker{content:"+ ";color:#2b8a3e;font-weight:700}
+.pm.minus li::marker{content:"− ";color:#c92a2a;font-weight:700}
+.catv{font-weight:600;padding:1px 8px;border-radius:6px}
+.catv.catknown{background:#ebfbee;color:#2b8a3e}
+.catv.catnew{background:#fff4e6;color:#e8590c}
+.f.col{flex-direction:column;align-items:stretch;gap:5px}
+.cmps{display:flex;flex-wrap:wrap;gap:5px}
+.cmp{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3b4ba8;border:1px solid #dfe3fb}
+.scoretab{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+.scoretab th,.scoretab td{border:1px solid var(--line);padding:4px 8px;text-align:left;vertical-align:top}
+.scoretab th{background:#f1f3f9;color:#475569;font-weight:700;font-size:11px}
+.scoretab td.mt{color:#64748b;white-space:nowrap}
+.scoretab td.me{font-weight:800;color:#2b8a3e;white-space:nowrap}
+.scoretab .note{color:#9aa3b2;font-size:10.5px}
+.fig{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;border:1px solid var(--line);margin:10px 0 0;background:#fff}
+.meta{font-size:12px;color:var(--mut)}
+.meta a{color:var(--accent);text-decoration:none}.meta a:hover{text-decoration:underline}
+.empty{color:var(--mut);font-size:14px;padding:30px 0}
+footer{max-width:1100px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:12px}
+.dd-list{list-style:none;padding:0}
+.dd-list li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:10px 0}
+.dd-list a{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none}
+.dd-list a:hover{color:var(--accent)}
+.dd-list .src{font-size:12px;color:var(--mut);margin-top:4px}
+article.dd{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 34px;line-height:1.7;font-size:15px}
+article.dd img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+article.dd pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+article.dd code{background:#eef1f7;padding:1px 5px;border-radius:4px;font-size:13px}
+article.dd pre code{background:none;padding:0}
+article.dd table{border-collapse:collapse;width:100%;font-size:13.5px}
+article.dd th,article.dd td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+article.dd th{background:#f1f3f9}
+article.dd blockquote{border-left:4px solid #c5cae9;margin:10px 0;padding:4px 14px;color:#4b5563;background:#f8f9ff}
+@media(max-width:760px){.card{grid-template-columns:1fr;gap:10px}header .wrap{flex-direction:column;align-items:flex-start}}
+</style><style>
+#qtab{position:fixed;right:0;top:45%;z-index:60;writing-mode:vertical-rl;padding:14px 9px;border:1px solid var(--line);border-right:none;border-radius:10px 0 0 10px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:2px}
+#qtab:hover{background:#4c6ef5}
+#qdrawer{position:fixed;right:0;top:0;height:100%;width:360px;max-width:92vw;z-index:70;background:var(--panel,#fff);border-left:1px solid var(--line);box-shadow:-4px 0 18px rgba(16,24,40,.14);padding:18px;overflow-y:auto;font-size:13.5px;box-sizing:border-box}
+#qdrawer h3{margin:0;font-size:15px}
+#qdrawer .qx{border:none;background:none;font-size:16px;cursor:pointer;color:#64748b}
+#qdrawer .qhint{color:#64748b;font-size:12px;margin:8px 0 10px}
+#qselbox{background:#f8f9ff;border:1px solid #dbe1f5;border-radius:8px;padding:8px 10px;margin-bottom:8px;font-size:12px}
+#qselbox .qsellbl{font-weight:700;color:#3b4a8a;margin-right:6px}
+#qselbox button{float:right;border:none;background:none;color:#94a3b8;cursor:pointer;font-size:11px}
+#qtext{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:13.5px;font-family:inherit;resize:vertical}
+#qsave{width:100%;margin-top:8px;padding:9px;border:none;border-radius:8px;background:#3b5bdb;color:#fff;font-weight:700;cursor:pointer}
+#qsave:hover{background:#4c6ef5}
+#qmsg{font-size:12px;color:#2b8a3e;margin:7px 0;min-height:16px}
+.qlisthead{font-weight:700;font-size:12.5px;color:#475569;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:12px}
+#qlist{list-style:none;margin:0;padding:0}
+#qlist li{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:7px 0;position:relative}
+#qlist li a{font-weight:700;font-size:12.5px}
+#qlist .qbody{margin:4px 0 2px;white-space:pre-wrap}
+#qlist .qmeta{color:#94a3b8;font-size:11px}
+#qlist .qdel{position:absolute;right:8px;top:8px;border:none;background:none;color:#c92a2a;cursor:pointer;font-size:11px}
+#qlist .qempty{border:none;color:#94a3b8;padding:4px 0}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5/lib/index.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+<!-- hub-nav: cross-site hub links (1단계 시험 — 이 블록 삭제로 원복) -->
+<nav style="display:flex;align-items:center;gap:14px;padding:6px 18px;font-size:12px;border-bottom:1px solid rgba(127,127,127,.25)">
+  <span style="opacity:.55;letter-spacing:.12em;font-size:10px">HUB</span>
+  <a href="https://jaeukmoon.github.io/TSF/" style="color:inherit;opacity:.7;text-decoration:none">📈 TSF</a>
+  <strong style="opacity:.9">🤖 WAM</strong>
+</nav>
+<!-- /hub-nav -->
+<header><div class="wrap">
+  <div>
+    <h1><a href="index.html">VQ-VAE · Video Tokenizer (Vector Quantization · 비디오 토크나이저)</a></h1>
+    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <div id="upd-status"></div>
+  </div>
+  <div class="nav">
+    <a class="btn ghost" href="index.html">논문 서베이</a>
+    <a class="btn ghost" href="deepdives.html">📚 딥다이브</a>
+    <a class="btn ghost" href="background.html">🧠 배경지식</a>
+    <a class="btn ghost" href="datasets.html">📊 데이터셋</a>
+    <a class="btn ghost" href="lab.html">🔒 Lab</a>
+    <a class="btn ghost" href="https://github.com/jaeukmoon/wm-survey-site/issues/new?labels=suggestion&title=%5B%EC%A0%9C%EC%95%88%5D%20&body=%23%23%20%EC%A0%9C%EC%95%88%20%EC%9C%A0%ED%98%95%20%28%ED%95%B4%EB%8B%B9%EC%97%90%20x%20%ED%91%9C%EC%8B%9C%29%0A-%20%5B%20%5D%20%EB%85%BC%EB%AC%B8%20%EC%B6%94%EA%B0%80%20%28arXiv%20%EB%A7%81%ED%81%AC/%EC%A0%9C%EB%AA%A9%29%0A-%20%5B%20%5D%20%EB%B0%B0%EA%B2%BD%EC%A7%80%EC%8B%9D%20%EC%A3%BC%EC%A0%9C%20%EC%B6%94%EA%B0%80%0A-%20%5B%20%5D%20%EA%B8%B0%EB%8A%A5%20%EC%A0%9C%EC%95%88%0A%0A%23%23%20%EB%82%B4%EC%9A%A9%0A%0A" target="_blank" rel="noopener">💡 건의</a>
+    <button class="btn primary" onclick="runUpdate()">⟳ 논문 업데이트</button>
+  </div>
+</div></header>
+<main>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <script>
+  const MD = "# VQ-VAE · Video Tokenizer (Vector Quantization · 비디오 토크나이저)\n\n> 출처: 원류 [VQ-VAE] \"Neural Discrete Representation Learning\" (van den Oord, Vinyals, Kavukcuoglu, arXiv 1711.00937, NeurIPS 2017), [VQGAN] \"Taming Transformers for High-Resolution Image Synthesis\" (Esser, Rombach, Ommer, arXiv 2012.09841, CVPR 2021), [Genie] \"Genie: Generative Interactive Environments\" (Bruce et al., arXiv 2402.15391, ICML 2024, 비디오 전용 확장). 우리 계보 등장: [MolmoAct2](deepdive_MolmoAct2.html)(depth VQ-VAE) · JEPA-Wild(`world_model_lineage_easy.md`, arXiv 2601.05230 — 대조 비판) · Hybrid Disentangled VQ-VAE(card:2606.18955) · [π0.5](deepdive_pi0.5.html)·[MolmoAct2](deepdive_MolmoAct2.html)(FAST/OpenFAST — 함정1 참조) · [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html)(대조: 연속 semantic tokenizer).\n\n**한 줄 정의**: [VAE](bg_vae-latent-space.html)처럼 인코더 $z_e(x)$로 압축은 하되, 그 결과를 아무 실수 벡터로나 두지 않고 **미리 정해둔 유한 개(K개) 벡터 사전(codebook) 중 가장 가까운 것 하나로 스냅**시켜 이산 인덱스 $k\\in\\{0,\\dots,K-1\\}$로 표현하는 토크나이저. 비디오에 적용하면 프레임(들)이 \"몇 번 코드북 항목들의 나열\"이 되어, 이후 언어모델처럼 **discrete next-token 예측**으로 생성·제어할 수 있게 된다.\n\n> **30초 큰 그림 비유 — \"번호 크레파스 상자\"**: [VAE 섹션](bg_vae-latent-space.html)의 화가는 원하는 색을 **자유롭게 섞어** 메모지에 적었다(연속 latent). VQ의 화가는 다르다 — 앞엔 **번호가 매겨진 K개 크레파스만 든 상자**(codebook $\\{e_0,\\dots,e_{K-1}\\}$)가 놓여 있고, 화가가 아무리 정교하게 색을 섞어도(그 결과가 $z_e(x)$) **상자 속에서 가장 비슷한 크레파스 번호 하나를 골라 그 색 그대로** 칠해야 한다($z_q(x)=e_k$). 그림은 이제 \"몇 번, 몇 번, 몇 번…\" 크레파스 번호의 나열로 완전히 요약된다 — 번호는 정수이므로 텍스트 단어와 똑같이 다룰 수 있다. 이 문서의 모든 식은 \"어떤 크레파스를 고르나(양자화), 화가·상자 둘 다 어떻게 더 잘 맞게 훈련하나(손실 3항), 상자를 고른 척 안 하고 화가에게 피드백을 어떻게 돌려주나(straight-through)\"로 읽으면 된다.\n\n### 왜 필요한가 (무엇이 아파서 나왔나)\n\n1. **연속 latent는 언어모델의 언어를 못 쓴다.** [VAE](bg_vae-latent-space.html)의 연속 latent $z$는 실수 벡터라 \"다음 토큰을 맞혀라\" 같은 **범주형 cross-entropy**로 다룰 수 없다 — GPT류 autoregressive 생성기·기존 NLP 인프라(BPE, next-token prediction)를 그대로 재활용하려면 이산 어휘가 필요하다. VQ-VAE는 이 다리를 놓는다: 이미지·비디오를 \"단어처럼 끊어진 기호\" 시퀀스로 바꿔 언어모델이 그대로 먹게 한다.\n2. **posterior collapse 방지.** 강력한 디코더를 쓰는 연속 VAE는 KL 항이 latent 정보를 아예 무시해버리는 \"posterior collapse\"에 취약하다([VQ-VAE] §1). 이산 codebook은 정보를 유한 개 카테고리에 강제로 담아 이 붕괴를 구조적으로 막는다.\n3. **비디오까지 확장하면 압축이 더 절실하다.** 프레임 수 × 공간 해상도만큼 시퀀스가 길어지는 비디오는 VAE보다도 더 공격적인 압축이 필요할 때가 많다 — 시공간 패치 하나를 정수 하나(codebook index)로 요약하면 시퀀스 길이가 극적으로 줄고, autoregressive 비디오 생성([Genie])이나 로봇 액션([FAST], `π0.5_deepdive.md`)처럼 \"다음 걸 이산 기호로 예측\"하는 파이프라인에 바로 꽂을 수 있다.\n\n### 비유로 읽는 수식 (쉬운 버전)\n\n> 정식 유도는 아래 `### 수식 (정식)` 참조. 여기선 \"번호 크레파스 상자\" 비유로 직관만 잡는다.\n\n- **EQ1 양자화(최근접 코드 선택)** `z_q(x) = e_k, k = argmin_j‖z_e(x) − e_j‖²` — 화가가 자유롭게 섞은 색 $z_e(x)$을 상자 속 $K$개 크레파스 $e_0,\\dots,e_{K-1}$과 하나씩 대보고, **거리가 가장 가까운 크레파스 번호 $k$**를 고른다. 최종 그림엔 그 크레파스 색($e_k$) 그대로 칠해진다 — 화가가 섞은 원래 색은 버려진다.\n- **EQ2 3항 손실** `L = 재구성 + ‖sg[z_e]−e‖² + β‖z_e−sg[e]‖²` — 세 갈래 훈련 신호: **①재구성**(그 크레파스 색으로 복원한 그림이 원본과 얼마나 비슷한가), **②codebook 항**(크레파스 자체의 색을 화가가 실제 섞은 색 쪽으로 재염색), **③commitment 항**(반대로 화가가 크레파스에서 너무 멀리 벗어난 색을 섞지 않도록 화가 습관을 교정, 가중치 $\\beta$). `sg[·]`(stop-gradient)는 \"이 안의 값은 상수로 취급, 그 쪽으로는 gradient 안 흘림\" — ②는 $e$만 학습, ③은 $z_e$만 학습하도록 서로 다른 항에 걸려 있다.\n- **EQ3 straight-through 추정** — 양자화(EQ1의 argmin)는 미분 불가능한 \"선택\" 연산이라 gradient가 못 지나간다. 그래서 순전파(forward)는 진짜로 $z_q=e_k$를 쓰지만, 역전파(backward)는 **양자화가 없었던 척** 재구성 손실의 gradient를 $z_q$에서 **그대로 복사**해 $z_e$로 흘려보낸다(크레파스 상자 관리인이 \"이번 평가 점수, 원래 화가가 섞은 색 탓으로 치자\"고 눈감아주는 셈).\n- **EQ4 EMA codebook 갱신(대안)** `e_i ← m_i/N_i`, `N_i,m_i`는 감쇠율 $\\gamma$(보통 0.99)로 흘러오는 이동평균 — ②codebook 항을 gradient descent 대신, **그 크레파스를 고른 화가들이 실제 섞은 색의 지수이동평균**으로 상자 관리인이 직접 크레파스를 다시 물들이는 방식(K-means의 온라인 버전). 매 스텝 1%만 반영되므로 천천히, 안정적으로 수렴한다.\n\n#### ⚠️ 초보 함정 (헷갈리는 지점 콕 집기)\n\n1. **\"연속값을 이산 토큰으로 바꾸면 다 VQ-VAE\"라고 생각하면 틀림.** [π0.5](deepdive_pi0.5.html)·[MolmoAct2](deepdive_MolmoAct2.html)의 **FAST/OpenFAST** action tokenizer도 \"이산 action token\"을 만들지만, 메커니즘이 전혀 다르다 — FAST는 궤적을 **주파수영역(DCT류)으로 변환 → 계수를 고정 눈금으로 스칼라 양자화 → BPE로 재압축**해 어휘를 만든다(`MolmoAct2_deepdive.md` §4.1.1). **학습된 codebook에 최근접 탐색을 하는 EQ1이 없다** — \"이산화 = VQ\"가 아니라, VQ는 이산화 방법 중 **codebook 최근접 스냅** 방식 하나일 뿐이다.\n2. **\"VQ-VAE를 학습하면 그 자체로 새 이미지/비디오를 생성할 수 있다\"고 생각하면 틀림.** VQ-VAE(인코더+codebook+디코더)는 **압축기(tokenizer)**이지 생성모델이 아니다 — 학습 후 codebook 인덱스가 어떤 순서로 나와야 그럴듯한지에 대해서는 아무것도 모른다. 새로 생성하려면 이산 인덱스 시퀀스 위에 **별도의 prior**(원 논문은 PixelCNN, 요즘은 대개 autoregressive Transformer — [Genie]의 dynamics model이 이 역할)를 **따로 학습**해야 한다. [VAE](bg_vae-latent-space.html) 섹션에서 \"diffusion/flow가 연속 latent 위에서 이 prior 역할을 한다\"고 한 것과 정확히 대응하는 이산 버전.\n3. **\"codebook 항과 commitment 항은 같은 걸 두 번 쓴 것\"이라고 생각하면 틀림.** 둘 다 $\\|z_e-e\\|^2$ 꼴로 보이지만 `sg[·]`가 붙는 위치가 반대다 — codebook 항은 **$e$ 방향으로만**(크레파스를 화가 색에 맞춤), commitment 항은 **$z_e$ 방향으로만**(화가를 크레파스에 맞춤) gradient가 흐른다. 하나를 빼면 화가·상자 중 한쪽만 움직여 학습이 불안정해진다.\n4. **\"VQ가 늘 연속 latent보다 나쁘다\"고 일반화하면 틀림.** JEPA-Wild(`world_model_lineage_easy.md`, arXiv 2601.05230)는 \"VQ가 messy in-the-wild 모션의 디테일을 무너뜨린다\"고 명시 비판하며 연속+sparsity 병목을 택했지만, 이건 **다양하고 예측 불가능한 인터넷 영상**이라는 특정 세팅의 얘기다. [MolmoAct2](deepdive_MolmoAct2.html)의 depth code($10\\times10$ 격자, 128 코드)나 [Genie]의 게임 화면처럼 **상태공간이 좁고 구조화**된 도메인에서는 VQ가 여전히 안정적으로 잘 작동한다 — \"느슨하고 다양한 데이터\"일수록 VQ 병목이 아프고, \"좁고 반복적인 데이터\"일수록 VQ가 잘 맞는다는 문맥 의존 트레이드오프.\n5. **실무 함정: codebook collapse.** 학습 초반 무작위 초기화된 codebook 중 몇 개만 계속 최근접으로 뽑히고 나머지는 한 번도 안 뽑혀 죽는 현상 — codebook의 실질 용량이 K보다 훨씬 작아진다. EQ4의 EMA 갱신이나, 오래 안 뽑힌 코드를 최근 배치의 인코더 출력으로 강제 재시작(random restart)하는 트릭으로 완화한다(원 논문엔 없고 후속 구현들의 관행).\n\n### 손계산 미니 예제 (★ 초등학생 관문)\n\n2차원 latent($D{=}2$), 크레파스 3개짜리 작은 상자($K{=}3$): $e_0=(0,0),\\ e_1=(1,2),\\ e_2=(3,1)$. 화가가 입력 $x$를 보고 색 $z_e(x)=(0.9,\\,1.8)$을 섞었다고 하자. $\\beta=0.25$(원 논문 권장값), 디코더는 단순화를 위해 \"받은 코드를 그대로 픽셀로 본다\"(항등 디코더, $\\hat{x}=z_q(x)$), 목표값은 $x=(0.9,1.8)$ 그 자체(화가가 본 것과 같음).\n\n| 스텝 | 식 | 계산 | 결과 |\n|---|---|---|---|\n| ① 상자와 거리 재기 (EQ1) | $\\|z_e-e_j\\|^2$ | $e_0{:}\\,0.9^2{+}1.8^2{=}4.05$ · $e_1{:}\\,0.1^2{+}0.2^2{=}0.05$ · $e_2{:}\\,2.1^2{+}0.8^2{=}5.05$ | 최소는 $e_1$ |\n| ② 크레파스 선택 (EQ1) | $z_q=e_{\\mathrm{argmin}}$ | $\\mathrm{argmin}=1$ | $z_q(x)=(1,\\,2)$ |\n| ③ 재구성 항 | $\\|x-\\hat{x}\\|^2,\\ \\hat{x}=z_q$ | $(0.9{-}1)^2{+}(1.8{-}2)^2$ | $0.05$ |\n| ④ codebook 항 | $\\|sg[z_e]-e_{k}\\|^2$ | $\\|(0.9,1.8)-(1,2)\\|^2$ | $0.05$ (①의 $e_1$ 거리와 동일값) |\n| ⑤ commitment 항 | $\\beta\\|z_e-sg[e_k]\\|^2$ | $0.25\\times0.05$ | $0.0125$ |\n| ⑥ 총 손실 (EQ2) | $L=③+④+⑤$ | $0.05+0.05+0.0125$ | $L=0.1125$ |\n| ⑦ straight-through | 재구성 gradient $\\partial(③)/\\partial \\hat{x}=-2(x-\\hat{x})$ | $-2\\times(-0.1,-0.2)$ | $(0.2,\\,0.4)$ — 이 값이 양자화 없었던 척 $z_e$로 그대로 복사됨(EQ3) |\n\n- ①은 \"상자 속 세 크레파스 중 어느 게 화가 색과 제일 가까운가\"를 재는 것 — $e_1$이 압도적으로 가깝다(거리제곱 $0.05 \\ll 4.05,\\,5.05$). ②는 그 결과 화가의 그림이 **정확히 $e_1$ 색으로 대체**됨을 보여준다(연속 $(0.9,1.8)$이 아니라 이산 코드 $k{=}1$만 남음 — 디코더는 $k$만 알면 됨).\n- ③~⑤는 EQ2의 세 항을 그대로 숫자로 채운 것: 재구성(③)과 codebook(④)이 우연히 같은 값(둘 다 $z_e$–$e_1$ 거리에서 나옴)인 건 이 토이 예제가 디코더를 항등함수로 단순화했기 때문 — 실전에선 디코더가 비선형이라 값이 갈린다.\n- ⑦은 \"화가가 실제로 크레파스 색($e_1$)으로 그림을 그렸는데도, 평가 피드백은 마치 화가가 자기가 섞은 색($z_e$) 그대로 그린 것처럼 되돌아온다\"는 straight-through의 핵심을 숫자로 확인한 것 — 이 gradient $(0.2,0.4)$가 인코더 파라미터까지 그대로 흘러 인코더를 학습시킨다(EQ1의 argmin 자체는 여전히 미분 안 됨, 우회할 뿐).\n\n### 수식 (정식)\n\n**(1) 사후분포와 양자화** [VQ-VAE 식 1–2]:\n\n$$\nq(z=k\\mid x) = \\begin{cases} 1 & k = \\arg\\min_j \\lVert z_e(x) - e_j \\rVert_2 \\\\ 0 & \\text{otherwise} \\end{cases},\n\\qquad\nz_q(x) = e_k,\\quad k = \\arg\\min_j \\lVert z_e(x) - e_j \\rVert_2\n$$\n\n- **무슨 식?**: 인코더 출력 $z_e(x)\\in\\mathbb{R}^D$에 대해, codebook $e\\in\\mathbb{R}^{K\\times D}$($K$개의 $D$차원 벡터) 중 유클리드 거리가 가장 가까운 하나의 인덱스 $k$를 **확률 1로** 고르는 **결정론적** 범주형 사후분포 $q(z\\mid x)$. $z_q(x)$는 그 인덱스가 가리키는 codebook 벡터 자체 — 디코더 $p(x\\mid z_q(x))$는 이 이산 인덱스 $k$ 하나만 입력으로 받는다.\n- **왜 결정론적인가**: VAE의 $q_\\phi(z|x)$는 분포(평균·분산)를 배웠지만, 여기선 \"가장 가까운 것 하나\"를 확정적으로 고른다 — 사전분포 $p(z)$도 $K$개 범주에 대한 **균등분포**로 고정한다([VQ-VAE] §3.1), 그래서 KL 항이 상수가 되어 VAE의 EQ2(정규화 항)에 대응하는 항이 손실식에서 아예 빠진다(사전이 학습되지 않으므로).\n\n**(2) 학습 목적함수 — 3항 손실** [VQ-VAE 식 3]:\n\n$$\n\\mathcal{L} = \\log p(x\\mid z_q(x)) + \\lVert \\mathrm{sg}[z_e(x)] - e \\rVert_2^2 + \\beta \\lVert z_e(x) - \\mathrm{sg}[e] \\rVert_2^2\n$$\n\n- **무슨 식?**: 세 항이 각각 다른 파라미터 집합을 학습시킨다. **①재구성**($\\log p(x|z_q(x))$, 디코더+인코더 공동)은 straight-through(아래 (3))를 통해서만 인코더에 도달. **②codebook loss**($\\mathrm{sg}[z_e(x)]-e$)는 **codebook $e$만** 업데이트(인코더 출력을 상수로 고정하고 codebook을 그쪽으로 당김). **③commitment loss**($z_e(x)-\\mathrm{sg}[e]$, 가중치 $\\beta$)는 **인코더만** 업데이트(codebook을 상수로 고정하고 인코더가 이미 고른 코드에서 너무 안 벗어나게 당김). 논문은 $\\beta=0.25$를 실전값으로 제시(결과가 폭넓은 $\\beta$에 안 민감함도 보고).\n- **왜 두 항으로 나뉘는가(논문이 한 줄로 넘어가는 지점)**: $\\|z_e-e\\|^2$ 자체는 인코더($z_e$)와 codebook($e$) 둘 다에 대해 미분 가능하지만, 그대로 한 항으로 두면 두 학습 속도가 얽혀 불안정하다. `sg[·]`로 매번 한쪽을 상수 취급해 **번갈아 최적화하듯** 분리하면(사실상 동시에, 각자 다른 항으로) 학습이 안정된다 — 이게 K-means의 \"할당(assignment) 스텝\"과 \"중심 갱신(update) 스텝\"을 한 손실식 안에 녹인 것과 같다는 것이 [VQ-VAE] §3.2의 핵심 통찰.\n\n**(3) Straight-through 추정기**:\n\n$$\n\\frac{\\partial \\mathcal{L}_{\\text{recon}}}{\\partial z_e(x)} \\;:=\\; \\frac{\\partial \\mathcal{L}_{\\text{recon}}}{\\partial z_q(x)}\n$$\n\n- **무슨 식?**: EQ1의 $\\arg\\min$은 계단함수라 어디서나 gradient가 0(또는 미정의) — 역전파가 이 지점에서 막힌다. Straight-through 추정기는 순전파에선 진짜 $z_q(x)$(양자화된 값)를 디코더에 넘기지만, 역전파에선 **디코더로부터 온 gradient를 양자화가 없었던 것처럼 그대로 $z_e(x)$에 복사**한다 — \"$:=$\" 표기는 이게 진짜 미분이 아니라 **정의된 근사 규칙**임을 뜻한다.\n- **비유**: 미니 예제 ⑦에서 본 그대로. 상자가 화가의 색을 크레파스 색으로 바꿔치기한 사실은 순전파(그림 자체)엔 반영되지만, 역전파(피드백)에선 무시된다 — 화가는 \"내가 섞은 색 그대로가 맞았다/틀렸다\"는 신호만 받는다.\n\n**(4) EMA codebook 갱신 — (2)의 codebook 항을 대신하는 대안** [VQ-VAE 부록 A.1, 식 6–8]:\n\n$$\nN_i^{(t)} := \\gamma\\, N_i^{(t-1)} + (1-\\gamma)\\, n_i^{(t)},\n\\qquad\nm_i^{(t)} := \\gamma\\, m_i^{(t-1)} + (1-\\gamma)\\sum_j z_{i,j}^{(t)},\n\\qquad\ne_i^{(t)} := \\frac{m_i^{(t)}}{N_i^{(t)}}\n$$\n\n- **무슨 식?**: $n_i^{(t)}$ = 이번 미니배치에서 코드 $i$가 선택된 횟수, $\\sum_j z_{i,j}^{(t)}$ = 코드 $i$로 배정된 인코더 출력들의 합. $N_i,m_i$를 감쇠율 $\\gamma$(보통 0.99)로 지수이동평균하고, 매 스텝 $e_i=m_i/N_i$(그 코드로 배정된 벡터들의 이동평균)로 codebook을 직접 덮어쓴다 — gradient descent(②codebook 항)를 쓰지 않는 **K-means의 온라인 버전**. 학습을 더 안정시켜 실전에서 더 널리 쓰인다.\n- **비유**: EQ2의 ②는 \"매번 손실을 미분해 크레파스 색을 조금씩 옮긴다\"였다면, 이건 \"이번에 이 번호를 고른 모든 화가들의 색을 즉시 평균 내어(단 1%만 반영, $\\gamma=0.99$) 크레파스를 다시 물들인다\"는 더 직접적인 방식.\n\n**(5) VQGAN — 이미지 품질을 위한 확장** [VQGAN 식]:\n\n$$\n\\mathcal{L}_{\\mathrm{VQ}} = \\lVert x-\\hat{x}\\rVert^2 + \\lVert \\mathrm{sg}[E(x)]-z_q\\rVert_2^2 + \\lVert \\mathrm{sg}[z_q]-E(x)\\rVert_2^2,\n\\qquad\n\\mathcal{Q}^{*}=\\arg\\min_{E,G,\\mathcal{Z}}\\max_{D}\\ \\mathbb{E}_{x}\\big[\\mathcal{L}_{\\mathrm{VQ}} + \\lambda\\,\\mathcal{L}_{\\mathrm{GAN}}(\\{E,G,\\mathcal{Z}\\},D)\\big]\n$$\n\n- **무슨 식?**: (2)의 L2 재구성을 **perceptual loss**(픽셀 차이 대신 사전학습 네트워크의 feature 차이)로 바꾸고, 진짜/가짜를 구별하는 patch discriminator $D$의 **적대적 손실** $\\mathcal{L}_{\\mathrm{GAN}}=\\mathbb{E}[\\log D(x)+\\log(1-D(\\hat{x}))]$을 더한다 — 원 VQ-VAE는 L2 재구성이라 고해상도에서 흐릿해지는 문제를 이렇게 보완한다.\n- **가중치 $\\lambda$도 학습**: 고정 상수 대신 $\\lambda = \\nabla_{G_L}[\\mathcal{L}_{\\mathrm{rec}}] \\,/\\, \\big(\\nabla_{G_L}[\\mathcal{L}_{\\mathrm{GAN}}]+\\delta\\big)$($G_L$=디코더 마지막 레이어, $\\delta{=}10^{-6}$)로 두 손실의 gradient 크기를 자동으로 맞춘다 — 재구성 신호가 GAN 신호에 묻히거나 반대로 지배당하지 않게. **오늘날 \"video tokenizer\"라 불리는 것들 대부분(아래 (6))이 이 VQGAN 스타일(perceptual+adversarial) 위에 시간축만 얹은 것**이다.\n\n**(6) 시간축으로 확장 — 비디오 토크나이저** [Genie, ST-transformer]:\n\nVQ-VAE의 (1)–(3)은 그대로 두고, 인코더·디코더의 **입력 형태만** 이미지 패치 $(H',W',D)$에서 시공간 패치 $(T',H',W',D)$로 넓힌 것이 비디오 토크나이저다. [Genie]는 여기서 한 걸음 더 나가 인코더·디코더를 **ST-transformer**(spatiotemporal transformer)로 짜서, 각 시공간 코드 $z_t$가 **그 프레임만이 아니라 이전에 나온 모든 프레임의 정보**를 담게 만든다(\"causal\" — [Forcing family](bg_forcing-family.html)의 causal mask와 같은 문제의식). 수식 자체는 (1)–(3)과 동일(codebook 최근접 스냅 + 3항 손실 + straight-through)이고, 바뀌는 건 **인코더·디코더 아키텍처와 입력 텐서 차원**뿐 — 그래서 이 문서에서 별도 EQ 번호를 새로 붙이지 않는다.\n\n- **숫자([Genie] video tokenizer)**: codebook $K{=}1024$, 임베딩 차원 $32$, patch size $4$, 파라미터 200M, 입력 16프레임×10FPS×160×90 해상도.\n- **숫자([Genie] latent action model, 별개의 두 번째 VQ-VAE)**: 과거 전체 프레임 $x_{1:t}$와 다음 프레임 $x_{t+1}$을 보고 \"그 사이 행동이 뭐였을까\"를 추론하는 IDM 구조 — codebook을 **의도적으로 작게**(예: $|A|{=}8$) 눌러 \"행동\"이라 부를 만한 좁은 병목을 강제한다(임베딩 32, 파라미터 300M, patch 16). 추론(inference) 시엔 이 latent action model 전체를 버리고 사용자 입력으로 대체한다 — 즉 **학습 때만 쓰는 라벨 생성기**.\n\n### 구조/흐름\n\n```\n(A) 이미지 VQ-VAE 파이프라인 (VQ-VAE/VQGAN)\n  x ──[encoder]──> z_e(x) ──[EQ1: argmin_j‖z_e−e_j‖]──> k (이산 인덱스) ──[codebook lookup]──> z_q(x)=e_k ──[decoder]──> x̂\n                        │                                                                              │\n              commitment loss(EQ2 ③, β)  ← z_e를 e_k 쪽으로 당김                        재구성/perceptual(+adversarial, VQGAN)\n                        │                              codebook loss(EQ2 ②) 또는 EMA(EQ4) ← e_k를 z_e 쪽으로 당김\n                        └── straight-through(EQ3): decoder gradient를 양자화 건너뛰고 z_e로 직접 복사 ──┘\n\n(B) 비디오 확장 — 시공간 패치 + causal ST-transformer (Genie 예)\n  frame 1..t ──[ST-transformer encoder, causal]──> 시공간 latent z_e(1..t) ──[프레임별/패치별 EQ1]──> 코드 인덱스 열\n                                                                                    │\n                                              (별개 VQ-VAE) latent action model: (x_{1:t}, x_{t+1}) → a_t ∈ {0,…,7}\n                                                                                    │\n                     dynamics model(autoregressive, 코드 인덱스 + a_t 조건)이 다음 프레임 코드를 next-token처럼 예측\n                                                                                    │\n                                                            ──[ST-transformer decoder]──> 픽셀 프레임 복원\n\n(C) 대조 — 연속 VAE(bg_vae-latent-space.html) 파이프라인과의 차이\n  VAE:  x → (μ,σ) → z=μ+σ⊙ε(연속, 무한 가짓수) → decoder → x̂     (샘플링은 diffusion/flow가 이 연속 공간 위에서)\n  VQ :  x → z_e(x) → 코드북 최근접 스냅 → k(이산, K가지) → decoder → x̂   (샘플링은 k 시퀀스 위 autoregressive prior가)\n```\n\n### 우리 계보에서의 쓰임 (used_by)\n\n| 논문/모델 | VQ 사용 방식 | 쓰임 |\n|---|---|---|\n| [MolmoAct2](deepdive_MolmoAct2.html) | Depth VQ-VAE(MolmoAct에서 학습, frozen 재사용) | $320\\times320$ depth map → downsample factor 32 → $10\\times10{=}100$ 격자, 각 코드 $\\in\\{0,\\dots,127\\}$(codebook 128). 공간만 이산화(시간축 없음, 프레임별 독립) — VLM 백본에 128개 depth-code 토큰을 어휘로 추가해 next-token으로 예측. |\n| [Genie](https://arxiv.org/abs/2402.15391)(arXiv 2402.15391, `world_model_lineage_easy.md`·`VLA-JEPA_deepdive.md`·`LaWAM_deepdive.md`에서 \"VQ 계열\"로 인용) | ST-transformer VQ-VAE 비디오 토크나이저(codebook 1024) + 별개의 VQ latent-action model($\\lvert A\\rvert{=}8$) | 진짜 **시공간(spatiotemporal)** VQ 비디오 토크나이저의 대표 예 — 우리 계보에서 \"VQ = Genie류\"라고 부를 때의 원조. latent action은 추론 시 사용자 입력으로 교체(위 (6) 참고). |\n| Hybrid Disentangled VQ-VAE(card:2606.18955) | 물리 마스크로 배경/모션을 분리한 VQ-VAE | 라벨 없는 인간 영상에서 순수 모션 latent action codebook을 구성해 cross-embodiment 사전학습(LAPA·UniVLA 계열). 저자 명시 한계: **고정 discrete codebook 용량이 fine-grained manipulation엔 부족**(함정4의 실제 사례). |\n| JEPA-Wild(`world_model_lineage_easy.md`, arXiv 2601.05230) | **VQ 미사용** — 대조 사례 | \"VQ(고정 codebook snap, Genie류)가 messy in-the-wild 모션의 디테일을 무너뜨린다\"고 명시 비판, 연속+sparsity/noise 정보병목으로 대체(함정4). |\n| [π0.5](deepdive_pi0.5.html) · [MolmoAct2](deepdive_MolmoAct2.html) | **VQ 아님** — FAST/OpenFAST(대조 사례) | action을 이산 토큰으로 만들지만 codebook 최근접 스냅이 아니라 주파수영역 변환+스칼라 양자화+BPE(함정1). \"이산화 = VQ\" 오해를 막는 가장 직접적인 반례. |\n| [LingBot-VA 2.0](deepdive_LingBot-VA_2.0.html) | **VQ 아님** — 연속 semantic visual-action tokenizer(대조 사례) | WAN2.2 VAE(연속)를 교체하되 VQ 대신 IDM/FDM 연속 bottleneck(96채널)을 채택 — \"재구성 전용 tokenizer는 action 개념이 없다\"는 문제의식은 VQ 계열 latent-action 논문들과 같지만 해법은 연속 쪽. |\n\n---\n";
+  window.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('dd-body');
+    // Math must be handled DURING marked parsing (marked-katex-extension), else
+    // marked mangles LaTeX (underscores -> <em>, $$ blocks -> <p>) before KaTeX runs.
+    let katexInMarked = false;
+    try {
+      // nonStandard: true — allow inline $...$ followed immediately by Korean particles (와/는/로),
+      // otherwise the default regex requires whitespace/punctuation after closing $ and skips them.
+      if (window.markedKatex) { marked.use(window.markedKatex({throwOnError: false, nonStandard: true})); katexInMarked = true; }
+    } catch (e) {}
+    // Disable GFM strikethrough: the notes use ~ for "approx"/ranges (1.5~2.8x, ~20,000,
+    // 8~256 GPU); marked pairs two ~ in a line into <del>. Consume ~ runs as literal text.
+    try {
+      marked.use({ extensions: [{
+        name: 'noStrike', level: 'inline',
+        start(s) { return s.indexOf('~'); },
+        tokenizer(s) { const mm = s.match(/^~+/); if (mm) return { type: 'noStrike', raw: mm[0], text: mm[0] }; },
+        renderer(t) { return t.text; }
+      }] });
+    } catch (e) {}
+    el.innerHTML = marked.parse(MD);
+    // Fallback only if the extension failed to load (e.g. offline CDN)
+    if (!katexInMarked && window.renderMathInElement) renderMathInElement(el, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ], throwOnError: false
+    });
+  });
+  </script>
+</main>
+<footer>built 2026-08-10 02:57 · WM_surveybot</footer>
+<button id="qtab" onclick="qToggle()">❓ 질문</button>
+<aside id="qdrawer" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>❓ 질문함</h3><button class="qx" onclick="qToggle()">✕</button>
+  </div>
+  <p class="qhint">여기 남긴 질문은 다음 Claude 세션이 읽고 해당 페이지 내용을 보강한다. 본문을 드래그한 채 열면 그 문장이 함께 저장된다. (state/questions.json)</p>
+  <div id="qselbox" hidden><button onclick="qClearSel()">지우기</button><span class="qsellbl">선택한 문장</span><div id="qseltxt"></div></div>
+  <textarea id="qtext" rows="4" placeholder="이 페이지에서 헷갈리는 점 / 보강하고 싶은 내용..."></textarea>
+  <button id="qsave" onclick="qSave()">저장</button>
+  <div id="qmsg"></div>
+  <div class="qlisthead">대기 중 질문 (open)</div>
+  <ul id="qlist"></ul>
+</aside>
+<script>
+async function runUpdate(){
+  const st = document.getElementById('upd-status');
+  st.textContent = '업데이트 중… (arXiv/HF 수집 → 사이트 재생성, 1~2분)';
+  try{
+    const r = await fetch('/api/update', {method:'POST'});
+    const j = await r.json();
+    st.textContent = j.summary || JSON.stringify(j);
+    if(j.ok) setTimeout(()=>location.reload(), 1500);
+  }catch(e){
+    st.textContent = '서버가 없습니다 — 터미널에서 `python surveybot/serve.py` 실행 후 http://localhost:8777 로 접속하세요. (요약·딥다이브 생성은 Claude 세션에서 /wm-survey)';
+  }
+}
+</script>
+<script>
+let _qsel = '';
+document.addEventListener('selectionchange', () => {
+  const s = String(window.getSelection() || '').trim();
+  if (s) _qsel = s.slice(0, 400);
+});
+function qToggle(){
+  const d = document.getElementById('qdrawer');
+  d.hidden = !d.hidden;
+  if (!d.hidden) { qShowSel(); qLoad(); }
+}
+function qShowSel(){
+  const box = document.getElementById('qselbox');
+  box.hidden = !_qsel;
+  if (_qsel) document.getElementById('qseltxt').textContent = _qsel;
+}
+function qClearSel(){ _qsel = ''; qShowSel(); }
+async function qLoad(){
+  const ul = document.getElementById('qlist');
+  try {
+    const r = await fetch('/api/questions');
+    const j = await r.json();
+    const qs = j.questions || [];
+    ul.innerHTML = qs.length ? '' : '<li class="qempty">없음</li>';
+    for (const q of qs) {
+      const li = document.createElement('li');
+      const a = document.createElement('a'); a.href = q.page || '#';
+      a.textContent = q.title || q.page || '(페이지 미상)';
+      const t = document.createElement('div'); t.className = 'qbody'; t.textContent = q.text;
+      const meta = document.createElement('span'); meta.className = 'qmeta'; meta.textContent = q.ts + ' · ' + q.id;
+      const del = document.createElement('button'); del.className = 'qdel'; del.textContent = '삭제';
+      del.onclick = () => qDismiss(q.id);
+      li.append(a, t, meta, del);
+      ul.appendChild(li);
+    }
+  } catch (e) {
+    ul.innerHTML = '<li class="qempty">서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속</li>';
+  }
+}
+async function qSave(){
+  const txt = document.getElementById('qtext').value.trim();
+  const msg = document.getElementById('qmsg');
+  if (!txt) { msg.textContent = '내용을 입력하세요'; return; }
+  const h1 = document.querySelector('h1');
+  const payload = {
+    page: location.pathname.split('/').pop() || 'index.html',
+    title: h1 ? h1.innerText.trim() : document.title,
+    selection: _qsel, text: txt,
+  };
+  try {
+    const r = await fetch('/api/question', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    const j = await r.json();
+    if (j.ok) {
+      msg.textContent = '저장됨 (' + j.id + ') — 다음 Claude 세션에서 처리';
+      document.getElementById('qtext').value = ''; _qsel = ''; qShowSel(); qLoad();
+    } else msg.textContent = j.summary || '저장 실패';
+  } catch (e) {
+    msg.textContent = '서버 필요 — python surveybot/serve.py 실행 후 localhost:8777 접속';
+  }
+}
+async function qDismiss(id){
+  try {
+    await fetch('/api/question_dismiss', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({id})});
+    qLoad();
+  } catch (e) {}
+}
+</script>
+</body></html>
