@@ -145,7 +145,96 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">105</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">13</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">56</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">23</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">13</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">112</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">14</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">59</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">25</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">14</span></button></div>
+  <section>
+    <h2 class="date">2026-08-23 · 2편</h2>
+    <article class="card big" data-group="WM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.13552" target="_blank" rel="noopener">PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 45 · 프록시 추정">완성도 45</span><span class="badge org">🔴 Meta FAIR</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 45</span></div>
+        <div class="meta"><span class="id">2608.13552</span> · <a href="https://arxiv.org/abs/2608.13552" target="_blank" rel="noopener">arXiv</a> · <a href="https://github.com/kxding/PlayWorld" target="_blank" rel="noopener">code</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">모델마다 같은 목표를 달성하는 action sequence가 달라 고정 trajectory 비교가 불공정하다는 문제에서 출발한다. 171개 scenario마다 long-horizon objective를 주고 multimodal Agent Player가 각 world model과 직접 상호작용하게 하여 geometry consistency, interaction fidelity, 보이지 않는 영역의 변화와 내부 상태 변화를 평가한다.</p><div class="f"><span class="lbl">기여</span><span>사람이 interactive world model을 시험하듯 목표 중심 agent interaction을 평가 protocol로 만들고, video quality·controllability 외에 persistent state와 long-horizon consistency를 분리한 benchmark를 제공한다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>171개 objective와 4개 핵심 장기 평가축으로 단순 video quality보다 실제 interactive reliability에 가까운 평가를 제공한다.</li><li>9개 state-of-the-art world model을 동일한 objective 아래 비교해 모델별 action interface 차이를 흡수한다.</li><li>현재 모델이 spatial consistency와 persistent state evolution에서 특히 취약하다는 공통 failure를 드러낸다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Agent Player의 planning·perception 능력이 world model 점수에 섞일 수 있어 evaluator calibration이 중요하다.</li><li>objective 달성 경로가 달라 run 간 variance와 action budget 통제가 필요하다.</li><li>benchmark 결과가 agent prompt와 policy choice에 얼마나 민감한지 추가 분석이 필요하다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">신규 benchmark — 고정 action sequence 대신 multimodal agent가 목표를 달성하도록 상호작용하며 long-horizon world model을 비교.</span></div><div class="f"><span class="lbl">데이터셋</span><span>PlayWorld: 171 long-horizon interactive scenarios, 9 world models</span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.19891" target="_blank" rel="noopener">EXIMO: VLM Guided Exploration of VLA Policies</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 28 → 필독도 28">필독 E 28</span><span class="badge rig" title="완성도(rigor) 33 · 프록시 추정">완성도 33</span><span class="badge org">🔴 Google DeepMind</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 11</span></div>
+        <div class="meta"><span class="id">2608.19891</span> · <a href="https://arxiv.org/abs/2608.19891" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">새 robot task를 배우기 위한 teleoperation data 비용과 VLA RL의 sample inefficiency를 줄이기 위해 explore–imitate–optimize 3단계를 사용한다. VLM이 long-horizon task를 짧은 subproblem으로 분해해 VLA의 exploration data를 수집하고, 그 data로 imitation fine-tuning한 뒤 residual off-policy RL로 최종 성능을 높인다.</p><div class="f"><span class="lbl">기여</span><span>VLM planning을 dataset collection에 직접 연결해 human teleoperation과 pure RL 사이의 data-generation 경로를 만들고, imitation과 residual RL을 순차적으로 결합했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>explore, imitate, optimize 세 단계를 각각 ablation해 어느 단계가 sample efficiency와 성능에 기여하는지 분리했다.</li><li>대형 VLA 전체를 처음부터 RL하는 대신 VLM-guided data와 residual RL을 사용해 adaptation 부담을 줄이는 설계다.</li><li>long-horizon task decomposition을 exploration에 사용해 sparse reward 문제를 완화한다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>후보 abstract에는 benchmark별 절대 수치와 robot setup이 없어 성능 우위의 크기는 본문 표 확인이 필요하다.</li><li>VLM planner의 잘못된 subgoal이 dataset bias로 누적될 수 있다.</li><li>세 단계 pipeline은 단일 fine-tuning 방식보다 운영 복잡도와 hyperparameter 수가 증가한다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLM+Action Expert — VLM planner가 VLA exploration을 안내하고 imitation과 residual RL로 새 task에 적응시키는 VLA fine-tuning pipeline.</span></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-08-20 · 2편</h2>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.20114" target="_blank" rel="noopener">DECOWAM: Decoupled Whole-Body World-Action Model for Legged Mobile Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 44 · 프록시 추정">완성도 44</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2608.20114</span> · <a href="https://arxiv.org/abs/2608.20114" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">고정 base 중심의 기존 WAM이 camera ego-motion, base 이동, arm action을 섞어 다루는 문제를 해결하기 위해 조건 interface와 latent를 분리한 mobile-manipulation WAM이다. FastWAM backbone은 freeze하고 residual adapter, privileged future에서 distill한 action-equivalent bottleneck, base/arm latent 분리, base-velocity conditioning을 학습한다.</p><div class="f"><span class="lbl">기여</span><span>legged mobile manipulator용 ARMDOG real-robot dataset과 함께, viewpoint 변화와 whole-body action을 factorize하는 parameter-efficient FastWAM adaptation을 제안했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>FastWAM 대비 action MSE를 21.7% 줄이면서 trainable adaptation parameter를 25.95M으로 제한했다.</li><li>method당 79회 closed-loop trial에서 비교 방법 중 가장 높은 whole-body coordination과 base-displacement robustness를 보였다.</li><li>video prediction과 action prediction을 동시에 비교해 moving viewpoint에서의 시각 예측과 제어 정렬을 함께 평가했다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>task completion은 strongest baseline과 비슷해 coordination 개선이 최종 성공률의 명확한 우위로 이어지지는 않았다.</li><li>privileged future observation을 사용하는 bottleneck distillation이 필요해 학습 data 요구와 pipeline 복잡도가 증가한다.</li><li>ARMDOG 단일 legged mobile-manipulator 설정 중심이라 다른 embodiment로의 일반화는 확인이 필요하다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM — FastWAM backbone을 유지하면서 moving-base ego-motion과 arm action을 분리 조건화하는 whole-body WAM.</span></div><div class="f"><span class="lbl">데이터셋</span><span>ARMDOG real-robot dataset with synchronized video, whole-body state/action, and language</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">FastWAM</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>Action prediction</td><td class="mt">MSE reduction vs FastWAM</td><td class="me">21.7% lower</td><td>FastWAM reference <span class="note">25.95M trainable adaptation parameters</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.19574" target="_blank" rel="noopener">HiTac-WAM: A Hierarchical Tactile World Action Model for Contact-Rich Robot Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 53 · 프록시 추정">완성도 53</span><span class="badge org">🔴 BAAI/Zhiyuan</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2608.19574</span> · <a href="https://arxiv.org/abs/2608.19574" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">video-action context에서 candidate action chunk별 미래 촉각을 contact state → 3D deformation field → slip risk 순으로 예측한다. 예측 촉각으로 action을 선택하고, 실행 중 실제 촉각과 예측의 지속적 불일치가 감지되면 corrective replanning을 수행해 contact-rich manipulation을 closed loop로 제어한다.</p><div class="f"><span class="lbl">기여</span><span>tactile future를 단일 image나 latent로 다루지 않고 물리적 의존관계가 있는 계층으로 factorize했으며, directed attention으로 tactile query만 video-action context를 읽게 하는 구조를 제안했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>contact F1 0.921을 달성하고 matched budget에서 deformation-only 대비 displacement L2 error를 17.6% 줄였다.</li><li>slip-only predictor 대비 slip AUPRC를 60.4% 개선해 계층적 tactile dependency의 이점을 보였다.</li><li>chip grasping, blackboard erasing, USB insertion에서 평균 real-robot success를 candidate selection 31.1%→61.1%, full correction system 72.2%까지 높였다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>3개 contact-rich task 중심이라 다양한 물체 재질과 tactile sensor로의 일반화가 필요하다.</li><li>앞 단계 stop-gradient signal에 뒤 단계가 의존하므로 contact error가 deformation과 slip prediction으로 전파될 수 있다.</li><li>candidate rollout과 tactile hierarchy를 모두 계산해 online planning latency가 증가할 가능성이 있다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">② WAM — candidate action마다 contact, deformation, slip의 미래 tactile state를 계층적으로 예측해 selection과 corrective replanning에 사용하는 WAM.</span></div><div class="f"><span class="lbl">데이터셋</span><span>Real-robot chip grasping, blackboard erasing, and USB insertion with tactile observations</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">deformation-only predictor</span><span class="cmp">slip-only predictor</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>3 real-robot contact-rich tasks</td><td class="mt">average success rate (%)</td><td class="me">72.2</td><td>hierarchical forecast selection only 61.1 · unguided baseline 31.1 <span class="note">full system includes discrepancy-triggered corrective replanning</span></td></tr><tr><td>Tactile forecasting</td><td class="mt">contact F1</td><td class="me">0.921</td><td></td></tr></tbody></table></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-08-19 · 1편</h2>
+    <article class="card" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.18701" target="_blank" rel="noopener">SoftVTBench: A Deformation-Aware Visuo-Tactile Dataset and Benchmark for Deformable-Object Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 45 → 필독도 45">필독 D 45</span><span class="badge rig" title="완성도(rigor) 54 · 프록시 추정">완성도 54</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 12</span></div>
+        <div class="meta"><span class="id">2608.18701</span> · <a href="https://arxiv.org/abs/2608.18701" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">RGB·tactile RGB·marker motion·proprioception·language·action과 evaluator-only FEM state를 동기화한 4,000개 demonstration으로, deformable-object manipulation이 성공했는지뿐 아니라 물체를 과도하게 눌렀는지까지 평가한다. 고정 calibration으로 Deformation-aware Success Rate(DSR)를 정의해, 기존 policy가 task를 끝내고도 물리적 허용 변형을 위반하는 실패를 드러낸다.</p><div class="f"><span class="lbl">기여</span><span>50개가 넘는 deformable asset과 시각적으로 대응되는 rigid twin을 포함한 dataset, evaluator-only physical ground truth, task completion과 peak normalized deformation을 결합한 DSR을 하나의 재현 가능한 benchmark로 묶었다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Diffusion Policy, π0.5, FastWAM의 12개 in-distribution 설정 모두에서 성공 rollout 중 0.7–24%가 변형 허용치를 위반함을 보여 task success만으로는 interaction quality를 과대평가한다는 점을 정량화했다.</li><li>distribution shift 6개 policy-suite 비교에서 visuo-tactile variant가 task success는 모두, DSR은 5개에서 높아 touch의 실질적 이점을 분리해 측정했다.</li><li>20 Hz로 vision, touch, proprioception, action, FEM state를 task 전체에 걸쳐 동기화해 후속 multimodal-fusion 연구에 재사용 가능하다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>독립 ground truth가 FEM simulation state에 의존하므로 실제 센서 오차와 재질 다양성이 있는 real-robot 환경으로의 전이는 추가 검증이 필요하다.</li><li>in-distribution에서는 tactile variant의 이점이 일관되지 않아 touch 제공 자체가 효과적 fusion을 보장하지 않는다.</li><li>평가가 deformable-object interaction에 집중되어 rigid manipulation이나 장시간 mobile manipulation으로의 일반화 범위는 제한적이다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">신규 평가축 — task success만 보지 않고 접촉 중 변형 한계를 함께 측정하는 visuo-tactile interaction-quality benchmark.</span></div><div class="f"><span class="lbl">데이터셋</span><span>SoftVTBench: 4,000 expert demonstrations, 50+ deformable assets and rigid twins, synchronized multi-view RGB/tactile/proprioception/action/FEM state</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Diffusion Policy</span><span class="cmp">π0.5</span><span class="cmp">FastWAM</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-08-18 · 2편</h2>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.18077" target="_blank" rel="noopener">Hydra-0: Action Flow for Generalist World Modeling and Control</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 44 · 프록시 추정">완성도 44</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2608.18077</span> · <a href="https://arxiv.org/abs/2608.18077" target="_blank" rel="noopener">arXiv</a> · <a href="https://nvidia-isaac.github.io/video_to_data/hydra-0/" target="_blank" rel="noopener">code</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">robot action을 pixel motion(action flow)으로 표현해 서로 다른 embodiment와 video-generation backbone이 공유할 수 있는 visual control interface를 만든다. forward mode에서는 action flow가 미래 영상 생성을 조건화하고, inverse mode에서는 human demonstration의 desired object flow로부터 compatible robot motion을 예측해 action head가 실행 action으로 변환한다.</p><div class="f"><span class="lbl">기여</span><span>heterogeneous robot action space를 visual motion interface로 통일해 cross-embodiment world modeling, zero-shot composition, open-loop policy evaluation, robot control을 하나의 representation으로 연결했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>action-conditioned baseline 대비 robot-motion error를 90.4%, object-motion error를 60.2% 줄였다.</li><li>RoboLab에서 replayed success와 reference success의 Pearson correlation r=0.96을 달성해 open-loop policy evaluation 가능성을 보였다.</li><li>human demonstration의 object flow에서 robot motion을 역으로 생성하는 emergent inverse mode를 제시했다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>pixel motion은 depth, force, occlusion을 직접 표현하지 않아 contact-rich 3D control에는 정보 손실 가능성이 있다.</li><li>action flow에서 executable joint action으로 변환하는 action head의 embodiment별 calibration이 필요하다.</li><li>abstract의 핵심 평가는 motion error와 replay correlation 중심이라 broad real-robot task success 검증 범위는 추가 확인이 필요하다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">④ action-centered WAM — embodiment별 joint action 대신 pixel motion인 action flow를 공통 action interface로 사용해 world prediction, evaluation, control을 연결.</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboLab benchmark and heterogeneous robot/video data</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">action-conditioned baseline</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>RoboLab replay evaluation</td><td class="mt">Pearson correlation</td><td class="me">0.96</td><td> <span class="note">replayed versus reference success rates</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2608.18035" target="_blank" rel="noopener">Plug-and-Play Traffic Element Awareness for End-to-End Autonomous Driving</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 45 · 프록시 추정">완성도 45</span><span class="badge conf">🎓 ECCV 2026</span></div>
+        <div class="meta"><span class="id">2608.18035</span> · <a href="https://arxiv.org/abs/2608.18035" target="_blank" rel="noopener">arXiv</a> · <a href="https://zzongzheng0918.github.io/TE-Aware-E2E-AD/" target="_blank" rel="noopener">code</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">기존 end-to-end driving이 차량·보행자 같은 dynamic participant에 집중하고 신호등·표지판의 영향을 체계적으로 측정하지 못한 문제를 다룬다. 여러 public driving dataset에 traffic-element annotation을 추가하고 perception–prediction–planning, VLA, regression, diffusion policy, trajectory scoring에 공통 signal을 주입한다.</p><div class="f"><span class="lbl">기여</span><span>서로 다른 driving model family와 dataset에 적용 가능한 최소 integration design과 통합 traffic-element research infrastructure를 구축해, traffic awareness의 효과를 architecture별로 비교했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>nuScenes, NAVSIM-v1/v2, Bench2Drive와 다섯 종류 model paradigm에서 일관된 개선을 보고해 특정 architecture에 종속되지 않는다.</li><li>public dataset의 구조화된 traffic-element annotation 부족을 직접 보완해 후속 비교 연구 기반을 제공한다.</li><li>NAVSIM-v2에서 state-of-the-art architecture와 data pipeline을 개선해 challenging benchmark에서 효과를 확인했다.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>후보 abstract에는 benchmark별 절대 수치가 없어 개선 크기와 statistical significance는 본문 표 확인이 필요하다.</li><li>traffic-element annotation 생성 품질과 지역별 신호 체계 차이에 대한 robustness가 중요하다.</li><li>robot manipulation WAM과 직접 관련되기보다 autonomous-driving policy input 보강에 가까운 인접 연구다.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">① VLA/정책 보강 — traffic light와 road sign signal을 다양한 end-to-end driving architecture에 최소 변경으로 주입하는 plug-and-play 방식.</span></div><div class="f"><span class="lbl">데이터셋</span><span>nuScenes, NAVSIM-v1, NAVSIM-v2, Bench2Drive with augmented traffic-element annotations</span></div>
+      </div>
+    </article>
+  </section>
   <section>
     <h2 class="date">2026-08-14 · 1편</h2>
     <article class="card" data-group="VLA">
@@ -1413,7 +1502,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-08-23 10:15 · WM_surveybot</footer>
+<footer>built 2026-08-23 13:58 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
