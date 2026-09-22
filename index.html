@@ -147,6 +147,17 @@ article.dd{padding:22px 18px}
 <main>
   <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">165</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">25</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">87</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">32</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">21</span></button></div>
   <section>
+    <h2 class="date">⏳ 요약 전 후보 (2026-09-22 수집 · 1편 — 원문 확인 및 요약 대기)</h2>
+    <article class="card pending" data-group="pending">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.23369" target="_blank" rel="noopener">The Right Future for Action: Learning Action-Relevant Predictive States in World Action Models</a></h3>
+        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.23369</span></div>
+      </div>
+      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Generation-free world action models (WAMs) retain future-video prediction during training but act from internal video features at inference, leaving unclear what these features should preserve for control. Our representa…</p></div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-09-17 · 2편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
@@ -2160,7 +2171,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-20 16:03 · WM_surveybot</footer>
+<footer>built 2026-09-22 01:33 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
