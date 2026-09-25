@@ -145,17 +145,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">182</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">25</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">94</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">39</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">24</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">192</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">26</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">98</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">41</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">27</span></button></div>
   <section>
-    <h2 class="date">⏳ 요약 전 후보 (2026-09-23 수집 · 6편 — 원문 확인 및 요약 대기)</h2>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.23369" target="_blank" rel="noopener">The Right Future for Action: Learning Action-Relevant Predictive States in World Action Models</a></h3>
-        <div class="badges"><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.23369</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Generation-free world action models (WAMs) retain future-video prediction during training but act from internal video features at inference, leaving unclear what these features should preserve for control. Our representa…</p></div>
-    </article>
+    <h2 class="date">⏳ 요약 전 후보 (2026-09-24 수집 · 2편 — 원문 확인 및 요약 대기)</h2>
     <article class="card pending" data-group="pending">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">MachEmbodied-U0: Unified Understanding and Generation Model for Embodied Intelligence</a></h3>
@@ -172,33 +164,56 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R"><p class="sum muted">⏳ 요약 전 후보 — World Action Models bring the predictive capabilities of video models into robot action generation, providing a rich foundation for modeling future visual states. Tactile sensing complements this foundation with direct m…</p></div>
     </article>
-    <article class="card pending" data-group="pending">
+  </section>
+  <section>
+    <h2 class="date">2026-09-23 · 4편</h2>
+    <article class="card" data-group="WAM">
       <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.25652" target="_blank" rel="noopener">GameDirector: Decoupling Gameplay Logic from Rendering for Player-Configurable Game World Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 Tencent</span><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.25652</span></div>
+        <h3><a href="https://arxiv.org/abs/2609.27314" target="_blank" rel="noopener">CoRe-WAM: Correspondence-Aligned Temporal Residuals for World Action Models</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.27314</span> · <a href="https://arxiv.org/abs/2609.27314" target="_blank" rel="noopener">arXiv</a></div>
+        
       </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Recent game world models support realistic visual simulation and interactive gameplay based on player inputs. However, they typically learn environment dynamics from pixel-level supervision, jointly modeling perception, …</p></div>
+      <div class="R">
+        <p class="sum">CoRe-WAM augments a Motus world-action model with TraceDelta, which aligns historical visual features to current scene content before differencing them. The resulting validity-gated residual conditions action generation while preserving the current-observation pathway.</p><div class="f"><span class="lbl">기여</span><span>A correspondence-aligned temporal interface for robot world-action models that transports historical features before computing signed changes and injecting them into visual policy tokens.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses correspondence to compare matched scene content instead of fixed image locations.</li><li>Parameter-efficient adaptation that retains frozen pretrained components.</li><li>Evaluated on a broad manipulation benchmark, a second policy architecture, and a physical robot.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: online correspondence estimation and temporal feature processing add inference overhead.</li><li>Interpretation: reliance on a frozen correspondence estimator may make control sensitive to tracking failures, occlusion, or rapid motion.</li><li>Interpretation: transfer under randomized conditions appears limited relative to the clean-setting transfer evaluation.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0; physical deployment on Astribot S1</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">X-VLA</span><span class="cmp">Fast-WAM</span><span class="cmp">FastWAM-Joint</span><span class="cmp">Motus</span><span class="cmp">4D-WAM</span><span class="cmp">StarVLA</span></span></div>
+      </div>
     </article>
-    <article class="card pending" data-group="pending">
+    <article class="card" data-group="WAM">
       <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.25376" target="_blank" rel="noopener">VLAQuantBench: Closed-Loop Evaluation of Post-Training Quantization for Vision-Language-Action Models</a></h3>
-        <div class="badges"><span class="badge org">🔴 Microsoft Research</span><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.25376</span></div>
+        <h3><a href="https://arxiv.org/abs/2609.27455" target="_blank" rel="noopener">Latent evolving World Action Model</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 48 · 프록시 추정">완성도 48</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.27455</span> · <a href="https://arxiv.org/abs/2609.27455" target="_blank" rel="noopener">arXiv</a></div>
+        
       </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Post-training quantization reduces the memory requirements of vision-language-action (VLA) models, but precision selection must account for the interaction between layer scope, numerical format, and calibration. We intro…</p></div>
+      <div class="R">
+        <p class="sum">LeWAM is a lightweight World Action Model that generates robot actions from frozen I-JEPA visual embeddings. During training it also predicts action-conditioned future embeddings, while deployment performs action-only inference.</p><div class="f"><span class="lbl">기여</span><span>It replaces video-diffusion-based WAM features with JEPA embeddings, jointly trains action generation and future-embedding prediction, and adds offline demonstration-guided preference refinement.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses a single predictor for action generation and action-conditioned future embedding prediction.</li><li>Avoids future prediction at inference, retaining action-only deployment.</li><li>DemoDPO derives offline preference supervision from demonstrations without new environment interaction.</li><li>Evaluated against FastWAM in real-world manipulation; FastWAM is an actual comparison, not only a citation.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>The main benchmark uses discrete task IDs rather than natural-language task conditioning, limiting evidence for language-grounded generalization.</li><li>Future prediction is removed at deployment, so the paper does not establish benefits from test-time planning or imagined futures.</li><li>Real-world evaluation is limited to three in-house tasks and an in-house teleoperation dataset.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">action prediction with auxiliary future/world-model learning</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0; three in-house real-world bimanual manipulation tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">LingBot-VLA-v2</span><span class="cmp">FastWAM</span></span></div>
+      </div>
     </article>
-    <article class="card pending" data-group="pending">
+    <article class="card big" data-group="WAM">
       <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.26313" target="_blank" rel="noopener">SafeLoop: Risk-Aware Rollback for Vision-Language-Action Manipulation</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.26313</span></div>
+        <h3><a href="https://arxiv.org/abs/2609.27656" target="_blank" rel="noopener">InternW0: A Foundational Physical World Model for Efficient Real-World Interactions</a></h3>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 → 필독도 80">필독 A 80</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge org">🔴 Physical Intelligence</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.27656</span> · <a href="https://arxiv.org/abs/2609.27656" target="_blank" rel="noopener">arXiv</a></div>
+        
       </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Recent vision-language-action (VLA) models are promising for general-purpose manipulation, but long-horizon execution remains fragile. Small state-estimation or control errors can lead to irreversible failures (e.g., col…</p></div>
+      <div class="R">
+        <p class="sum">InternW0 is a world-action model that couples future video prediction with fast closed-loop robot control. It reuses predictive context while conditioning each action update on new observations and contact feedback.</p><div class="f"><span class="lbl">기여</span><span>An asymmetric video–action mixture-of-transformers architecture for asynchronous prediction and control, with cross-embodiment interfaces and contact-aware post-training.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Separates slow predictive modeling from responsive action generation through observation-conditioned context routing.</li><li>Jointly trains predictive visual dynamics and continuous control, with optional force and tactile conditioning.</li><li>Evaluates both simulation generalization and contact-rich real-world scientific manipulation.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: broader modalities, reliable timestamping, and spatial calibration remain future requirements.</li><li>Author-reported: partial observability, accumulated prediction error, and intervention-dependent dynamics require better uncertainty handling.</li><li>Interpretation: the extensive task-specific post-training makes the degree of zero-shot cross-embodiment transfer unclear.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>Heterogeneous robot and egocentric pretraining data including EgoLab; evaluated on LIBERO, RoboTwin 2.0, and real-robot manipulation tasks.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">Fast-WAM</span><span class="cmp">AHA-WAM</span><span class="cmp">OpenWAM-α</span><span class="cmp">Motus</span><span class="cmp">LingBot-VA</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.27308" target="_blank" rel="noopener">EmbodiedSWE: Coding Agents for Long Horizon Dexterous Robotics</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge org">🔴 ByteDance Seed</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.27308</span> · <a href="https://arxiv.org/abs/2609.27308" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">EmbodiedSWE turns coding-agent solutions for long-horizon dexterous simulation tasks into verified, diversified demonstrations for VLA training. It introduces a benchmark and data engine, then demonstrates simulated-policy training and sim-to-real transfer.</p><div class="f"><span class="lbl">기여</span><span>Introduces EmbodiedSWE-Bench and EmbodiedSWE-Gen, using verified coding-agent programs to generate diverse robot-learning trajectories for VLA fine-tuning.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Connects coding-agent task solving to scalable, verified VLA supervision.</li><li>Covers long-horizon, contact-rich manipulation across multiple robot embodiments.</li><li>Evaluates both data scaling and generalization from agent-aided trajectory diversification.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: the full coding-agent-to-robot distillation pipeline was not evaluated end to end.</li><li>Author-reported: generated environments need stronger visual realism and physical validation for robot training.</li><li>Interpretation: VLA evaluation is limited to selected tasks and models, so broader policy generality remains unestablished.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other</span></div><div class="f"><span class="lbl">데이터셋</span><span>EmbodiedSWE-Bench; EmbodiedSWE-Gen generated trajectories</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Fable 5.1</span><span class="cmp">Opus 5</span><span class="cmp">Opus 4.8</span><span class="cmp">GPT-6 Astra</span><span class="cmp">GPT-5.6 Sol</span><span class="cmp">GPT-5.6 Terra</span><span class="cmp">SmolVLA</span><span class="cmp">π0.5-DROID</span></span></div>
+      </div>
     </article>
   </section>
   <section>
-    <h2 class="date">2026-09-22 · 3편</h2>
+    <h2 class="date">2026-09-22 · 6편</h2>
     <article class="card" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.25562" target="_blank" rel="noopener">IndustrialVLA-Bench: A Traceable Multi-Axis Evaluation of Open Robot Policy Models</a></h3>
@@ -230,6 +245,39 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">PatchWAM encodes continuous robot actions as fixed visual-latent patches, allowing one diffusion transformer to jointly generate an action chunk and a future observation. It tests whether a world-action model can avoid a dedicated trainable action pathway.</p><div class="f"><span class="lbl">기여</span><span>Introduces the parameter-free Action-as-Patch codec and a shared flow-matching transformer for joint future-frame and continuous-action prediction.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses a matched dual-expert control to directly examine the need for a dedicated action pathway.</li><li>The fixed action codec is information-preserving and adds no trainable action-specific module.</li><li>Evaluates manipulation, perturbation robustness, and clean-to-random transfer across several benchmarks.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: the matched comparison changes action capacity, token visibility, and processing path together, so it cannot isolate the cause of the advantage.</li><li>Author-reported: results use no independent training seeds and all experiments are in simulation.</li><li>Author-reported: jointly updating future-frame tokens increases inference cost and does not establish real-time or safe physical-robot deployment.</li><li>Interpretation: benchmark comparisons use differing data, augmentation, and checkpoint protocols, limiting architectural conclusions outside the matched control.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">Joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0; LIBERO; LIBERO-Plus; RoboDojo; LIBERO-Pro</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Dual-expert control</span><span class="cmp">ImageWAM</span><span class="cmp">FastWAM</span><span class="cmp">4D-WAM</span><span class="cmp">MotuBrain</span><span class="cmp">ABot-M0.5</span><span class="cmp">OpenWAM-α</span><span class="cmp">QuoVLA</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.25652" target="_blank" rel="noopener">GameDirector: Decoupling Gameplay Logic from Rendering for Player-Configurable Game World Models</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 52 · 프록시 추정">완성도 52</span><span class="badge org">🔴 Tencent</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.25652</span> · <a href="https://arxiv.org/abs/2609.25652" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">GameDirector separates explicit game logic from video-world-model rendering for configurable, closed-loop gameplay. An agentic control layer tracks state, plans NPC actions, and enforces rules before prompting the renderer.</p><div class="f"><span class="lbl">기여</span><span>Introduces a modular game-world-model framework combining visual perception, explicit state tracking, language-model action planning, and deterministic rule enforcement.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Explicit rules and state tracking target mechanics-consistent long-horizon gameplay.</li><li>Player-configurable characters, combat parameters, and skills are supported without modifying the renderer.</li><li>Evaluation compares representative state-modeling and boss-control designs under a shared backbone and data setup.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Interpretation: validation is limited to three combat-game settings, so transfer to broader game genres is unproven.</li><li>Interpretation: state updates depend on learned visual detectors, so perception errors can propagate into the control loop.</li><li>Author-reported: future work aims to extend the framework with richer structured intermediate representations and controllable settings.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other: agentic game world model with external rule-based control</span></div><div class="f"><span class="lbl">데이터셋</span><span>A state-annotated gameplay dataset collected across No Rest for the Wicked, Vampire, and Hollow Knight.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Matrix-Game 2.0</span><span class="cmp">ReactiveGWM</span><span class="cmp">WildWorld</span><span class="cmp">StatePlay</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.26467" target="_blank" rel="noopener">RouteRLT: Learning When and Which RL Specialist Should Control a Vision-Language-Action Policy</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 58 · 프록시 추정">완성도 58</span><span class="badge conf">🎓 IROS</span></div>
+        <div class="meta"><span class="id">2609.26467</span> · <a href="https://arxiv.org/abs/2609.26467" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">RouteRLT learns to route control from a frozen SmolVLA generalist to phase-specific RL specialists during precision-critical manipulation stages. It uses latent-state phase selection, switch stabilization, and boundary-aware action-chunk handoffs.</p><div class="f"><span class="lbl">기여</span><span>A learned generalist–specialist controller router that selects among a frozen VLA and separately trained RL specialists without privileged phase signals at deployment.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Routes among multiple controllers from frozen VLA representations without privileged deployment state.</li><li>Explicitly handles controller switches within chunked action execution.</li><li>Evaluated in both simulation and a real-robot multi-stage insertion setting.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: evaluation is limited to one VLA backbone and does not compare full-backbone online fine-tuning.</li><li>Author-reported: hardware coverage is restricted to one robot and connector/port geometry, with an operator-aligned insertion handoff.</li><li>Author-reported: router and specialist training are decoupled, creating end-to-end handoff distribution shift.</li><li>Interpretation: reliance on phase annotations for specialist and router training may constrain transfer to tasks whose critical phases are hard to label.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO Object simulation; real-world Trossen cable pickup and port insertion.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">SmolVLA</span><span class="cmp">Oracle-routed RLT</span><span class="cmp">Full-trajectory RL specialist</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.26868" target="_blank" rel="noopener">Backdoors in Learning-Based Industrial Robotic Arm Manipulation: An Empirical Security Study</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 0 → 필독도 0">필독 E 0</span><span class="badge rig" title="완성도(rigor) 49 · 프록시 추정">완성도 49</span><span class="badge conf">🎓 IROS</span></div>
+        <div class="meta"><span class="id">2609.26868</span> · <a href="https://arxiv.org/abs/2609.26868" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">An empirical security study shows that physical backdoors can induce semantically wrong yet physically feasible behavior in learned industrial manipulation policies. It proposes online visual trigger sanitization to mitigate the attack without retraining the deployed policy.</p><div class="f"><span class="lbl">기여</span><span>Evaluates training-time physical-trigger backdoors and an attention-guided online observation-sanitization defense on FANUC and xArm manipulation tasks.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses two real commercial industrial arms rather than simulation alone.</li><li>Studies both attack stealthiness and runtime defense cost.</li><li>Compares online sanitization with offline fine-tuning under the same attack setting.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: the defense assumes triggers are in off-task background regions.</li><li>Author-reported: it does not address language-conditioned or other multimodal triggers.</li><li>Interpretation: evaluation covers two tasks and a single cited visuomotor-policy family, limiting generalization to broader VLA deployments.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">other</span></div><div class="f"><span class="lbl">데이터셋</span><span>Teleoperation demonstrations for color sorting and machinery boxing on FANUC LR Mate 200iD and xArm 6.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Offline fine-tuning defense</span></span></div>
       </div>
     </article>
   </section>
@@ -314,7 +362,7 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
-    <h2 class="date">2026-09-20 · 1편</h2>
+    <h2 class="date">2026-09-20 · 2편</h2>
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.23863" target="_blank" rel="noopener">Grounded Action Model: 3D Grounding as a Foundation for Robotics</a></h3>
@@ -324,6 +372,17 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">GAM grounds language, points, or boxes into object-centric 3D observations for robot action prediction. A frozen 3D grounding backbone supplies selected-object appearance and geometry to an action transformer.</p><div class="f"><span class="lbl">기여</span><span>Introduces 3D grounding as the foundation for a manipulation policy, with a shared prompt interface for direct target selection and planner-driven execution.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses explicit object geometry and target-focused visual features rather than whole-scene observations.</li><li>Supports language, point, and box prompts through one object-centric interface.</li><li>Evaluates simulation robustness and real-robot, planner-driven manipulation.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: grounding errors propagate directly to actions, and object-centric filtering can omit relevant context such as obstacles.</li><li>Author-reported: performance can struggle with unseen object sizes because grasp motions may not adapt.</li><li>FastWAM is a reported RoboTwin leaderboard baseline; ImageWAM is citation-only and not an evaluated comparison.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0; LIBERO-PRO; real bimanual YAM and Franka tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">Flex-π</span><span class="cmp">MolmoAct2</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.23369" target="_blank" rel="noopener">The Right Future for Action: Learning Action-Relevant Predictive States in World Action Models</a></h3>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 → 필독도 80">필독 A 80</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge org">🔴 Alibaba/Qwen</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.23369</span> · <a href="https://arxiv.org/abs/2609.23369" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">ARPS makes a generation-free world action model act through a compact, horizon-conditioned predictive state rather than dense video features. The state is trained to anticipate future visual representations and their temporal changes using only current observations at inference.</p><div class="f"><span class="lbl">기여</span><span>Introduces Action-Relevant Predictive States: a learned bottleneck between a WAM video expert and action expert, supervised with multi-horizon absolute and temporal-difference targets from a frozen V-JEPA2 teacher.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Targets predictive content selected for action readability rather than predictability alone.</li><li>Uses training-only future-representation supervision while retaining current-observation-only inference.</li><li>Includes controlled ablations of teacher choice, temporal targets, state capacity, extraction depth, and gradient flow.</li><li>Evaluates both in-domain manipulation and distribution-shift robustness.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: evaluation is limited to one WAM backbone because pretraining is costly.</li><li>Author-reported: all experiments are in simulation, with no real-robot evaluation.</li><li>The paper&#x27;s robustness claims are benchmark-specific and do not establish general real-world transfer.</li><li>Some reported baseline results are reproduced or sourced from prior evaluations, which can limit strict comparability across implementations.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">action prediction with auxiliary future/world-model learning</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, LIBERO-Plus, and RoboTwin 2.0</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Fast-WAM</span><span class="cmp">OpenVLA</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">VLA-JEPA</span><span class="cmp">Motus</span><span class="cmp">LingBot-VA</span><span class="cmp">Enfold</span><span class="cmp">DC-WAM</span><span class="cmp">Cosmos-Policy</span><span class="cmp">Faster-WAM</span></span></div>
       </div>
     </article>
   </section>
@@ -1334,6 +1393,20 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
+    <h2 class="date">2026-07-15 · 1편</h2>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2607.14236" target="_blank" rel="noopener">Never Too Late for Force: Accelerating VLA Post-Training with Reactive Force Injection</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 66 · 프록시 추정">완성도 66</span><span class="badge conf">🎓 CORL</span></div>
+        <div class="meta"><span class="id">2607.14236</span> · <a href="https://arxiv.org/abs/2607.14236" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">LIFT post-trains a pretrained VLA with a reactive force-conditioned action expert for contact-rich manipulation. It combines causal force memory with online human-corrected DAgger data while preserving the base policy output at initialization.</p><div class="f"><span class="lbl">기여</span><span>Adds a causal reactive force path beside a pretrained π0.5 action expert, using zero-initialized cross-attention and mixed vision-only/force-enabled online post-training.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses recent force history to refresh actions during contact rather than relying on a single force frame.</li><li>Preserves the pretrained action output at initialization through copied expert weights and a zero-initialized force residual.</li><li>Evaluates reactive force memory, online corrective data, generalization conditions, and a residual-policy alternative.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: collection depends on skilled human intervention, which burdens operators and affects correction-data quality.</li><li>Author-reported: experiments are limited to a single-arm platform.</li><li>Interpretation: evaluation covers three task-specific real-robot settings, limiting evidence for broader cross-platform generalization.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>Real-robot towel folding, book insertion, and Hanoi ring placement; vision-only handheld demonstrations plus online force-enabled corrective data.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5 w/ Online DAgger</span><span class="cmp">LIFT w/o Reactive Force Injection</span><span class="cmp">LIFT w/ Offline DAgger</span><span class="cmp">π0.5 w/ Offline Handheld Data</span><span class="cmp">Residual Policy</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-07-13 · 2편</h2>
     <article class="card" data-group="WM">
       <div class="L">
@@ -2131,6 +2204,20 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
+    <h2 class="date">2026-05-22 · 1편</h2>
+    <article class="card" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2605.23568" target="_blank" rel="noopener">TactileReflex: Noise-Statistics-Driven Vision-Tactile Reflex Control for Force-Sensitive Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 0 → 필독도 0">필독 E 0</span><span class="badge rig" title="완성도(rigor) 53 · 프록시 추정">완성도 53</span><span class="badge conf">🎓 IROS</span></div>
+        <div class="meta"><span class="id">2605.23568</span> · <a href="https://arxiv.org/abs/2605.23568" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">TactileReflex is an interpretable vision-tactile reflex controller for safely manipulating fragile, liquid-filled containers. It derives control thresholds from sensor-noise statistics and adapts grip through anti-slip, release, and force-protection channels.</p><div class="f"><span class="lbl">기여</span><span>Introduces calibration-driven, three-channel tactile reflex control that uses image-level tactile proxies rather than learned force prediction or task-specific training.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses direct, interpretable tactile feedback with explicit force-protection behavior.</li><li>Avoids external force calibration, manual threshold tuning, and task-specific training.</li><li>Ablations isolate the roles of anti-slip, release, and force-protection channels.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: limited to gripper-centric control and grayscale tactile processing.</li><li>Author-reported: broader material coverage and direct VLA integration remain future work.</li><li>Interpretation: evaluation is narrow in objects, tasks, and hardware, so generalization beyond the tested cups is unproven.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other: vision-tactile closed-loop reflex control</span></div><div class="f"><span class="lbl">데이터셋</span><span>Real-robot experiments on soft disposable plastic cups and hard measuring cups, including dynamic pouring.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Fixed-effort (no-reflex) baseline</span><span class="cmp">Partial TactileReflex channel configurations</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-04-13 · 1편</h2>
     <article class="card big" data-group="VLA">
       <div class="L">
@@ -2419,7 +2506,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-24 00:04 · WM_surveybot</footer>
+<footer>built 2026-09-25 00:03 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
