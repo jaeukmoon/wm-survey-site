@@ -145,9 +145,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">192</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">26</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">98</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">41</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">27</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">199</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">26</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">102</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">43</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">28</span></button></div>
   <section>
-    <h2 class="date">⏳ 요약 전 후보 (2026-09-24 수집 · 2편 — 원문 확인 및 요약 대기)</h2>
+    <h2 class="date">⏳ 요약 전 후보 (2026-09-25 수집 · 2편 — 원문 확인 및 요약 대기)</h2>
     <article class="card pending" data-group="pending">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">MachEmbodied-U0: Unified Understanding and Generation Model for Embodied Intelligence</a></h3>
@@ -166,7 +166,21 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
-    <h2 class="date">2026-09-23 · 4편</h2>
+    <h2 class="date">2026-09-24 · 1편</h2>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.28927" target="_blank" rel="noopener">Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.28927</span> · <a href="https://arxiv.org/abs/2609.28927" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">Streaming-WAM performs asynchronous robot manipulation by jointly predicting future visual states and the remaining action chunk. It conditions visual prediction on actions already committed during inference, so action continuation accounts for ongoing motion.</p><div class="f"><span class="lbl">기여</span><span>An action-conditioned streaming world-action model that uses the committed action prefix both as a fixed policy prefix and as conditioning for future visual prediction within a joint update.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Directly addresses scene changes caused by actions executed while inference is running.</li><li>Joint visual and action prediction supplies motion-aware visual features to the action continuation.</li><li>Evaluated across multiple simulation benchmarks and real-world manipulation tasks.</li><li>Includes conditioning and visual-prediction analyses.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: future work is needed for variable inference delays and more dynamic environments.</li><li>Interpretation: the method depends on completing updates within the committed-prefix execution window to avoid pauses.</li><li>Interpretation: it is built on existing WAM backbones and uses task-specific training data rather than demonstrating broad cross-embodiment generalization.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, RoboTwin 2.0, RoboCasa, and two real-world manipulation tasks (Stamp Paper and Block Manipulation).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">OpenVLA</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">Motus</span><span class="cmp">LingBot-FDM</span><span class="cmp">Fast-WAM</span><span class="cmp">Fast-WAM-RTC</span><span class="cmp">Fast-WAM-Joint</span><span class="cmp">Fast-WAM-Joint-CD</span><span class="cmp">X-WAM</span><span class="cmp">X-WAM-CD</span><span class="cmp">Joint-WAM</span><span class="cmp">Joint-WAM-CD</span><span class="cmp">Cosmos Policy</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-09-23 · 8편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.27314" target="_blank" rel="noopener">CoRe-WAM: Correspondence-Aligned Temporal Residuals for World Action Models</a></h3>
@@ -209,6 +223,50 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">EmbodiedSWE turns coding-agent solutions for long-horizon dexterous simulation tasks into verified, diversified demonstrations for VLA training. It introduces a benchmark and data engine, then demonstrates simulated-policy training and sim-to-real transfer.</p><div class="f"><span class="lbl">기여</span><span>Introduces EmbodiedSWE-Bench and EmbodiedSWE-Gen, using verified coding-agent programs to generate diverse robot-learning trajectories for VLA fine-tuning.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Connects coding-agent task solving to scalable, verified VLA supervision.</li><li>Covers long-horizon, contact-rich manipulation across multiple robot embodiments.</li><li>Evaluates both data scaling and generalization from agent-aided trajectory diversification.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: the full coding-agent-to-robot distillation pipeline was not evaluated end to end.</li><li>Author-reported: generated environments need stronger visual realism and physical validation for robot training.</li><li>Interpretation: VLA evaluation is limited to selected tasks and models, so broader policy generality remains unestablished.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other</span></div><div class="f"><span class="lbl">데이터셋</span><span>EmbodiedSWE-Bench; EmbodiedSWE-Gen generated trajectories</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Fable 5.1</span><span class="cmp">Opus 5</span><span class="cmp">Opus 4.8</span><span class="cmp">GPT-6 Astra</span><span class="cmp">GPT-5.6 Sol</span><span class="cmp">GPT-5.6 Terra</span><span class="cmp">SmolVLA</span><span class="cmp">π0.5-DROID</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.28431" target="_blank" rel="noopener">LiMA: Bridging Long-term Imagination to Real-time Dexterous Manipulation via Asynchronous Diffusion</a></h3>
+        <div class="badges"><span class="badge pri gA" title="관련성 80 → 필독도 80">필독 A 80</span><span class="badge rig" title="완성도(rigor) 52 · 프록시 추정">완성도 52</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge org">🔴 BAAI/Zhiyuan</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.28431</span> · <a href="https://arxiv.org/abs/2609.28431" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">LiMA is an asynchronous diffusion framework for bimanual dexterous manipulation that separates long-horizon imagination from high-frequency action refinement. A structured latent bridge couples the slow planner to the reactive controller.</p><div class="f"><span class="lbl">기여</span><span>Introduces a dual-system Future Dreamer and Motion Refiner coupled through a latent Schrödinger bridge for future-aware, real-time manipulation.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Explicitly combines long-horizon visual foresight with frequent observation-conditioned action refinement.</li><li>Uses a structured intent-to-execution latent bridge rather than unconditional-noise action refinement.</li><li>Evaluated on real-world short- and long-horizon bimanual tasks, including perturbation settings.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: performance degrades under severe occlusion and visually ambiguous scenes; it lacks tactile feedback.</li><li>Author-reported: reported latency may not reflect deployment-optimized performance.</li><li>FastWAM is cited in related work only, not an evaluated comparison baseline.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>Six real-world bimanual dexterous manipulation tasks with expert teleoperation demonstrations.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">GR00T N1.6</span><span class="cmp">InternVLA-A1</span><span class="cmp">VPP</span><span class="cmp">Cosmos-Policy</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.28811" target="_blank" rel="noopener">DeltaWAM: Delta World Action Models for Bimanual Manipulation</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.28811</span> · <a href="https://arxiv.org/abs/2609.28811" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">DeltaWAM jointly predicts compact visual transitions and bimanual action chunks from a dense visual anchor. Its Streaming Delta Memory incrementally updates action context from observed deltas instead of repeatedly encoding full observations.</p><div class="f"><span class="lbl">기여</span><span>Introduces a delta-native world-action model with three sharing architectures and Streaming Delta Memory for efficient streaming manipulation; Fast-WAM is an actual evaluated comparator, not merely a citation.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Separates dense scene context from compact action-relevant visual changes.</li><li>Evaluates simulation, visual randomization, ablations, efficiency, and real-world bimanual manipulation.</li><li>Streaming memory targets repeated visual-context computation during control.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: delta-encoder overhead offsets part of the compute savings.</li><li>Author-reported: accumulated transition context trades lower clean-setting performance for stronger randomized performance in one ablation.</li><li>Interpretation: periodic anchor refresh and bounded visual staleness add operational sensitivity to fast scene changes.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin 2.0; real-world dual-arm bimanual tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">RDT</span><span class="cmp">ACT</span><span class="cmp">π0</span><span class="cmp">OpenVLA</span><span class="cmp">π0.5</span><span class="cmp">Fast-WAM</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.28064" target="_blank" rel="noopener">SlackDrive: Reclaiming Runtime Slack for Adaptive Driving Inference</a></h3>
+        <div class="badges"><span class="badge pri gD" title="관련성 35 → 필독도 35">필독 D 35</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.28064</span> · <a href="https://arxiv.org/abs/2609.28064" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">SlackDrive dynamically selects an inference budget for a frozen driving world-action model using recently observed latency. It aims to preserve planning utility while meeting changing real-time control deadlines.</p><div class="f"><span class="lbl">기여</span><span>A plug-and-play pre-inference scheduler that profiles discrete compute budgets once, estimates runtime load from completed forwards, and selects the highest-utility predicted-feasible budget before the next driving inference.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses measured runtime latency as feedback before the next costly forward pass.</li><li>Keeps the driving backbone frozen and is designed to work with different compute actuators.</li><li>Evaluates under fluctuating runtime load with matched efficient-inference and static-budget baselines.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Evaluation is centered on NAVSIM v2 and one primary frozen backbone, so deployment generality remains uncertain.</li><li>The method depends on temporal predictability in runtime latency; the authors report reduced benefit under memoryless spikes.</li><li>Utility profiles are aggregate operating-point estimates, which may not select the best compute level for every individual scene.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>NAVSIM v2</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">DriveDreamer-Policy</span><span class="cmp">FastV</span><span class="cmp">SparseVLM</span><span class="cmp">EfficientVLA</span><span class="cmp">ToMe</span><span class="cmp">VisionZip</span><span class="cmp">PruMerge+</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="기타">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.28466" target="_blank" rel="noopener">The Past Frames the Future: Memory for Autoregressive Video Generation</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 20 → 필독도 20">필독 E 20</span><span class="badge rig" title="완성도(rigor) 44 · 프록시 추정">완성도 44</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span><span class="badge up">▲ 36</span></div>
+        <div class="meta"><span class="id">2609.28466</span> · <a href="https://arxiv.org/abs/2609.28466" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">A survey of persistent-memory mechanisms for long-horizon autoregressive video generation. It frames memory as managed historical state that conditions future visual rollouts beyond the active context window.</p><div class="f"><span class="lbl">기여</span><span>Provides a unified memory formulation and organizes prior work by memory forms, functions, operations, learning, and evaluation.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Clear operational definition separating persistent memory from local context.</li><li>Broad framework covering representation, lifecycle, optimization, and evaluation.</li><li>Identifies concrete long-horizon consistency and state-persistence challenges.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: standardized memory-revealing evaluation remains an open challenge.</li><li>Author-reported: trustworthy state updating and resource-aware composable memory architectures remain unresolved.</li><li>Interpretation: as a survey, it does not introduce or empirically evaluate a new generation model.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">other</span></div><div class="f"><span class="lbl">데이터셋</span><span>Not applicable (survey)</span></div>
       </div>
     </article>
   </section>
@@ -2260,6 +2318,20 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
+    <h2 class="date">2026-03-21 · 1편</h2>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2603.20659" target="_blank" rel="noopener">StageCraft: Execution Aware Mitigation of Distractor and Obstruction Failures in VLA Models</a></h3>
+        <div class="badges"><span class="badge pri gE" title="관련성 8 → 필독도 8">필독 E 8</span><span class="badge rig" title="완성도(rigor) 66 · 프록시 추정">완성도 66</span><span class="badge conf">🎓 IROS</span></div>
+        <div class="meta"><span class="id">2603.20659</span> · <a href="https://arxiv.org/abs/2603.20659" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">StageCraft prepares a robot workspace before VLA execution by using a VLM to identify distractors or obstructions likely to cause failure. It infers minimal object-removal actions from prior policy rollouts and success labels without retraining the VLA.</p><div class="f"><span class="lbl">기여</span><span>A training-free execution decorator that uses in-context VLM reasoning over rollout histories to select and remove only the scene objects needed to improve a fixed VLA policy&#x27;s reliability.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Training-free and plug-and-play with fixed VLA policies.</li><li>Targets execution-time clutter and obstruction failures through minimal environment interventions.</li><li>Evaluated on real robots and simulation with two VLA backbones.</li><li>Uses rollout outcomes to adapt intervention extent to the base policy&#x27;s observed robustness.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: scalability is bounded by VLM context length as rollout histories grow.</li><li>Author-reported: it does not cover numerous, non-manipulable, or non-discrete-object distractors.</li><li>Requires successful in-context rollouts containing task-relevant objects and accurate VLM prompt following.</li><li>Adds a separate perception, planning, and physical object-removal stage before task execution.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other: VLM-guided pre-execution environment modification for fixed VLA policies</span></div><div class="f"><span class="lbl">데이터셋</span><span>Three real-world Franka FR3 manipulation tasks with unseen distractor objects; RLBench simulation.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Pi0.5</span><span class="cmp">SmolVLA</span><span class="cmp">gemini-3.1-pro</span><span class="cmp">gemini-2.5-pro</span><span class="cmp">gpt-5.2-pro</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
     <h2 class="date">2026-03-19 · 1편</h2>
     <article class="card" data-group="VLA">
       <div class="L">
@@ -2309,6 +2381,20 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">raw 카메라 frame(들)과 그 사이 행동을 입력받아, 다음 frame의 latent embedding(픽셀이 아닌 192-dim feature)을 예측하는 action-conditioned JEPA world model이다. 추론 시 시작 이미지+목표 이미지를 주면 학습된 action head 없이 CEM planning으로 목표 latent에 도달하는 행동 sequence를 탐색한다. raw 픽셀에서 end-to-end로, ~15M params·단일 GPU 수 시간 학습으로 collapse 없이 안정 학습되며 foundation-model 기반 WM 대비 최대 48배 빠른 planning을 달성한다.</p><div class="f"><span class="lbl">기여</span><span>기존 JEPA/latent WM이 collapse 회피를 위해 의존하던 EMA target encoder·pretrained encoder·stop-gradient·auxiliary decoder·다항(약 6-hyperparameter) loss 레시피를 모두 제거하고, 단일 SIGReg regularizer + next-embedding prediction loss(loss weight 사실상 1개, tunable hyperparameter 6→1)만으로 raw 픽셀에서 end-to-end로 안정 학습되는 첫 JEPA WM을 제시했다.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>EMA·pretrained encoder·stop-gradient·학습 decoder 없이 SIGReg 단일 regularizer로 representation collapse를 막아, tunable loss hyperparameter를 6→1로 단순화</li><li>~15M params·단일 GPU 수 시간으로 학습 가능한 경량 레시피, foundation-model 기반 WM 대비 planning 최대 48배 빠름(~1s/plan vs ~47s)</li><li>2D·3D 다양한 control task에서 경쟁력 유지하며, latent 공간이 물리량 probing·implausible event 감지(surprise) 등 의미 있는 물리 구조를 인코딩</li><li>데이터셋·체크포인트·코드 공개(HF lewm collection, github lucas-maes/le-wm)로 재현·재사용 용이</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>peer-reviewed venue 없음 — preprint 상태</li><li>학습된 IDM/action head가 없어 행동은 오직 test-time CEM 탐색으로만 복원됨(별도 학습 controller 부재); 4칸 taxonomy에 깔끔히 안 맞아 ③은 least-bad bucket이고 순수 standalone WM에 가까움</li><li>VLA 아님(언어 조건화 없음)·WAM 아님(action head 없음)이라 직접 배포 가능한 정책이 아니라 building block/레시피 성격</li><li>학습 데이터가 오프라인·reward-free·non-optimal(pseudo-expert/exploratory) 픽셀 trajectory 4종에 한정, 대규모/실로봇 일반화는 미검증</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">③ WM+IDM</span></div><div class="f"><span class="lbl">데이터셋</span><span>오프라인·reward-free 픽셀 trajectory 4종: Two-Room(2D navigation) · Reacher · Push-T(2D manipulation, PLDM 데이터셋) · OGBench-Cube(3D manipulation). HF lewm collection으로 공개(lewm-tworooms/-reacher/-pusht/-cube).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">I-JEPA</span><span class="cmp">V-JEPA</span><span class="cmp">PLDM (end-to-end alternative)</span><span class="cmp">DINO-WM (foundation-model based WM)</span></span></div><div class="f col"><span class="lbl">점수표</span><table class="scoretab"><thead><tr><th>벤치마크</th><th>지표</th><th>본 모델</th><th>비교모델 점수</th></tr></thead><tbody><tr><td>Loss hyperparameter count (vs only existing end-to-end alternative)</td><td class="mt">tunable loss hyperparameters</td><td class="me">1</td><td>existing end-to-end alternative (e.g. PLDM) 6 <span class="note">abstract 명시: tunable loss hyperparameters 6→1</span></td></tr><tr><td>Planning speed (vs foundation-model-based WM)</td><td class="mt">planning speedup</td><td class="me">up to 48x faster (~1s/plan)</td><td>foundation-model-based WM (e.g. DINO-WM) 1x (~47s/plan, approx) <span class="note">abstract: plans up to 48x faster; ~1s vs ~47s는 lineage section 기준(approx)</span></td></tr></tbody></table></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-02-20 · 1편</h2>
+    <article class="card" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2602.18532" target="_blank" rel="noopener">VLANeXt: Recipes for Building Strong VLA Models</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 52 → 필독도 52">필독 C 52</span><span class="badge rig" title="완성도(rigor) 70 · 프록시 추정">완성도 70</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge conf">🎓 ICML</span></div>
+        <div class="meta"><span class="id">2602.18532</span> · <a href="https://arxiv.org/abs/2602.18532" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">VLANeXt systematically studies VLA design choices under a shared training and evaluation framework. It distills these studies into a direct vision-language-to-action model recipe and evaluates the resulting policy in benchmarks and real-world manipulation.</p><div class="f"><span class="lbl">기여</span><span>A controlled VLA design-space study covering architecture, perception, and action modeling, culminating in VLANeXt with soft VLM-policy coupling, multi-view inputs, VLM-side proprioception, action chunking, flow matching, and a frequency-domain auxiliary loss.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Systematically varies foundational, perceptual, and action-modeling choices within one framework.</li><li>Evaluates robustness on LIBERO-plus as well as real-world single-arm and bimanual tasks.</li><li>Reports practical efficiency trade-offs: the lightweight frequency-domain auxiliary objective is preferred over world modeling.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: auxiliary world modeling substantially increases training cost and is excluded from the final recipe.</li><li>Interpretation: the central evidence is concentrated on LIBERO/LIBERO-plus and a small set of real-world tasks, so broader embodiment and long-horizon generalization remain uncertain.</li><li>FastWAM is cited as related work only; it is not an evaluated comparison model in this paper.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO; LIBERO-plus; DROID pretraining and task-specific real-world manipulation data.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Diffusion Policy</span><span class="cmp">Octo</span><span class="cmp">MDT</span><span class="cmp">OpenVLA</span><span class="cmp">TraceVLA</span><span class="cmp">SpatialVLA</span><span class="cmp">WorldVLA</span><span class="cmp">CoT-VLA</span><span class="cmp">π0</span><span class="cmp">π0-Fast</span><span class="cmp">NORA</span><span class="cmp">SmolVLA</span><span class="cmp">UniVLA</span><span class="cmp">FLOWER</span><span class="cmp">OpenVLA-OFT</span></span></div>
       </div>
     </article>
   </section>
@@ -2506,7 +2592,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-25 00:03 · WM_surveybot</footer>
+<footer>built 2026-09-26 00:02 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
