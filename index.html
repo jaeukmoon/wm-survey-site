@@ -145,9 +145,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">199</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">26</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">102</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">43</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">28</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">200</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">26</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">103</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">43</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">28</span></button></div>
   <section>
-    <h2 class="date">⏳ 요약 전 후보 (2026-09-25 수집 · 2편 — 원문 확인 및 요약 대기)</h2>
+    <h2 class="date">⏳ 요약 전 후보 (2026-09-27 수집 · 2편 — 원문 확인 및 요약 대기)</h2>
     <article class="card pending" data-group="pending">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">MachEmbodied-U0: Unified Understanding and Generation Model for Embodied Intelligence</a></h3>
@@ -166,7 +166,7 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
-    <h2 class="date">2026-09-24 · 1편</h2>
+    <h2 class="date">2026-09-24 · 2편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.28927" target="_blank" rel="noopener">Streaming-WAM: Action-Conditioned World-Action Model for Asynchronous Robot Manipulation</a></h3>
@@ -176,6 +176,17 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">Streaming-WAM performs asynchronous robot manipulation by jointly predicting future visual states and the remaining action chunk. It conditions visual prediction on actions already committed during inference, so action continuation accounts for ongoing motion.</p><div class="f"><span class="lbl">기여</span><span>An action-conditioned streaming world-action model that uses the committed action prefix both as a fixed policy prefix and as conditioning for future visual prediction within a joint update.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Directly addresses scene changes caused by actions executed while inference is running.</li><li>Joint visual and action prediction supplies motion-aware visual features to the action continuation.</li><li>Evaluated across multiple simulation benchmarks and real-world manipulation tasks.</li><li>Includes conditioning and visual-prediction analyses.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: future work is needed for variable inference delays and more dynamic environments.</li><li>Interpretation: the method depends on completing updates within the committed-prefix execution window to avoid pauses.</li><li>Interpretation: it is built on existing WAM backbones and uses task-specific training data rather than demonstrating broad cross-embodiment generalization.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, RoboTwin 2.0, RoboCasa, and two real-world manipulation tasks (Stamp Paper and Block Manipulation).</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">OpenVLA</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">Motus</span><span class="cmp">LingBot-FDM</span><span class="cmp">Fast-WAM</span><span class="cmp">Fast-WAM-RTC</span><span class="cmp">Fast-WAM-Joint</span><span class="cmp">Fast-WAM-Joint-CD</span><span class="cmp">X-WAM</span><span class="cmp">X-WAM-CD</span><span class="cmp">Joint-WAM</span><span class="cmp">Joint-WAM-CD</span><span class="cmp">Cosmos Policy</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.30247" target="_blank" rel="noopener">Rolling-WAM: World Action Models with Rolling Imagination</a></h3>
+        <div class="badges"><span class="badge pri gC" title="관련성 60 → 필독도 60">필독 C 60</span><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge bw">⚡ vs FastWAM</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.30247</span> · <a href="https://arxiv.org/abs/2609.30247" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">Rolling-WAM jointly predicts future video and robot actions while spreading denoising across successive closed-loop replanning cycles. A sliding window retains partially denoised future chunks so the imminent chunk can be executed with lower steady-state latency.</p><div class="f"><span class="lbl">기여</span><span>Introduces rolling video-action denoising for WAMs, training and executing a staggered-noise window that reuses and refines future visual-action predictions after each observation update.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Preserves explicit future visual prediction while reducing per-cycle joint-denoising work.</li><li>Evaluated across simulated manipulation, bimanual scene variation, and physical humanoid tasks.</li><li>Includes controlled comparisons to Fast-WAM and Joint-WAM under matched settings where applicable.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported limitation: retained predictions can lag rapid scene changes and misguide actions, especially with long windows.</li><li>Author-reported limitation: suitable window and chunk sizes may vary with task dynamics and control frequency.</li><li>Interpretation: the approach depends on carrying forward partially denoised predictions, so abrupt distribution shifts may reduce the value of computation reuse.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">Joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO; RoboTwin 2.0; three real-world Unitree G1 humanoid manipulation tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">GR00T N1.7</span><span class="cmp">Motus</span><span class="cmp">LingBot-VA</span><span class="cmp">Fast-WAM</span><span class="cmp">Joint-WAM</span></span></div>
       </div>
     </article>
   </section>
@@ -2592,7 +2603,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-26 00:02 · WM_surveybot</footer>
+<footer>built 2026-09-27 02:50 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
