@@ -145,36 +145,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">224</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">28</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">119</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">48</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">29</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">227</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">28</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">121</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">49</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">29</span></button></div>
   <section>
-    <h2 class="date">⏳ 요약 전 후보 (2026-09-30 수집 · 3편 — 원문 확인 및 요약 대기)</h2>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.34981" target="_blank" rel="noopener">What Makes World Action Models Generalize? An Empirical Study of Test-Time Future Modeling</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.34981</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — World action models (WAMs) predict the future alongside actions during training. Due to the heavy computation cost of video denoising, whether the future must still be generated during inference is disputed: Explicit WAM…</p></div>
-    </article>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.34608" target="_blank" rel="noopener">Efficient World Action Model Inference with Adaptive Intermediate States</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.34608</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — World Action Models (WAMs) enable future-aware control by jointly modeling actions and environment dynamics. However, iterative diffusion or flow inference incurs substantial denoising latency. Prior inference state offe…</p></div>
-    </article>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.36720" target="_blank" rel="noopener">T$^2$Mem: Learning Test-Time Memory for Robotics</a></h3>
-        <div class="badges"><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.36720</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — Memory-dependent robotic manipulation requires policies to use information that is no longer available in the current observation. Retaining history alone is insufficient: memory must preserve information that supports f…</p></div>
-    </article>
-  </section>
-  <section>
-    <h2 class="date">2026-09-29 · 3편</h2>
+    <h2 class="date">2026-09-29 · 4편</h2>
     <article class="card" data-group="WAM">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.36413" target="_blank" rel="noopener">One from Infinity: Actualizing Futures from Pretrained World Models into Robot Actions</a></h3>
@@ -208,9 +181,20 @@ article.dd{padding:22px 18px}
         <p class="sum">LIBERO-MAX is a paired simulation benchmark for testing whether robot policies can finish manipulation tasks after the world changes mid-execution. It isolates the effect of a change by replaying an identical pre-event action history in Base and Dynamic rollouts.</p><div class="f"><span class="lbl">기여</span><span>Introduces a controlled paired protocol and temporal diagnostics for evaluating robot-policy robustness to geometry, observation, appearance, clutter, and path changes during execution.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Controls pre-event state, policy seed, and executed actions to attribute outcome differences to the introduced event.</li><li>Evaluates a broad set of VLA, predictive VLA, and world-action policies under the same paired cases.</li><li>Includes diagnostics for event type, post-event feedback timing, and action commitment.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: evaluation is limited to simulated manipulation and one persistent event triggered before grasping.</li><li>Author-reported: transfer to physical robots, repeated or reversible changes, and later task stages remains untested.</li><li>Author-reported: endpoint success does not establish internal change detection, deliberate replanning, or safety.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">Other — robot-policy robustness benchmark</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO-MAX, constructed from LIBERO-Plus and LIBERO-PRO</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">OpenVLA-OFT</span><span class="cmp">X-VLA</span><span class="cmp">Xiaomi-Robotics-0</span><span class="cmp">MolmoAct2</span><span class="cmp">SmolVLA</span><span class="cmp">GR00T N1.7</span><span class="cmp">DM0.5</span><span class="cmp">VLA-JEPA</span><span class="cmp">Cosmos-Policy</span><span class="cmp">Fast-WAM</span><span class="cmp">HiMem-WAM</span><span class="cmp">Light-WAM</span><span class="cmp">DiT4DiT</span></span></div>
       </div>
     </article>
+    <article class="card big" data-group="VLA">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.36720" target="_blank" rel="noopener">T$^2$Mem: Learning Test-Time Memory for Robotics</a></h3>
+        <div class="badges"><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge org">🔴 NVIDIA</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.36720</span> · <a href="https://arxiv.org/abs/2609.36720" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">T²Mem equips a pretrained vision-language-action policy with fast-weight memory that updates from observations during deployment. It targets manipulation decisions that require information no longer present in the current observation.</p><div class="f"><span class="lbl">기여</span><span>An observation-grounded fast-weight memory pathway and alternating memory–policy training that use action supervision to learn what historical information supports control, without memory-specific annotations or external reasoning models.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Integrates episode-local memory directly into a single VLA policy.</li><li>Uses online self-supervised updates while action supervision shapes decision-relevant memory.</li><li>Includes interventions testing dependence on online updates and stored-memory content.</li><li>Evaluates against symbolic, perceptual, recurrent-memory, and memory-free policy baselines.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: it is weaker on tasks requiring tracking swaps and evolving object–location relationships, suggesting limited cross-temporal reasoning.</li><li>Author-reported: terminal performance can still be constrained by low-level execution precision, even when the intended target is identified.</li><li>Evaluation is confined to the RoboMME benchmark, so broader real-world generalization is not established.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboMME (16 memory-dependent manipulation tasks)</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">SAM2Act+</span><span class="cmp">MemER</span><span class="cmp">TTT</span><span class="cmp">RMT</span><span class="cmp">TokenDrop</span><span class="cmp">FrameSamp</span><span class="cmp">SimpleSG</span><span class="cmp">GroundSG</span></span></div>
+      </div>
+    </article>
   </section>
   <section>
-    <h2 class="date">2026-09-28 · 11편</h2>
+    <h2 class="date">2026-09-28 · 13편</h2>
     <article class="card" data-group="VLA">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.34256" target="_blank" rel="noopener">UMR: Universal Manipulation Representation</a></h3>
@@ -330,6 +314,28 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">Action Upcycling accelerates chunked robot policies by executing trustworthy discarded tail actions instead of replanning immediately. It uses velocity fluctuation within an already predicted action chunk to adapt the execution horizon without model internals, extra samples, or training.</p><div class="f"><span class="lbl">기여</span><span>A policy-agnostic test-time controller that reuses smooth action-chunk tails to reduce replanning frequency for VLAs and a world action model.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Training-free and uses only the predicted action chunk.</li><li>Applies across several chunked VLA policies and a world action model.</li><li>Evaluated in simulation benchmarks and physical robot manipulation.</li><li>Can be combined with per-call acceleration methods.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>The trust signal is based on predicted velocity smoothness, which may not reliably capture unforeseen environment changes.</li><li>Effectiveness depends on selecting an execution ratio and threshold from policy rollouts.</li><li>Real-robot evidence uses a single arm setup and a limited task set.</li><li>The authors do not release the real-robot data or fine-tuned weights.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">VLM/action expert</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, LIBERO-Plus, RoboTwin 2.0, and real-world YAM-arm manipulation tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">SmolVLA</span><span class="cmp">π0.5</span><span class="cmp">GR00T N1.7</span><span class="cmp">FastWAM</span><span class="cmp">AAC</span><span class="cmp">AutoHorizon</span></span></div>
+      </div>
+    </article>
+    <article class="card big" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.34608" target="_blank" rel="noopener">Efficient World Action Model Inference with Adaptive Intermediate States</a></h3>
+        <div class="badges"><span class="badge rig" title="완성도(rigor) 48 · 프록시 추정">완성도 48</span><span class="badge org">🔴 Alibaba/Qwen</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.34608</span> · <a href="https://arxiv.org/abs/2609.34608" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">WAMachine accelerates closed-loop world action model inference by retaining and adapting intermediate state across replans, denoising steps, and Transformer layers. It targets future-aware robot policies while retaining their native task performance.</p><div class="f"><span class="lbl">기여</span><span>A training-free stateful inference framework combining trajectory remapping, observation rebinding, and residual rescaling to reduce redundant computation in world action models.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Works across three distinct world action model architectures.</li><li>Coordinates reuse at planning, denoising, and Transformer-layer levels with consistency checks and fallback refreshes.</li><li>Evaluates closed-loop task success as well as inference efficiency.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: evaluation is limited to simulation; real-robot deployment requires additional safety validation.</li><li>Interpretation: the method depends on model-specific reuse settings and consistency thresholds.</li><li>Interpretation: Motus requires an additional rendering GPU in the reported setup.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO; RoboTwin 2.0</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Cosmos Policy</span><span class="cmp">Fast-WAM-IDM</span><span class="cmp">Motus</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.34981" target="_blank" rel="noopener">What Makes World Action Models Generalize? An Empirical Study of Test-Time Future Modeling</a></h3>
+        <div class="badges"><span class="badge rig" title="완성도(rigor) 56 · 프록시 추정">완성도 56</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.34981</span> · <a href="https://arxiv.org/abs/2609.34981" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">Simple-WAM keeps future video tokens during robot-action inference but processes them once while fully noised. It argues that this future conditioning preserves WAM generalization without iterative future-frame denoising.</p><div class="f"><span class="lbl">기여</span><span>A controlled study of inference-time future conditioning in world-action models, followed by Simple-WAM: single-pass conditioning on fully noised future video tokens with a training schedule aligned to that inference setting.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Separates future-token conditioning from iterative denoising through matched paradigm comparisons.</li><li>Evaluates robustness, data efficiency, and task generalization rather than relying only on in-distribution performance.</li><li>Includes simulation benchmarks and real-world bimanual manipulation experiments.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: conclusions are based on a single 5B backbone without embodied pretraining, so scaling and embodied-pretraining effects remain open.</li><li>Interpretation: the controlled comparisons inherit the Fast-WAM architecture and training setting, limiting evidence that the mechanism transfers across substantially different WAM designs.</li><li>Task generalization remains difficult when held-out-task video is unavailable.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, LIBERO-Plus, RoboTwin 2.0, and real-world AgileX Aloha dual-arm tasks</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">VLA-Adapter</span><span class="cmp">Lingbot-VA</span><span class="cmp">FastWAM-Joint</span><span class="cmp">FastWAM</span></span></div>
       </div>
     </article>
   </section>
@@ -2890,7 +2896,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-30 13:29 · WM_surveybot</footer>
+<footer>built 2026-09-30 13:48 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
