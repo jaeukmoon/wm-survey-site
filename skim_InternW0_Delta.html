@@ -134,8 +134,8 @@ article.dd{padding:22px 18px}
 <!-- /hub-nav -->
 <header><div class="wrap">
   <div>
-    <h1><a href="index.html">LeRobot 데이터 포맷 (LeRobotDataset)</a></h1>
-    <p>배경지식 · <a href="background.html">← 목록</a></p>
+    <h1><a href="index.html">InternW0-Δ reading entry</a></h1>
+    <p>📖 스키밍 (쉬운 버전) · <a href="deepdives.html">← 목록</a></p>
     <div id="upd-status"></div>
   </div>
   <div class="nav">
@@ -151,9 +151,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: basic_theory.md)</p></article>
+  <article class="dd" id="dd-body"><p class="muted">렌더링 중… (오프라인이면 CDN 로드 실패 — 원본: InternW0_Delta_skim.md)</p></article>
   <script>
-  const MD = "# LeRobot 데이터 포맷 (LeRobotDataset)\n\n> Hugging Face **LeRobot**(오픈소스 로보틱스 라이브러리)의 표준 데이터셋 포맷. 로봇 시연(teleop episode)을 통일된 구조로 저장해 어떤 정책이든 같은 로더로 읽게 한다. VLA/WM 데이터가 거의 이 포맷으로 배포된다(DROID·RoboTwin·π0 등).\n\n**구조**\n\n| 구성 | 내용 |\n|---|---|\n| **parquet** (Arrow 테이블) | `observation.state`(proprio), `action`, `timestamp`, `episode_index`, `frame_index`, `task_index` |\n| **mp4 비디오** | 카메라 프레임을 raw 이미지가 아니라 **인코딩 영상**으로 저장(용량↓). 카메라마다 `observation.images.<cam_name>` 키 |\n| **`meta/`** | `info.json`(fps · **feature별 shape** · robot_type · 버전) · `stats.json`(정규화 mean/std/min/max) · `episodes.jsonl` · `tasks.jsonl`(언어 지시) |\n\n**핵심 포인트**\n- 로딩: `LeRobotDataset(\"repo_id\")` — HF Hub에서 받아옴. action chunk는 `delta_timestamps`로 \"미래 H step\"을 한 샘플에 묶어 반환.\n- **차원의 출처**: `observation.state`·`action`의 차원과 **카메라 키 개수**가 `meta/info.json` features에 **명시**됨 → \"이 데이터 action_dim/state_dim/카메라 몇 개?\"는 info.json을 보면 끝. → **Action 차원** · **VLA 초기화** 섹션.\n- **정규화 stats**: `stats.json`의 mean/std가 학습/추론 때 action·state를 normalize하는 값(체크포인트 옆 `*_dataset_stats.json`의 정체).\n- **버전**: v2.1은 정규화 stats를 **에피소드별**로 옮긴 버전(v2.0은 전역).\n\n---\n";
+  const MD = "# InternW0-Δ reading entry\n\n- Publication: 2026-09-25.\n- Status: queued for study; detailed analysis not started.\n- Format: arXiv paper.\n- [Official source](https://arxiv.org/abs/2609.31394)\n- [Archived source Markdown](https://github.com/jaeukmoon/World-Model/blob/study/physical-ai-reading-20260930/InternW0_Delta_source.md)\n\n## Starting point\n\nInternW0-Δ transfers video dynamics, scene semantics, and geometric/motion priors into an action policy. Causal Imprint learns predictive features using future supervision during training, without generating future video during action inference.\n\n## Questions for the first reading\n\n- Trace the attention directions between video, action, and predictive queries.\n- Separate training-only future supervision and 4D distillation from inference inputs.\n- Check data composition, state-action alignment, and ablations before attributing gains to architecture.\n\n## Reading sequence\n\n1. [InternW0](skim_InternW0.html): asynchronous predictive context and control.\n2. [InternW0-Δ](skim_InternW0_Delta.html): predictive supervision without inference-time video rollout.\n3. [FLUX 3 Action](skim_FLUX_3_Action.html): efficient joint video-action generation.\n\nThe sequence is a study plan, not a claim that these systems form a direct architectural lineage. Source archives preserve official text; they are not independent validation of reported results.\n";
   window.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('dd-body');
     // Math must be handled DURING marked parsing (marked-katex-extension), else
