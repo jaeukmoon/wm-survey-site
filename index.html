@@ -145,25 +145,9 @@ article.dd{padding:22px 18px}
   </div>
 </div></header>
 <main>
-  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">208</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">27</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">110</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">43</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">28</span></button></div>
+  <div class="chips"><button class="chip on" onclick="filterGroup('ALL',this)">전체<span class="n">210</span></button><button class="chip" onclick="filterGroup('WM',this)">WM<span class="n">27</span></button><button class="chip" onclick="filterGroup('WAM',this)">WAM<span class="n">112</span></button><button class="chip" onclick="filterGroup('VLA',this)">VLA<span class="n">43</span></button><button class="chip" onclick="filterGroup('기타',this)">기타<span class="n">28</span></button></div>
   <section>
-    <h2 class="date">⏳ 요약 전 후보 (2026-09-30 수집 · 19편 — 원문 확인 및 요약 대기)</h2>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">MachEmbodied-U0: Unified Understanding and Generation Model for Embodied Intelligence</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.25627</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — General-purpose robot control requires models to understand task intent, identify where to interact, capture how the scene evolves, and generate precise actions. Vision-language-action models provide strong semantic prio…</p></div>
-    </article>
-    <article class="card pending" data-group="pending">
-      <div class="L">
-        <h3><a href="https://arxiv.org/abs/2609.21449" target="_blank" rel="noopener">ME-Dex 1.0: Bringing Heterogeneous Tactile Sensing into World Action Modeling</a></h3>
-        <div class="badges"><span class="badge arxiv">📄 arXiv</span></div>
-        <div class="meta"><span class="id">2609.21449</span></div>
-      </div>
-      <div class="R"><p class="sum muted">⏳ 요약 전 후보 — World Action Models bring the predictive capabilities of video models into robot action generation, providing a rich foundation for modeling future visual states. Tactile sensing complements this foundation with direct m…</p></div>
-    </article>
+    <h2 class="date">⏳ 요약 전 후보 (2026-09-30 수집 · 17편 — 원문 확인 및 요약 대기)</h2>
     <article class="card pending" data-group="pending">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.36518" target="_blank" rel="noopener">LIBERO-MAX: Do Robot Policies Adapt When the World Changes?</a></h3>
@@ -512,7 +496,7 @@ article.dd{padding:22px 18px}
     </article>
   </section>
   <section>
-    <h2 class="date">2026-09-22 · 6편</h2>
+    <h2 class="date">2026-09-22 · 7편</h2>
     <article class="card" data-group="기타">
       <div class="L">
         <h3><a href="https://arxiv.org/abs/2609.25562" target="_blank" rel="noopener">IndustrialVLA-Bench: A Traceable Multi-Axis Evaluation of Open Robot Policy Models</a></h3>
@@ -577,6 +561,17 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">An empirical security study shows that physical backdoors can induce semantically wrong yet physically feasible behavior in learned industrial manipulation policies. It proposes online visual trigger sanitization to mitigate the attack without retraining the deployed policy.</p><div class="f"><span class="lbl">기여</span><span>Evaluates training-time physical-trigger backdoors and an attention-guided online observation-sanitization defense on FANUC and xArm manipulation tasks.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Uses two real commercial industrial arms rather than simulation alone.</li><li>Studies both attack stealthiness and runtime defense cost.</li><li>Compares online sanitization with offline fine-tuning under the same attack setting.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: the defense assumes triggers are in off-task background regions.</li><li>Author-reported: it does not address language-conditioned or other multimodal triggers.</li><li>Interpretation: evaluation covers two tasks and a single cited visuomotor-policy family, limiting generalization to broader VLA deployments.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catnew">other</span></div><div class="f"><span class="lbl">데이터셋</span><span>Teleoperation demonstrations for color sorting and machinery boxing on FANUC LR Mate 200iD and xArm 6.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Offline fine-tuning defense</span></span></div>
+      </div>
+    </article>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">MachEmbodied-U0: Unified Understanding and Generation Model for Embodied Intelligence</a></h3>
+        <div class="badges"><span class="badge rig" title="완성도(rigor) 52 · 프록시 추정">완성도 52</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.25627</span> · <a href="https://arxiv.org/abs/2609.25627" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">ME-U0 unifies task-grounded understanding, multimodal future visual-dynamics generation, and continuous robot control. Its understanding expert supplies subtask and affordance context to a shared generation expert.</p><div class="f"><span class="lbl">기여</span><span>A Mixture-of-Transformers embodied model that jointly generates future RGB, depth, normals, optical flow, and actions through flow matching, with temporal alignment for fine-grained control.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Combines explicit subtask decomposition and affordance grounding with visual-dynamics and action generation.</li><li>Uses geometry and motion targets beyond RGB to supervise manipulation-relevant scene changes.</li><li>Evaluates downstream control in simulation and provides real-world deployment demonstrations.</li><li>Uses a unified state-action interface across multiple robot embodiments.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: memory-dependent tasks remain challenging because the model does not explicitly retain observation history.</li><li>Author-reported: real-world deployment tests familiar embodiments from the pretraining corpus, not unseen robots.</li><li>Interpretation: real-world evidence is qualitative, limiting conclusions about reliability across tasks and environments.</li><li>Interpretation: downstream post-training lacks the auxiliary labels used in pretraining, so retention of grounding capabilities under adaptation is not fully quantified.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">Joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>Pretraining: AgiBot World Beta, RoboMIND 2.0, RoboCOIN, Galaxea Open-World, and egocentric demonstrations; evaluation: RoboDojo, LIBERO, and LIBERO-Plus.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">Fast-WAM</span><span class="cmp">OpenWAM-α</span><span class="cmp">ImageWAM</span></span></div>
       </div>
     </article>
   </section>
@@ -682,6 +677,20 @@ article.dd{padding:22px 18px}
       </div>
       <div class="R">
         <p class="sum">ARPS makes a generation-free world action model act through a compact, horizon-conditioned predictive state rather than dense video features. The state is trained to anticipate future visual representations and their temporal changes using only current observations at inference.</p><div class="f"><span class="lbl">기여</span><span>Introduces Action-Relevant Predictive States: a learned bottleneck between a WAM video expert and action expert, supervised with multi-horizon absolute and temporal-difference targets from a frozen V-JEPA2 teacher.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Targets predictive content selected for action readability rather than predictability alone.</li><li>Uses training-only future-representation supervision while retaining current-observation-only inference.</li><li>Includes controlled ablations of teacher choice, temporal targets, state capacity, extraction depth, and gradient flow.</li><li>Evaluates both in-domain manipulation and distribution-shift robustness.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: evaluation is limited to one WAM backbone because pretraining is costly.</li><li>Author-reported: all experiments are in simulation, with no real-robot evaluation.</li><li>The paper&#x27;s robustness claims are benchmark-specific and do not establish general real-world transfer.</li><li>Some reported baseline results are reproduced or sourced from prior evaluations, which can limit strict comparability across implementations.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">action prediction with auxiliary future/world-model learning</span></div><div class="f"><span class="lbl">데이터셋</span><span>LIBERO, LIBERO-Plus, and RoboTwin 2.0</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">Fast-WAM</span><span class="cmp">OpenVLA</span><span class="cmp">π0</span><span class="cmp">π0.5</span><span class="cmp">VLA-JEPA</span><span class="cmp">Motus</span><span class="cmp">LingBot-VA</span><span class="cmp">Enfold</span><span class="cmp">DC-WAM</span><span class="cmp">Cosmos-Policy</span><span class="cmp">Faster-WAM</span></span></div>
+      </div>
+    </article>
+  </section>
+  <section>
+    <h2 class="date">2026-09-18 · 1편</h2>
+    <article class="card" data-group="WAM">
+      <div class="L">
+        <h3><a href="https://arxiv.org/abs/2609.21449" target="_blank" rel="noopener">ME-Dex 1.0: Bringing Heterogeneous Tactile Sensing into World Action Modeling</a></h3>
+        <div class="badges"><span class="badge rig" title="완성도(rigor) 60 · 프록시 추정">완성도 60</span><span class="badge arxiv">📄 arXiv</span></div>
+        <div class="meta"><span class="id">2609.21449</span> · <a href="https://arxiv.org/abs/2609.21449" target="_blank" rel="noopener">arXiv</a></div>
+        
+      </div>
+      <div class="R">
+        <p class="sum">ME-Dex-1.0 is a world-action model that treats tactile signals as future observations alongside video while generating robot actions. It targets tactile manipulation across grippers and dexterous hands with a shared tactile representation.</p><div class="f"><span class="lbl">기여</span><span>Introduces a three-expert Mixture-of-Transformers that jointly predicts future video, tactile latents, and action chunks, plus a canonical tactile representation and simulation data engine for heterogeneous tactile sources.</span></div><div class="f"><span class="lbl">강점</span><ul class="pm plus"><li>Models future tactile dynamics jointly with visual dynamics and actions.</li><li>Supports heterogeneous tactile layouts across grippers and dexterous hands.</li><li>Evaluates manipulation across multiple simulated benchmarks and physical robots.</li></ul></div><div class="f"><span class="lbl">약점</span><ul class="pm minus"><li>Author-reported: tactile-encoder pretraining remains limited in data scale and sensor diversity.</li><li>Author-reported: policies rely mainly on observation updates and replanning rather than high-frequency tactile feedback control.</li><li>Interpretation: physical-robot evidence is qualitative, limiting the strength of real-world performance conclusions.</li></ul></div><div class="f"><span class="lbl">분류</span><span class="catv catknown">joint future-observation/action prediction</span></div><div class="f"><span class="lbl">데이터셋</span><span>RoboTwin, DexJoCo, and ManiFeel; qualitative physical-robot deployments on LeRobot SO-101 and Xynova Flex2.</span></div><div class="f"><span class="lbl">비교모델</span><span class="cmps"><span class="cmp">π0.5</span><span class="cmp">Fast-WAM</span><span class="cmp">Motus</span><span class="cmp">DP-T</span><span class="cmp">DECO</span><span class="cmp">DECO.p</span><span class="cmp">ManiFeel</span></span></div>
       </div>
     </article>
   </section>
@@ -2833,7 +2842,7 @@ function filterGroup(g, btn){
 }
 </script>
 </main>
-<footer>built 2026-09-30 13:16 · WM_surveybot</footer>
+<footer>built 2026-09-30 13:25 · WM_surveybot</footer>
 <button id="qtab" onclick="qToggle()">❓ 질문</button>
 <aside id="qdrawer" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center">
